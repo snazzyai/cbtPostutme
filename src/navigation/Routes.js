@@ -1,6 +1,7 @@
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
-import Splashscreen from './screens/Splashscreen'
-import Signin from './screens/Signin.js'
+import Splashscreen from '../screens/Splashscreen'
+import Signin from '../screens/Signin'
+import PastQuestions from '../screens/PastQuestions'
 
 const Navigator = createStackNavigator({
     Splashscreen: {
@@ -11,6 +12,12 @@ const Navigator = createStackNavigator({
     },
     Signin: {
         screen: Signin,
+        navigationOptions: {
+            header: null
+        }
+    },
+    PastQuestions: {
+        screen: PastQuestions,
         navigationOptions: {
             header: null
         }
