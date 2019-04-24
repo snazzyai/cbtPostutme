@@ -1,28 +1,29 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native'
+import Splashscreen from '../components/splashscreen'
 import SplashScreen from 'react-native-splash-screen'
 
 
 class Startup extends Component {
     state = {
-
+        isLoading: true
+    }
+    awaitStartup = async () => {
+        return new Promise(resolve => {
+            setTimeout(() => resolve('dummyString'), 3000)
+        })
     }
 
-    componenentDidMount() {
-        // do stuff while splash screen is shown
-        // After having done stuff (such as async tasks) hide the splash screen
-        SplashScreen.show();
+    async componentDidMount() {
+        data = await this.awaitStartup()
+        if (data !== null) {
+            this.props.navigation.navigate('Signin')
+        }
     }
 
+    render() {
+        return <Splashscreen />
+    }
 }
 
-render() {
-    return (
-        <View>
-            <Text>Startpage</Text>
-        </View>
-    );
-}
-}
-
-export default Startup;
+export default Startup

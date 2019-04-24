@@ -20,8 +20,6 @@ import Routes from './src/navigation/Routes'
 
 
 export default class App extends Component {
-
-
   render() {
     return (
       <Routes />

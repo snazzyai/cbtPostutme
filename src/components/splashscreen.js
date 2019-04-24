@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native'
 
-const splashscreen = () => {
+const Splashscreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.logo}>
-                <Image source={require('../../assets/images/faceyourbook.jpg')} />
+                <Image source={require('../../assets/images/launch_screen.jpg')} />
             </View>
         </View>
     );
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default splashscreen;
+export default Splashscreen;
