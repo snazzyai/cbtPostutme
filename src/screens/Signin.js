@@ -15,4 +15,10 @@ class Signin extends Component {
     }
 }
 
+const styles = StyleSheet.create({
+
+
+
+})
+
 export default Signin;

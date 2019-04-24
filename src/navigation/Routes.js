@@ -1,11 +1,11 @@
-import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
-import Splashscreen from '../screens/Splashscreen'
+import { createStackNavigator, createAppContainer } from 'react-navigation'
 import Signin from '../screens/Signin'
 import PastQuestions from '../screens/PastQuestions'
+import Startup from '../screens/Startup'
 
 const Navigator = createStackNavigator({
-    Splashscreen: {
-        screen: Splashscreen,
+    Startup: {
+        screen: Startup,
         navigationOptions: {
             header: null
         }
