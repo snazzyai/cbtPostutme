@@ -12,7 +12,7 @@ class Startup extends Component {
 
     awaitStartup = async () => {
         return new Promise(resolve => {
-            setTimeout(() => resolve('dummyString'), 3000)
+            setTimeout(() => resolve('dummyString'), 1000)
         })
     }
 
