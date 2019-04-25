@@ -9,22 +9,9 @@ class PastQuestions extends Component {
     }
 
     render() {
-        return (
-            <View style={styles.container}>
-                <View style={styles.searchBarView}>
-                    <TextInput onChangeText={this.searchChange} placeholder="search" style={styles.searchBar} />
-                </View>
-                <View>
-
-                </View>
-            </View>
-        );
+        return <Text>Main</Text>
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        justifyContent: "center"
-    },
-})
+
 export default PastQuestions;
