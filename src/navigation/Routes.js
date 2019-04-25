@@ -8,6 +8,7 @@ const Navigation = createStackNavigator({
         navigationOptions: {
             header: null
         }
+
     },
 })
 
@@ -15,7 +16,14 @@ const Main = createStackNavigator({
     PastQuestions: {
         screen: PastQuestions,
         navigationOptions: {
-            header: null
+            title: "CHOOSE A TYPE",
+            headerStyle: {
+                backgroundColor: "#47a309"
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+                fontWeight: "bold"
+            }
         }
     },
 })
