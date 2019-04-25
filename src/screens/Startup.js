@@ -1,30 +1,53 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native'
-import Splashscreen from '../components/splashscreen'
-import SplashScreen from 'react-native-splash-screen'
+import Splashscreen from '../components/Splashscreen/Splashscreen'
+import Signin from '../components/Signin/Signin'
+
+// import SplashScreen from 'react-native-splash-screen'
 
 
 class Startup extends Component {
     state = {
-        isLoading: true
+        isLoading: true,
+        displayLogin: false,
+        isLoggedIn: false
     }
 
 
     awaitStartup = async () => {
         return new Promise(resolve => {
-            setTimeout(() => resolve('dummyString'), 1000)
+            setTimeout(() => resolve('dummyString'), 500)
         })
     }
 
     async componentDidMount() {
         data = await this.awaitStartup()
         if (data !== null) {
-            this.props.navigation.navigate('Signin')
+            this.setState({
+                isLoading: !this.state.isLoading,
+                displayLogin: true
+            })
+
         }
     }
 
+    handleSignin = () => {
+        this.props.navigation.navigate("Main")
+    }
+
+
+
+
     render() {
-        return <Splashscreen />
+        if (!this.state.displayLogin) {
+            return <Splashscreen />
+        }
+        else {
+            return (
+                <Signin login={this.handleSignin} />
+            )
+        }
+
     }
 }
 
