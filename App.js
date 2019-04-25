@@ -8,6 +8,7 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
+// import { CreateRootNavigator } from './src/navigation/Routes'
 import Routes from './src/navigation/Routes'
 
 
@@ -21,6 +22,7 @@ import Routes from './src/navigation/Routes'
 
 export default class App extends Component {
   render() {
+    // const Layout = CreateRootNavigator()
     return (
       <Routes />
     );
