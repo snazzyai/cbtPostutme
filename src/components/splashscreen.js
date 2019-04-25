@@ -1,13 +1,9 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet, ImageBackground } from 'react-native'
 
 const Splashscreen = () => {
     return (
-        <View style={styles.container}>
-            <View style={styles.logo}>
-                <Image source={require('../../assets/images/launch_screen.jpg')} />
-            </View>
-        </View>
+        <ImageBackground source={require('../../assets/images/launch_screen.jpg')} />
     );
 }
 const styles = StyleSheet.create({

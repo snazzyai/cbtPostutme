@@ -8,16 +8,26 @@ class Signin extends Component {
 
     render() {
         return (
-            <View>
-                <Text>Signin</Text>
+            <View style={styles.container}>
+                <View>
+
+                </View>
+                <View>
+
+                </View>
+                <View>
+
+
+                </View>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-
-
+    container: {
+        flex: 1
+    }
 
 })
 

@@ -8,6 +8,8 @@ class Startup extends Component {
     state = {
         isLoading: true
     }
+
+
     awaitStartup = async () => {
         return new Promise(resolve => {
             setTimeout(() => resolve('dummyString'), 3000)
