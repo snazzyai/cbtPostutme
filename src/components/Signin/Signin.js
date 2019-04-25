@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, AsyncStorage } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
@@ -14,10 +14,11 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 class Signin extends Component {
 
     state = {
+        name: "",
         email: "",
         phone: "",
-
     }
+
     handleEmail = (value) => {
         this.setState({
             email: value
@@ -33,6 +34,10 @@ class Signin extends Component {
             name: value
         })
     }
+
+
+
+
 
 
 
@@ -74,7 +79,7 @@ const styles = StyleSheet.create({
         color: "#ffffff"
     },
     inputFieldView: {
-        marginTop: hp("10%"),
+        marginTop: hp("8%"),
         alignItems: "center"
 
     },

@@ -31,7 +31,10 @@ class Startup extends Component {
         }
     }
 
+
+
     handleSignin = () => {
+
         this.props.navigation.navigate("Main")
     }
 

@@ -9,7 +9,14 @@ class PastQuestions extends Component {
 
     }
 
+    onSelectType = (id, type) => {
 
+        this.props.navigation.navigate('Payment', {
+            id: id,
+            type: type
+        })
+
+    }
 
     render() {
 
@@ -19,24 +26,40 @@ class PastQuestions extends Component {
                 <View style={styles.typeView}>
                     <ScrollView style={styles.scrollView} >
                         <View style={styles.typeList}>
-                            <TouchableOpacity style={[styles.type, styles.color1]}><Text style={styles.typeText}>UTME</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "UTME" })} style={[styles.type, styles.color1]}>
+                                <Text style={styles.typeText}>UTME</Text>
+                            </TouchableOpacity>
 
-                            <TouchableOpacity style={[styles.type, styles.color2]}><Text style={styles.typeText}>WAEC</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "WAEC" })} style={[styles.type, styles.color2]}>
+                                <Text style={styles.typeText}>WAEC</Text>
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.typeList}>
-                            <TouchableOpacity style={[styles.type, styles.color3]}><Text style={styles.typeText}>UNILORIN POST UTME</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "UNILORIN" })} style={[styles.type, styles.color3]}>
+                                <Text style={styles.typeText}>UNILORIN POST UTME</Text>
+                            </TouchableOpacity>
 
-                            <TouchableOpacity style={[styles.type, styles.color4]}><Text style={styles.typeText}>UNILAG POST UTME</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "UNILAG" })} style={[styles.type, styles.color4]}>
+                                <Text style={styles.typeText}>UNILAG POST UTME</Text>
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.typeList}>
-                            <TouchableOpacity style={[styles.type, styles.color5]}><Text style={styles.typeText}>UNIBEN POST UTME</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "UNIBEN" })} style={[styles.type, styles.color5]}>
+                                <Text style={styles.typeText}>UNIBEN POST UTME</Text>
+                            </TouchableOpacity>
 
-                            <TouchableOpacity style={[styles.type, styles.color6]}><Text style={styles.typeText}>OAU POST UTME</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "OAU" })} style={[styles.type, styles.color6]}>
+                                <Text style={styles.typeText}>OAU POST UTME</Text>
+                            </TouchableOpacity>
                         </View>
                         <View style={styles.typeList}>
-                            <TouchableOpacity style={[styles.type, styles.color7]}><Text style={styles.typeText}>LASU POST UTME</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "LASU" })} style={[styles.type, styles.color7]}>
+                                <Text style={styles.typeText}>LASU POST UTME</Text>
+                            </TouchableOpacity>
 
-                            <TouchableOpacity style={[styles.type, styles.color8]}><Text style={styles.typeText}>UNIJOS POST UTME</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "UNIJOS" })} style={[styles.type, styles.color8]}>
+                                <Text style={styles.typeText}>UNIJOS POST UTME</Text>
+                            </TouchableOpacity>
                         </View>
 
                     </ScrollView>
