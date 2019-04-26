@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView, Image } from 'react-native'
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, ScrollView, Image, ImageBackground } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
@@ -66,75 +66,118 @@ class PastQuestions extends Component {
     render() {
 
         return (
-            <View style={styles.container}>
-                <View style={styles.searchBarView}>
-                    <TextInput style={styles.searchBarInput} placeholder="search..." onChangeText={this.searchFilter} />
-                </View>
-                <View style={styles.scrollView}>
-                    <ScrollView keyboardShouldPersistTaps='always'>
-                        {this.state.schools.map(type => (
-                            <TouchableOpacity style={styles.typesView} onPress={() => this.props.navigation.navigate('Payment')} >
-                                <View style={styles.imageView}>
-                                    <Image source={type.imageSource} style={styles.image} />
-                                </View>
-                                <View style={styles.detailsView}>
-                                    <Text>{type.typeName}</Text>
-                                    <Text style={styles.fullTypeName}>{type.fullTypeName}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        ))
-                        }
-                    </ScrollView>
 
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={styles.container}>
+                    <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.topView}>
+                        <View style={styles.textHeaderView}>
+                            <Text style={styles.textHeader}>SELECT A CATEGORY</Text>
+                        </View>
+                        <View style={styles.searchBar}>
+                            <TextInput style={styles.searchBarInput} placeholder="Search..." onChangeText={this.searchFilter} />
+                        </View>
+                    </ImageBackground>
+                    <View style={styles.textCategoryView}>
+                        <Text style={styles.textCategory}>CATEGORIES</Text>
+                    </View>
+                    {this.state.schools.map(type => (
+                        <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => this.props.navigation.navigate('Payment', {
+                            id: type.id,
+                            name: type.typeName
+                        })} >
+                            <View style={styles.imageView}>
+                                <Image source={type.imageSource} style={styles.image} />
+                            </View>
+                            <View style={styles.detailsView}>
+                                <Text style={styles.typeName}>{type.typeName}</Text>
+                                <Text style={styles.fullTypeName}>{type.fullTypeName}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    ))
+                    }
                 </View>
-            </View>
+
+            </ScrollView>
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: "center",
-        alignItems: "center"
+        backgroundColor: "#f7f7f7"
     },
-    searchBarView: {
-        justifyContent: "center",
+    topView: {
+        height: 200,
+        alignItems: "center",
+        paddingTop: 20
+    },
+    textHeaderView: {
+        padding: 30
+    },
+    textHeader: {
+        color: "#ffffff",
+        fontSize: 20,
+        fontWeight: "bold",
+        fontFamily: 'sans-serif',
+    },
+    searchBar: {
+        borderRadius: 20,
         width: "90%",
-        height: 45,
-        borderRadius: 10,
+        height: 40,
         elevation: 3,
-        paddingLeft: wp("8%"),
-        marginTop: hp('8%')
+        backgroundColor: "#ffffff",
+        paddingLeft: wp("5%"),
+
     },
     searchBarInput: {
-        fontSize: 18,
-        paddingTop: 10,
+        fontSize: 16,
         color: "#000000"
+    },
+    textCategoryView: {
+
+    },
+    textCategory: {
+        color: "#000000",
+        fontSize: 16,
+        paddingTop: 25,
+        paddingLeft: 15,
+        fontWeight: "bold"
+
     },
     imageView: {
         borderRadius: 50,
     },
     image: {
-        height: 70,
-        width: 70,
-        borderRadius: 50,
-        backgroundColor: "blue"
+        height: 60,
+        width: 60,
+        borderRadius: 50
 
     },
     scrollView: {
-        padding: 20
+        padding: 10,
+        marginTop: 30
+
     },
     detailsView: {
         paddingLeft: 20
     },
     typesView: {
         flexDirection: "row",
-        padding: 20,
-        margin: 10,
-        backgroundColor: 'green'
+        padding: 10,
+        elevation: 2,
+        borderRadius: 5,
+        backgroundColor: '#fff',
+        margin: 10
+        // elevation: 10
+    },
+    typeName: {
+        color: "black",
+        fontWeight: "bold",
+        fontSize: 18
     },
     fullTypeName: {
-        paddingTop: 10
+        paddingTop: 10,
+        color: "#000"
     }
 
 })

@@ -2,6 +2,7 @@ import { createSwitchNavigator, createStackNavigator, createAppContainer } from 
 import PastQuestions from '../screens/PastQuestions'
 import Startup from '../screens/Startup'
 import Payment from '../screens/Payment'
+import BankTransferScreen from '../screens/BankTransferScreen'
 
 const Navigation = createStackNavigator({
     Startup: {
@@ -9,22 +10,14 @@ const Navigation = createStackNavigator({
         navigationOptions: {
             header: null
         }
-
     },
 })
 
 const Main = createStackNavigator({
-    PastQuestions: {
-        screen: PastQuestions,
+    BankTransfer: {
+        screen: BankTransferScreen,
         navigationOptions: {
-            title: "SELECT CATEGORY",
-            headerStyle: {
-                backgroundColor: "#47a309"
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-                fontWeight: "bold"
-            }
+            header: null
         }
     },
     Payment: {
@@ -32,8 +25,14 @@ const Main = createStackNavigator({
         navigationOptions: {
             header: null
         }
-
     },
+    PastQuestions: {
+        screen: PastQuestions,
+        navigationOptions: {
+            header: null
+        }
+    }
+
 })
 
 
