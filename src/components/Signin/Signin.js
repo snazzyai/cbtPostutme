@@ -38,9 +38,6 @@ class Signin extends Component {
 
 
 
-
-
-
     render() {
 
         return (
@@ -58,7 +55,6 @@ class Signin extends Component {
                     <TouchableOpacity onPress={this.props.login} style={styles.clickable}>
                         <Text style={styles.clickableText}>SIGN IN</Text>
                     </TouchableOpacity>
-
                 </View>
             </View>
         );

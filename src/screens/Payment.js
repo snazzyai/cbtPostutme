@@ -10,7 +10,9 @@ class Payment extends Component {
         const type = navigation.getParam('type')
 
         return (
-            <View><Text>Payment for <Text>{JSON.stringify(type)}</Text></Text></View>
+            <View>
+                <Text>Payment for <Text>{JSON.stringify(type)}</Text></Text>
+            </View>
         );
     }
 }

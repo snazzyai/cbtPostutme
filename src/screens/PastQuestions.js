@@ -1,11 +1,52 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView, Image } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 
 
 
 class PastQuestions extends Component {
     state = {
+        schools: [
+            {
+                id: 1,
+                typeName: "WAEC",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "University of Lagos PostUtme"
+
+            },
+            {
+                id: 2,
+                typeName: "POSTUTME",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "University of Lagos PostUtme"
+            },
+            {
+                id: 3,
+                typeName: "UNILAG",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "University of Lagos PostUtme"
+            },
+            {
+                id: 4,
+                typeName: "UNILAG",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "University of Lagos PostUtme"
+            },
+            {
+                id: 5,
+                typeName: "UNILAG",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "University of Lagos PostUtme"
+            },
+            {
+                id: 6,
+                typeName: "UNILAG",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "University of Lagos PostUtme"
+            },
+
+        ]
 
     }
 
@@ -18,51 +59,33 @@ class PastQuestions extends Component {
 
     }
 
+    searchFilter = () => {
+
+    }
+
     render() {
 
         return (
             <View style={styles.container}>
-
-                <View style={styles.typeView}>
-                    <ScrollView style={styles.scrollView} >
-                        <View style={styles.typeList}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "UTME" })} style={[styles.type, styles.color1]}>
-                                <Text style={styles.typeText}>UTME</Text>
+                <View style={styles.searchBarView}>
+                    <TextInput style={styles.searchBarInput} placeholder="search..." onChangeText={this.searchFilter} />
+                </View>
+                <View style={styles.scrollView}>
+                    <ScrollView keyboardShouldPersistTaps='always'>
+                        {this.state.schools.map(type => (
+                            <TouchableOpacity style={styles.typesView} onPress={() => this.props.navigation.navigate('Payment')} >
+                                <View style={styles.imageView}>
+                                    <Image source={type.imageSource} style={styles.image} />
+                                </View>
+                                <View style={styles.detailsView}>
+                                    <Text>{type.typeName}</Text>
+                                    <Text style={styles.fullTypeName}>{type.fullTypeName}</Text>
+                                </View>
                             </TouchableOpacity>
-
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "WAEC" })} style={[styles.type, styles.color2]}>
-                                <Text style={styles.typeText}>WAEC</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.typeList}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "UNILORIN" })} style={[styles.type, styles.color3]}>
-                                <Text style={styles.typeText}>UNILORIN POST UTME</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "UNILAG" })} style={[styles.type, styles.color4]}>
-                                <Text style={styles.typeText}>UNILAG POST UTME</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.typeList}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "UNIBEN" })} style={[styles.type, styles.color5]}>
-                                <Text style={styles.typeText}>UNIBEN POST UTME</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "OAU" })} style={[styles.type, styles.color6]}>
-                                <Text style={styles.typeText}>OAU POST UTME</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.typeList}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "LASU" })} style={[styles.type, styles.color7]}>
-                                <Text style={styles.typeText}>LASU POST UTME</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Payment', { id: 1, type: "UNIJOS" })} style={[styles.type, styles.color8]}>
-                                <Text style={styles.typeText}>UNIJOS POST UTME</Text>
-                            </TouchableOpacity>
-                        </View>
-
+                        ))
+                        }
                     </ScrollView>
+
                 </View>
             </View>
         )
@@ -74,73 +97,46 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    // searchBarView: {
-    //     justifyContent: "center",
-    //     width: "90%",
-    //     height: 55,
-    //     borderRadius: 10,
-    //     elevation: 3,
-    //     paddingLeft: wp("8%"),
-    //     marginTop: hp('5%')
-
-    // },
-    // searchBarInput: {
-    //     fontSize: 20,
-    //     paddingTop: 12,
-    //     color: "#000000"
-    // },
-    scrollView: {
-
-
-    },
-    typeView: {
-        justifyContent: "center"
-    },
-    typeList: {
+    searchBarView: {
         justifyContent: "center",
-        flexDirection: "row",
-        padding: 10
+        width: "90%",
+        height: 45,
+        borderRadius: 10,
+        elevation: 3,
+        paddingLeft: wp("8%"),
+        marginTop: hp('8%')
     },
-    type: {
-        width: 150,
-        height: 150,
-        alignItems: "center",
-        margin: 20,
-        paddingTop: hp("8%"),
-    }, color1: {
-
-    },
-    typeText: {
-        fontFamily: "Helvetica",
-        textAlign: "center",
-        fontSize: 20,
+    searchBarInput: {
+        fontSize: 18,
+        paddingTop: 10,
         color: "#000000"
+    },
+    imageView: {
+        borderRadius: 50,
+    },
+    image: {
+        height: 70,
+        width: 70,
+        borderRadius: 50,
+        backgroundColor: "blue"
 
     },
-    color1: {
-        backgroundColor: "#b0ff92"
+    scrollView: {
+        padding: 20
     },
-    color2: {
-        backgroundColor: "#7d7c7a"
+    detailsView: {
+        paddingLeft: 20
     },
-    color3: {
-        backgroundColor: "#e0f760"
+    typesView: {
+        flexDirection: "row",
+        padding: 20,
+        margin: 10,
+        backgroundColor: 'green'
     },
-    color4: {
-        backgroundColor: "#f74f4f"
-    },
-    color5: {
-        backgroundColor: "#f7b645"
-    },
-    color6: {
-        backgroundColor: "#f74fe0"
-    },
-    color7: {
-        backgroundColor: "#6b4ff7"
-    },
-    color8: {
-        backgroundColor: "#467a23"
-    },
+    fullTypeName: {
+        paddingTop: 10
+    }
+
 })
 
 export default PastQuestions;

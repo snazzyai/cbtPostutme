@@ -17,7 +17,7 @@ const Main = createStackNavigator({
     PastQuestions: {
         screen: PastQuestions,
         navigationOptions: {
-            title: "CHOOSE A TYPE",
+            title: "SELECT CATEGORY",
             headerStyle: {
                 backgroundColor: "#47a309"
             },
@@ -45,7 +45,7 @@ export default createAppContainer(createSwitchNavigator(
 
     },
     {
-        initialRouteName: 'Navigation',
+        initialRouteName: 'Main',
     }
 ));
 
