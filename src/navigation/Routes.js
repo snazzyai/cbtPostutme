@@ -1,6 +1,7 @@
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
 import PastQuestions from '../screens/PastQuestions'
 import Startup from '../screens/Startup'
+import Quiz from '../screens/Quiz.screen';
 
 const Navigation = createStackNavigator({
     Startup: {
@@ -12,6 +13,12 @@ const Navigation = createStackNavigator({
 })
 
 const Main = createStackNavigator({
+    Quizs: {
+        screen: Quiz, 
+        navigationOptions: {
+            header: null
+        }
+    },
     PastQuestions: {
         screen: PastQuestions,
         navigationOptions: {
@@ -46,6 +53,6 @@ export default createAppContainer(createSwitchNavigator(
 // }
 
 
-
+c
 
 

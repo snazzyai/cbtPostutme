@@ -14,7 +14,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 class Signin extends Component {
 
     state = {
-        email: "",
+        email: "",  
         phone: "",
 
     }
