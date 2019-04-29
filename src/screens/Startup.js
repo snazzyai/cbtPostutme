@@ -16,7 +16,7 @@ class Startup extends Component {
 
     awaitStartup = async () => {
         return new Promise(resolve => {
-            setTimeout(() => resolve('resolve'), 3000)
+            setTimeout(() => resolve('resolve'), 500)
         })
     }
 

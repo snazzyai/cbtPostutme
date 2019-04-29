@@ -39,12 +39,13 @@ const Main = createStackNavigator({
 
 export default createAppContainer(createSwitchNavigator(
     {
+
         Navigation: Navigation,
         Main: Main,
 
     },
     {
-        initialRouteName: 'Main',
+        initialRouteName: 'Navigation',
     }
 ));
 
