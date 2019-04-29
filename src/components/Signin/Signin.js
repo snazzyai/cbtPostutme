@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableHighlight, AsyncStorage, ImageBackground, Image } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import Emailsvg from "../../../assets/icons/Emailsvg"
+
 
 
 class Signin extends Component {
@@ -28,8 +30,6 @@ class Signin extends Component {
     }
 
 
-
-
     render() {
 
         return (
@@ -39,6 +39,7 @@ class Signin extends Component {
 
                 </View>
                 <View style={styles.inputFieldView}>
+                    <Emailsvg />
                     <TextInput onChangeText={this.handleName} style={styles.inputField} placeholder="Name" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                     <TextInput keyboardType="email-address" onChangeText={this.handleEmail} style={styles.inputField} placeholder="Email" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                     <TextInput keyboardType="phone-pad" onChangeText={this.handlePhone} style={styles.inputField} placeholder="Phone Number" underlineColorAndroid="#fff" placeholderTextColor="#fff" />

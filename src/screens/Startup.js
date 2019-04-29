@@ -34,7 +34,6 @@ class Startup extends Component {
 
 
     handleSignin = async () => {
-
         this.props.navigation.navigate("Main")
     }
 
