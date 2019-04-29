@@ -20,18 +20,21 @@ const Main = createStackNavigator({
             header: null
         }
     },
+    PastQuestions: {
+        screen: PastQuestions,
+        navigationOptions: {
+            header: null
+        }
+    },
     Payment: {
         screen: Payment,
         navigationOptions: {
             header: null
         }
     },
-    PastQuestions: {
-        screen: PastQuestions,
-        navigationOptions: {
-            header: null
-        }
-    }
+
+
+
 
 })
 

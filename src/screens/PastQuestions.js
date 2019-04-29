@@ -66,7 +66,6 @@ class PastQuestions extends Component {
     render() {
 
         return (
-
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
                     <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.topView}>
@@ -96,7 +95,6 @@ class PastQuestions extends Component {
                     ))
                     }
                 </View>
-
             </ScrollView>
         )
     }

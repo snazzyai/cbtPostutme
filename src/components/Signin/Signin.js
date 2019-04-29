@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, AsyncStorage } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, AsyncStorage, ImageBackground } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
@@ -41,7 +41,7 @@ class Signin extends Component {
     render() {
 
         return (
-            <View style={styles.container} >
+            <ImageBackground source={require("../../../assets/images/launch_screen.jpg")} style={styles.container} >
                 <View style={styles.logo}>
                     <Text style={styles.logoText}>POST UTME APP</Text>
                 </View>
@@ -56,23 +56,23 @@ class Signin extends Component {
                         <Text style={styles.clickableText}>SIGN IN</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </ImageBackground>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: "#00BB27"
+        flex: 1
     },
     logo: {
         marginTop: hp("10%"),
         alignItems: "center"
     },
     logoText: {
-        fontSize: 30,
-        color: "#ffffff"
+        fontSize: 35,
+        color: "#ffffff",
+
     },
     inputFieldView: {
         marginTop: hp("8%"),
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     inputField: {
         width: wp("95%"),
         height: hp('12%'),
-        fontSize: 20
+        fontSize: 19
     },
     clickable: {
         marginTop: hp('10%')
@@ -104,8 +104,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         width: wp("95%"),
         height: hp('7%'),
-        borderRadius: 20,
-        paddingTop: 10
+        borderRadius: 25,
+        paddingTop: 10,
+        elevation: 2
 
     },
     clickableText: {
