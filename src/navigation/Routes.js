@@ -44,7 +44,7 @@ export default createAppContainer(createSwitchNavigator(
 
     },
     {
-        initialRouteName: 'Navigation',
+        initialRouteName: 'Main',
     }
 ));
 

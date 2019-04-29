@@ -41,7 +41,7 @@ class Signin extends Component {
     render() {
 
         return (
-            <ImageBackground source={require("../../../assets/images/launch_screen.jpg")} style={styles.container} >
+            <ImageBackground source={require("../../../assets/images/signin.jpg")} style={styles.container} >
                 <View style={styles.logo}>
                     <Text style={styles.logoText}>POST UTME APP</Text>
                 </View>
