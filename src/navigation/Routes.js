@@ -14,12 +14,6 @@ const Navigation = createStackNavigator({
 })
 
 const Main = createStackNavigator({
-    BankTransfer: {
-        screen: BankTransferScreen,
-        navigationOptions: {
-            header: null
-        }
-    },
     PastQuestions: {
         screen: PastQuestions,
         navigationOptions: {
@@ -32,9 +26,12 @@ const Main = createStackNavigator({
             header: null
         }
     },
-
-
-
+    BankTransfer: {
+        screen: BankTransferScreen,
+        navigationOptions: {
+            header: null
+        }
+    },
 
 })
 
@@ -47,7 +44,7 @@ export default createAppContainer(createSwitchNavigator(
 
     },
     {
-        initialRouteName: 'Main',
+        initialRouteName: 'Navigation',
     }
 ));
 

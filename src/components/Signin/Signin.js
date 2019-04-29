@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, AsyncStorage, ImageBackground } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableHighlight, AsyncStorage, ImageBackground } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
@@ -52,9 +52,9 @@ class Signin extends Component {
                 </View>
 
                 <View style={styles.clickableView}>
-                    <TouchableOpacity onPress={this.props.login} style={styles.clickable}>
+                    <TouchableHighlight onPress={this.props.login} style={styles.clickable}>
                         <Text style={styles.clickableText}>SIGN IN</Text>
-                    </TouchableOpacity>
+                    </TouchableHighlight>
                 </View>
             </ImageBackground>
         );

@@ -41,9 +41,9 @@ class BankTransferScreen extends Component {
                     <View style={styles.faq}>
                         <Text style={[styles.textPayment, styles.texPaymentJustify]}>Visit any GTBank Outlet(You can also make use of internet bank transfer) and pay N1500 only into:</Text>
                         <Text></Text>
-                        <Text style={[styles.textPayment, styles.textPaymentBold]}>Account Name: Brimatel Global Network</Text>
+                        <Text style={styles.textPayment}>Account Name: <Text style={styles.textPaymentBold}>Brimatel Global Networks</Text></Text>
                         <Text></Text>
-                        <Text style={[styles.textPayment, styles.textPaymentBold]}>Account Number: 0117562221</Text>
+                        <Text style={styles.textPayment}>Account Number: <Text style={styles.textPaymentBold}>0117562221</Text></Text>
                         <Text ></Text>
                         <Text style={[styles.textPayment, styles.texPaymentJustify]}>Then contact Olamide via whatsapp on this phone number (09093905099) to get your pin.</Text>
                     </View>
