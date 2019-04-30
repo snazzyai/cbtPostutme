@@ -2,6 +2,8 @@ import { createSwitchNavigator, createStackNavigator, createAppContainer } from 
 import PastQuestions from '../screens/PastQuestions'
 import Startup from '../screens/Startup'
 import Quiz from '../screens/Quiz.screen';
+import Payment from '../screens/Payment'
+import BankTransferScreen from '../screens/BankTransferScreen'
 
 const Navigation = createStackNavigator({
     Startup: {
@@ -12,9 +14,16 @@ const Navigation = createStackNavigator({
     },
 })
 
-const Main = createStackNavigator({
-    Quizs: {
-        screen: Quiz, 
+/**
+ * @var setup: Setup Navigation Stack for First User.
+ */
+const Setup = createStackNavigator({
+
+    BankTransfer: {
+        screen: BankTransferScreen
+    },
+    Payment: {
+        screen: Payment,
         navigationOptions: {
             header: null
         }
@@ -24,8 +33,16 @@ const Main = createStackNavigator({
         navigationOptions: {
             header: null
         }
-    },
-})
+    }
+});
+
+// const User = createStackNavigator({
+//     MyExam: {
+//         screen: 
+//     }
+// })
+
+
 
 export default createAppContainer(createSwitchNavigator(
     {
@@ -52,7 +69,5 @@ export default createAppContainer(createSwitchNavigator(
 //     )
 // }
 
-
-c
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, AsyncStorage } from 'react-native'
 import Splashscreen from '../components/Splashscreen/Splashscreen'
 import Signin from '../components/Signin/Signin'
 
@@ -35,6 +35,11 @@ class Startup extends Component {
         this.props.navigation.navigate("Main" )
     }
 
+    handleSignin = async () => {
+
+        this.props.navigation.navigate("Main")
+    }
+
 
 
 
@@ -51,4 +56,4 @@ class Startup extends Component {
     }
 }
 
-export default Startup
+export default Startup;
