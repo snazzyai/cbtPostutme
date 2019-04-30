@@ -12,8 +12,8 @@ class Payment extends Component {
             title: "A message",
             message: 'http://www.facebook.com',
         });
-
     }
+
 
     render() {
         const { navigation } = this.props
@@ -30,7 +30,7 @@ class Payment extends Component {
                 </ImageBackground>
                 <View style={styles.paymentMethodView}>
                     <Text style={styles.paymentMethodText} >{name}</Text>
-                    <TouchableOpacity style={styles.paymentTouch}>
+                    <TouchableOpacity style={styles.paymentTouch} onPress={this.props.navigation.navigate("DrawerNavigation")}>
                         <Text style={styles.paymentText}>PAY ONLINE</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('BankTransfer')} style={styles.paymentTouch}>
@@ -43,7 +43,7 @@ class Payment extends Component {
                         <Text style={styles.paymentText}>SHARE</Text>
                     </TouchableOpacity>
                 </View>
-                {/* this is the share link view renderer */}
+
 
             </View>
 

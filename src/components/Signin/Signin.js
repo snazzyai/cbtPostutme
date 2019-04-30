@@ -1,54 +1,45 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableHighlight, AsyncStorage, ImageBackground, Image } from 'react-native'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Emailsvg from "../../../assets/icons/Emailsvg"
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, Image, ScrollView } from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
+
 
 
 
 class Signin extends Component {
 
-    state = {
-        name: "",
-        email: "",
-        phone: "",
-    }
-
-    handleEmail = (value) => {
-        this.setState({
-            email: value
-        })
-    }
-    handlePhone = (value) => {
-        this.setState({
-            phone: value
-        })
-    }
-    handleName = (value) => {
-        this.setState({
-            name: value
-        })
-    }
-
-
     render() {
 
         return (
             <ImageBackground source={require("../../../assets/images/signin.jpg")} style={styles.container} >
-                <View style={styles.logo}>
-                    <Image style={styles.imageLogo} source={require("../../../assets/images/logo.png")} />
+                <ScrollView style={styles.scrollView}>
+                    <View style={styles.logo}>
+                        <Image style={styles.imageLogo} source={require("../../../assets/images/logo.png")} />
 
-                </View>
-                <View style={styles.inputFieldView}>
-                    <Emailsvg />
-                    <TextInput onChangeText={this.handleName} style={styles.inputField} placeholder="Name" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
-                    <TextInput keyboardType="email-address" onChangeText={this.handleEmail} style={styles.inputField} placeholder="Email" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
-                    <TextInput keyboardType="phone-pad" onChangeText={this.handlePhone} style={styles.inputField} placeholder="Phone Number" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
-                </View>
-                <View style={styles.clickableView}>
-                    <TouchableHighlight onPress={this.props.login} style={styles.clickable}>
-                        <Text style={styles.clickableText}>SIGN IN</Text>
-                    </TouchableHighlight>
-                </View>
+                    </View>
+                    <View style={styles.inputFieldView}>
+
+                        <View style={styles.inputContainer}>
+                            <TextInput onChangeText={this.props.handleName} style={styles.inputStyle} placeholder="Name" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
+                            <Icon style={styles.icon} name="ios-person" size={30} color="#fff" />
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <TextInput keyboardType="email-address" onChangeText={this.props.handleEmail} style={styles.inputStyle} placeholder="Email" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
+                            <Icon style={styles.icon} name="md-mail" size={30} color="#fff" />
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <TextInput keyboardType="phone-pad" onChangeText={this.props.handlePhone} style={styles.inputStyle} placeholder="Phone Number" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
+                            <Icon style={styles.icon} name="md-call" size={30} color="#fff" />
+                        </View>
+
+                    </View>
+                    <View style={styles.clickableView}>
+                        <TouchableOpacity onPress={this.props.login} style={styles.clickable}>
+                            <Text style={styles.clickableText}>SIGN IN</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                </ScrollView>
+
             </ImageBackground>
         );
     }
@@ -56,11 +47,31 @@ class Signin extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1
+    },
+    inputContainer: {
+        flexDirection: 'row',
+        paddingLeft: 20,
+        paddingTop: 20
+    },
+    inputStyle: {
         width: "100%",
-        height: "100%"
+        alignItems: "center",
+        paddingBottom: 15,
+        height: 50,
+        fontSize: 19,
+        color: "#fff",
+
+    },
+    icon: {
+        marginTop: 5,
+        position: "relative",
+        right: 25
+
+
     },
     logo: {
-        marginTop: hp("10%"),
+        marginTop: "15%",
         alignItems: "center"
     },
     logoText: {
@@ -69,39 +80,40 @@ const styles = StyleSheet.create({
 
     },
     inputFieldView: {
-        marginTop: hp("8%"),
-        alignItems: "center"
+        marginTop: "20%",
+        alignItems: "center",
+
 
     },
 
     inputField: {
-        width: wp("95%"),
-        height: hp('10%'),
+        width: "95%",
+        height: 50,
         fontSize: 18,
-        color: "#fff"
-
-
+        color: "#fff",
+        margin: 10
     },
     clickable: {
-        marginTop: hp('10%')
+
     },
     referralView: {
-        paddingLeft: wp("3%")
+        paddingLeft: "3%"
     },
     referralText: {
         fontSize: 18,
         color: "#ffffff",
     },
     clickableView: {
-        marginTop: hp("5%"),
-        alignItems: "center"
+        marginTop: "7%",
+        alignItems: "center",
+
 
     },
     clickable: {
         alignItems: "center",
         backgroundColor: "#ffffff",
-        width: wp("95%"),
-        height: hp('7%'),
+        width: "95%",
+        height: 45,
         borderRadius: 25,
         paddingTop: 10,
         elevation: 2
@@ -115,6 +127,9 @@ const styles = StyleSheet.create({
         fontFamily: '',
         color: "#fff",
         fontWeight: "bold"
+    },
+    scrollView: {
+        marginBottom: 10
     }
 })
 
