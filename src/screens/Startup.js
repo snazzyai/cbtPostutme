@@ -38,12 +38,14 @@ class Startup extends Component {
     }
 
     awaitStartup = async () => {
+
         return new Promise(resolve => {
             setTimeout(() => resolve("resolve", 300))
         })
     }
 
     async componentDidMount() {
+        // await AsyncStorage.removeItem("userEmail")
         const userId = await AsyncStorage.getItem('userEmail')
         const data = await this.awaitStartup()
         if (data !== null && userId === null)

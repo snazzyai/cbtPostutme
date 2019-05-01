@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { Text, View, SafeAreaView } from 'react-native'
+import React from 'react';
+import { Text, View, SafeAreaView, StyleSheet } from 'react-native'
 import { DrawerItems } from 'react-navigation'
 
 const CustomDrawerNavigation = (props) => {
-    render()
-    {
-        return (
-            <SafeAreaView>
+    return (
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={{ backgroundColor: "green", flex: 1 }}>
                 <DrawerItems {...props} />
-            </SafeAreaView>
-        );
-    }
+            </View>
+
+        </SafeAreaView>
+    );
 }
 
 export default CustomDrawerNavigation;

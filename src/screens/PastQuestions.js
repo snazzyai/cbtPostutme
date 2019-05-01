@@ -123,6 +123,21 @@ class PastQuestions extends Component {
 
     }
 
+    handlePress = () => {
+        this.state.schools.map((type) => {
+            if (type.typeName == "WAEC" || type.typeName == "PUTME") {
+                this.props.navigation.navigate("Download", {
+                    id: type.id,
+                    type: type.typeName
+                })
+            }
+            this.props.navigation.navigate('Payment', {
+                id: type.id,
+                type: type.typeName
+            })
+        })
+    }
+
     onSelectType = () => {
 
     }
@@ -148,21 +163,18 @@ class PastQuestions extends Component {
                     <View style={styles.textCategoryView}>
                         <Text style={styles.textCategory}>CATEGORIES</Text>
                     </View>
-                    {this.state.schools.map(type => (
-                        <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => this.props.navigation.navigate('Payment', {
-                            id: type.id,
-                            name: type.typeName
-                        })
-                        } >
-                            <View style={styles.imageView}>
-                                <Image source={type.imageSource} style={styles.image} />
-                            </View>
-                            <View style={styles.detailsView}>
-                                <Text style={styles.typeName}>{type.typeName}</Text>
-                                <Text style={styles.fullTypeName}>{type.fullTypeName}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    ))
+                    {
+                        this.state.schools.map(type => (
+                            <TouchableOpacity key={type.id} style={styles.typesView} onPress={this.handlePress} >
+                                <View style={styles.imageView}>
+                                    <Image source={type.imageSource} style={styles.image} />
+                                </View>
+                                <View style={styles.detailsView}>
+                                    <Text style={styles.typeName}>{type.typeName}</Text>
+                                    <Text style={styles.fullTypeName}>{type.fullTypeName}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        ))
                     }
                 </View>
             </ScrollView>

@@ -9,12 +9,10 @@ class Payment extends Component {
     }
     onShare = async () => {
         const result = Share.share({
-            title: "A message",
-            message: 'http://www.facebook.com',
+            title: "Download FaceYourBook App from the playstore",
+            message: 'http://www.simbibot.com',
         });
     }
-
-
     render() {
         const { navigation } = this.props
         const name = navigation.getParam('name')
@@ -30,7 +28,7 @@ class Payment extends Component {
                 </ImageBackground>
                 <View style={styles.paymentMethodView}>
                     <Text style={styles.paymentMethodText} >{name}</Text>
-                    <TouchableOpacity style={styles.paymentTouch} onPress={this.props.navigation.navigate("DrawerNavigation")}>
+                    <TouchableOpacity style={styles.paymentTouch} onPress={() => this.props.navigation.navigate("DrawerNavigation")}>
                         <Text style={styles.paymentText}>PAY ONLINE</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('BankTransfer')} style={styles.paymentTouch}>
@@ -43,11 +41,7 @@ class Payment extends Component {
                         <Text style={styles.paymentText}>SHARE</Text>
                     </TouchableOpacity>
                 </View>
-
-
             </View>
-
-
         );
     }
 }

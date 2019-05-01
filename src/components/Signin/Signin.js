@@ -20,15 +20,15 @@ class Signin extends Component {
 
                         <View style={styles.inputContainer}>
                             <TextInput onChangeText={this.props.handleName} style={styles.inputStyle} placeholder="Name" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
-                            <Icon style={styles.icon} name="ios-person" size={30} color="#fff" />
+                            <Icon style={styles.icon} name="ios-person" size={20} color="#fff" />
                         </View>
                         <View style={styles.inputContainer}>
                             <TextInput keyboardType="email-address" onChangeText={this.props.handleEmail} style={styles.inputStyle} placeholder="Email" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
-                            <Icon style={styles.icon} name="md-mail" size={30} color="#fff" />
+                            <Icon style={styles.icon} name="md-mail" size={20} color="#fff" />
                         </View>
                         <View style={styles.inputContainer}>
                             <TextInput keyboardType="phone-pad" onChangeText={this.props.handlePhone} style={styles.inputStyle} placeholder="Phone Number" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
-                            <Icon style={styles.icon} name="md-call" size={30} color="#fff" />
+                            <Icon style={styles.icon} name="md-call" size={20} color="#fff" />
                         </View>
 
                     </View>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 
     },
     icon: {
-        marginTop: 5,
+        marginTop: 10,
         position: "relative",
         right: 25
 
