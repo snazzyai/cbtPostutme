@@ -1,5 +1,4 @@
-import React from 'react';
-import { SafeAreaView, View, Image } from 'react-native'
+
 import { createSwitchNavigator, createStackNavigator, createAppContainer, createDrawerNavigator, DrawerItems } from 'react-navigation'
 import CustomDrawerNavigation from "../components/CustomDrawerNavigation/CustomDrawerNavigation"
 import PastQuestions from '../screens/PastQuestions'
@@ -11,8 +10,6 @@ import WaecScreen from '../screens/WaecScreen'
 import DownloadScreen from "../screens/DownloadScreen"
 import ActivationScreenOne from "../screens/ActivationScreenOne"
 import ActivationScreenTwo from "../screens/ActivationScreenTwo"
-
-
 
 
 
@@ -40,14 +37,12 @@ const Main = createStackNavigator({
         navigationOptions: {
             header: null
         }
-
     },
     ActivationTwo: {
         screen: ActivationScreenTwo,
         navigationOptions: {
             header: null
         }
-
     },
     Download: {
         screen: DownloadScreen,
@@ -55,9 +50,6 @@ const Main = createStackNavigator({
             header: null
         }
     }
-
-
-
 })
 const StartScreen = createSwitchNavigator({
     Startup: Startup,

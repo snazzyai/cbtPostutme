@@ -3,22 +3,24 @@ import { StyleSheet, View, Text, ImageBackground } from 'react-native'
 
 
 
-const ActivationScreenHeader = ({ processNumber }) => {
+const ActivationScreenHeader = ({ processText }) => {
     return (
-        <ImageBackground style={styles.header}>
-            <Text style={styles.headerText}>Activation Process {processNumber}</Text>
+        <ImageBackground source={require("../../../assets/images/background.jpg")} style={styles.header}>
+            <Text style={styles.headerText}>{processText}</Text>
         </ImageBackground>
     )
 }
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     header: {
-        height: 200
+        height: 200,
+        paddingTop: "25%"
     },
     headerText: {
         fontWeight: "bold",
-        fontSize: 25,
+        fontSize: 30,
         color: "#fff",
         textAlign: "center"
+
     }
 })
 export default ActivationScreenHeader

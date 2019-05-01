@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, ScrollView, Image, ImageBackground } from 'react-native'
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, ScrollView, Image, ImageBackground, Alert, Share } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+
 
 
 
@@ -17,9 +19,9 @@ class PastQuestions extends Component {
             },
             {
                 id: 2,
-                typeName: "PUTME",
+                typeName: "UTME",
                 imageSource: require("../../assets/images/unilag.png"),
-                fullTypeName: "PUTME QUESTIONS"
+                fullTypeName: "UTME QUESTIONS"
             },
             {
                 id: 3,
@@ -123,6 +125,49 @@ class PastQuestions extends Component {
 
     }
 
+
+    // onShare = async () => {
+    //     try {
+    //         const result = await Share.share({
+    //             title: "Download simbi",
+    //             message: "http://www.simbibot.com"
+    //         });
+
+    //         if (result.action === Share.sharedAction) {
+    //             if (result.activityType) {
+    //                 console.log("shared")
+    //                 Alert.alert("shared")
+    //             } else {
+    //                 console.log("you havent")
+    //                 Alert.alert("you havent shared yet")
+    //             }
+    //         }
+    //         else if (result.action === Share.dismissedAction) {
+    //             console.log("dismissed")
+    //             Alert.alert("dismissed")
+    //         }
+    //     } catch (error) {
+    //         alert(error.message);
+    //     }
+    // };
+
+    // handleAlert = () => {
+    //     Alert.alert(
+    //         'YOU NEED TO SHARE',
+    //         'Share to your Friends to access this question',
+    //         [
+    //             {
+    //                 text: 'Share',
+    //                 onPress: this.onShare
+    //             },
+
+    //             { text: 'OK' }
+    //         ],
+    //         { cancelable: false },
+    //     );
+
+    // }
+
     QuestionList = () => {
 
     }
@@ -139,21 +184,21 @@ class PastQuestions extends Component {
         const QuestionList = this.state.schools.map(type => (
             <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => {
                 if (type.typeName == "WAEC") {
-                    this.props.navigation.navigate("Download", {
+                    this.props.navigation.navigate('Download', {
                         id: type.id,
-                        type: type.typeName
+                        name: type.typeName
                     })
                 }
-                else if (type.typeName == "PUTME") {
-                    this.props.navigation.navigate("Download", {
+                else if (type.typeName == "UTME") {
+                    this.props.navigation.navigate('Download', {
                         id: type.id,
-                        type: type.typeName
+                        name: type.typeName
                     })
                 }
                 else {
                     this.props.navigation.navigate('Payment', {
                         id: type.id,
-                        type: type.typeName
+                        name: type.typeName
                     })
                 }
             }} >

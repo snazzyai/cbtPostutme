@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, Share } from "react-native"
 
+import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
+
+
 
 
 class Payment extends Component {
@@ -8,7 +11,7 @@ class Payment extends Component {
         visible: false
     }
     onShare = async () => {
-        const result = Share.share({
+        const result = await Share.share({
             title: "Download FaceYourBook App from the playstore",
             message: 'http://www.simbibot.com',
         });
@@ -16,7 +19,7 @@ class Payment extends Component {
     render() {
         const { navigation } = this.props
         const name = navigation.getParam('name')
-        const id = navigation.getParam('id', "some id")
+        const id = navigation.getParam('id')
 
         return (
             <View style={styles.container}>
@@ -28,15 +31,8 @@ class Payment extends Component {
                 </ImageBackground>
                 <View style={styles.paymentMethodView}>
                     <Text style={styles.paymentMethodText} >{name}</Text>
-                    <TouchableOpacity style={styles.paymentTouch} onPress={() => this.props.navigation.navigate("ActivationOne", {
-                        id: id,
-                        name: name
-                    })}>
-                        <Text style={styles.paymentText}>PAY ONLINE</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('BankTransfer')} style={styles.paymentTouch}>
-                        <Text style={styles.paymentText}>PAY WITH BANK</Text>
-                    </TouchableOpacity>
+                    <ButtonComponent onPress={() => this.props.navigation.navigate("ActivationOne")} text={"PAY ONLINE"} />
+                    <ButtonComponent onPress={() => this.props.navigation.navigate("BankTransfer")} text={"BANK TRANSFER"} />
                 </View>
                 <View style={styles.paymentMethodView}>
                     <Text style={styles.paymentMethodText}>SHARE TO OTHER PEOPLE</Text>
