@@ -2,14 +2,19 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 
-class ActivationScreenOne extends Component {
+class ActivationScreenTwo extends Component {
     state = {}
     render() {
-        return ( 
+        return (
+            <View>
+                <ActivationScreenHeader processNumber={"Two"} />
+                <View>
+                    <Text>Question</Text>
+                </View>
+            </View>
 
-
-         );
+        );
     }
 }
 
-export default ActivationScreenOne;
+export default ActivationScreenTwo;

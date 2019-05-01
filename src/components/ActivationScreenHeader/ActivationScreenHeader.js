@@ -5,7 +5,7 @@ import { StyleSheet, View, Text, ImageBackground } from 'react-native'
 
 const ActivationScreenHeader = ({ processNumber }) => {
     return (
-        <ImageBackground source={require("../../../assets/images/background.jpg")} style={styles.header}>
+        <ImageBackground style={styles.header}>
             <Text style={styles.headerText}>Activation Process {processNumber}</Text>
         </ImageBackground>
     )
