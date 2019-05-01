@@ -123,21 +123,9 @@ class PastQuestions extends Component {
 
     }
 
-    handlePress = () => {
-        this.state.schools.map((type) => {
-            if (type.typeName == "WAEC" || type.typeName == "PUTME") {
-                this.props.navigation.navigate("Download", {
-                    id: type.id,
-                    type: type.typeName
-                })
-            }
-            this.props.navigation.navigate('Payment', {
-                id: type.id,
-                type: type.typeName
-            })
-        })
-    }
+    QuestionList = () => {
 
+    }
     onSelectType = () => {
 
     }
@@ -148,6 +136,36 @@ class PastQuestions extends Component {
 
     render() {
         const { fullTypeName, id } = this.state
+        const QuestionList = this.state.schools.map(type => (
+            <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => {
+                if (type.typeName == "WAEC") {
+                    this.props.navigation.navigate("Download", {
+                        id: type.id,
+                        type: type.typeName
+                    })
+                }
+                else if (type.typeName == "PUTME") {
+                    this.props.navigation.navigate("Download", {
+                        id: type.id,
+                        type: type.typeName
+                    })
+                }
+                else {
+                    this.props.navigation.navigate('Payment', {
+                        id: type.id,
+                        type: type.typeName
+                    })
+                }
+            }} >
+                <View style={styles.imageView}>
+                    <Image source={type.imageSource} style={styles.image} />
+                </View>
+                <View style={styles.detailsView}>
+                    <Text style={styles.typeName}>{type.typeName}</Text>
+                    <Text style={styles.fullTypeName}>{type.fullTypeName}</Text>
+                </View>
+            </TouchableOpacity>
+        ))
 
         return (
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -163,19 +181,7 @@ class PastQuestions extends Component {
                     <View style={styles.textCategoryView}>
                         <Text style={styles.textCategory}>CATEGORIES</Text>
                     </View>
-                    {
-                        this.state.schools.map(type => (
-                            <TouchableOpacity key={type.id} style={styles.typesView} onPress={this.handlePress} >
-                                <View style={styles.imageView}>
-                                    <Image source={type.imageSource} style={styles.image} />
-                                </View>
-                                <View style={styles.detailsView}>
-                                    <Text style={styles.typeName}>{type.typeName}</Text>
-                                    <Text style={styles.fullTypeName}>{type.fullTypeName}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        ))
-                    }
+                    {QuestionList}
                 </View>
             </ScrollView>
         )

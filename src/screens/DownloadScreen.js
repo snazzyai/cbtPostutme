@@ -9,9 +9,6 @@ class DownloadScreen extends Component {
         hasDownloaded: false
     }
 
-
-
-
     downloadQuestions = async () => {
         await AsyncStorage.setItem("WaecQuestions", [
             {
@@ -27,23 +24,35 @@ class DownloadScreen extends Component {
         })
     }
 
-    async componentDidMount() {
-        await setTimeout(this.downloadQuestions(), 3000)
+    handleNavigation = () => {
+        this.props.navigation.navigate("WaecScreen")
+    }
+    componentDidMount() {
+        this.downloadQuestions()
     }
 
     render() {
         if (!this.state.hasdownloaded) {
             return (
+
                 <View style={styles.container}>
+                    <ActivationScreenHeader />
                     <Text>Downloading files Please Wait...</Text>
                 </View>
             )
         }
         else {
             return (
-                { navigateScreen() }
+                <View style={styles.container}>
+                    <ActivationScreenHeader />
+                    <TouchableOpacity onPress={this.handleNavigation()} >
+                        <Text> Click here to go to Waec Screen</Text>
+                    </TouchableOpacity>
+                </View>
+
             )
         }
+
 
     }
 }

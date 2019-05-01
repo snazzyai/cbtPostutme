@@ -28,7 +28,10 @@ class Payment extends Component {
                 </ImageBackground>
                 <View style={styles.paymentMethodView}>
                     <Text style={styles.paymentMethodText} >{name}</Text>
-                    <TouchableOpacity style={styles.paymentTouch} onPress={() => this.props.navigation.navigate("DrawerNavigation")}>
+                    <TouchableOpacity style={styles.paymentTouch} onPress={() => this.props.navigation.navigate("ActivationOne", {
+                        id: id,
+                        name: name
+                    })}>
                         <Text style={styles.paymentText}>PAY ONLINE</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('BankTransfer')} style={styles.paymentTouch}>
