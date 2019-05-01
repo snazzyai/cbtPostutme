@@ -33,6 +33,8 @@ class ActivationScreenOne extends Component {
                             onPress={(value) => { this.setState({ value: value }) }}
                             buttonColor={'green'}
                         />
+
+
                         <ButtonComponent text={"NEXT"} onPress={this.handlePress} />
                     </View>
                 </View>

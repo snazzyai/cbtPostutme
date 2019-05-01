@@ -126,47 +126,47 @@ class PastQuestions extends Component {
     }
 
 
-    // onShare = async () => {
-    //     try {
-    //         const result = await Share.share({
-    //             title: "Download simbi",
-    //             message: "http://www.simbibot.com"
-    //         });
+    onShare = async () => {
+        try {
+            const result = await Share.share({
+                title: "Download simbi",
+                message: "http://www.simbibot.com"
+            });
 
-    //         if (result.action === Share.sharedAction) {
-    //             if (result.activityType) {
-    //                 console.log("shared")
-    //                 Alert.alert("shared")
-    //             } else {
-    //                 console.log("you havent")
-    //                 Alert.alert("you havent shared yet")
-    //             }
-    //         }
-    //         else if (result.action === Share.dismissedAction) {
-    //             console.log("dismissed")
-    //             Alert.alert("dismissed")
-    //         }
-    //     } catch (error) {
-    //         alert(error.message);
-    //     }
-    // };
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    console.log("shared")
+                    Alert.alert("shared")
+                } else {
+                    console.log("you havent")
+                    Alert.alert("you havent shared yet")
+                }
+            }
+            else if (result.action === Share.dismissedAction) {
+                console.log("dismissed")
+                Alert.alert("dismissed")
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
 
-    // handleAlert = () => {
-    //     Alert.alert(
-    //         'YOU NEED TO SHARE',
-    //         'Share to your Friends to access this question',
-    //         [
-    //             {
-    //                 text: 'Share',
-    //                 onPress: this.onShare
-    //             },
+    handleAlert = () => {
+        Alert.alert(
+            'YOU NEED TO SHARE',
+            'Share to your Friends to access this question',
+            [
+                {
+                    text: 'Share',
+                    onPress: this.onShare
+                },
 
-    //             { text: 'OK' }
-    //         ],
-    //         { cancelable: false },
-    //     );
+                { text: 'OK' }
+            ],
+            { cancelable: false },
+        );
 
-    // }
+    }
 
     QuestionList = () => {
 
@@ -184,16 +184,12 @@ class PastQuestions extends Component {
         const QuestionList = this.state.schools.map(type => (
             <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => {
                 if (type.typeName == "WAEC") {
-                    this.props.navigation.navigate('Download', {
-                        id: type.id,
-                        name: type.typeName
-                    })
+                    this.handleAlert()
+
                 }
                 else if (type.typeName == "UTME") {
-                    this.props.navigation.navigate('Download', {
-                        id: type.id,
-                        name: type.typeName
-                    })
+                    this.handleAlert()
+
                 }
                 else {
                     this.props.navigation.navigate('Payment', {
