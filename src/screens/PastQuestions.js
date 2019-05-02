@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, ScrollView, Image, ImageBackground } from 'react-native'
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, ScrollView, Image, ImageBackground, Alert, Share } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+
 
 
 
@@ -17,9 +19,9 @@ class PastQuestions extends Component {
             },
             {
                 id: 2,
-                typeName: "PUTME",
+                typeName: "UTME",
                 imageSource: require("../../assets/images/unilag.png"),
-                fullTypeName: "PUTME QUESTIONS"
+                fullTypeName: "UTME QUESTIONS"
             },
             {
                 id: 3,
@@ -123,6 +125,46 @@ class PastQuestions extends Component {
 
     }
 
+
+    shared = () => {
+        Share.share({
+            title: "Download FaceYourBook",
+            message: "http://www.simbibot.com"
+        })
+        setTimeout(Alert.alert("you have successfully shared"), 2000)
+        this.props.navigation.navigate('Download')
+    }
+
+
+    onShare = async () => {
+        try {
+            this.shared()
+        }
+        catch (error) {
+            alert("error");
+        }
+    };
+
+    handleAlert = () => {
+        Alert.alert(
+            'YOU NEED TO SHARE',
+            'Share to your Friends to access this question',
+            [
+                {
+                    text: 'Share',
+                    onPress: this.onShare
+                },
+
+                { text: 'OK' }
+            ],
+            { cancelable: false },
+        );
+
+    }
+
+    QuestionList = () => {
+
+    }
     onSelectType = () => {
 
     }
@@ -133,6 +175,32 @@ class PastQuestions extends Component {
 
     render() {
         const { fullTypeName, id } = this.state
+        const QuestionList = this.state.schools.map(type => (
+            <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => {
+                if (type.typeName == "WAEC") {
+                    this.handleAlert()
+
+                }
+                else if (type.typeName == "UTME") {
+                    this.handleAlert()
+
+                }
+                else {
+                    this.props.navigation.navigate('Payment', {
+                        id: type.id,
+                        name: type.typeName
+                    })
+                }
+            }} >
+                <View style={styles.imageView}>
+                    <Image source={type.imageSource} style={styles.image} />
+                </View>
+                <View style={styles.detailsView}>
+                    <Text style={styles.typeName}>{type.typeName}</Text>
+                    <Text style={styles.fullTypeName}>{type.fullTypeName}</Text>
+                </View>
+            </TouchableOpacity>
+        ))
 
         return (
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -148,22 +216,7 @@ class PastQuestions extends Component {
                     <View style={styles.textCategoryView}>
                         <Text style={styles.textCategory}>CATEGORIES</Text>
                     </View>
-                    {this.state.schools.map(type => (
-                        <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => this.props.navigation.navigate('Payment', {
-                            id: type.id,
-                            name: type.typeName
-                        })
-                        } >
-                            <View style={styles.imageView}>
-                                <Image source={type.imageSource} style={styles.image} />
-                            </View>
-                            <View style={styles.detailsView}>
-                                <Text style={styles.typeName}>{type.typeName}</Text>
-                                <Text style={styles.fullTypeName}>{type.fullTypeName}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    ))
-                    }
+                    {QuestionList}
                 </View>
             </ScrollView>
         )

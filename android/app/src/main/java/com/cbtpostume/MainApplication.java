@@ -4,6 +4,7 @@ import android.app.Application;
 
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.horcrux.svg.SvgPackage;
 import cl.json.RNSharePackage;
@@ -31,6 +32,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+<<<<<<< HEAD
+=======
+            new VectorIconsPackage(),
+>>>>>>> d2ffee2ce15fa2e3ba27f7b2b1cc71a47656c18c
             new AsyncStoragePackage(),
             new SvgPackage(),
             new RNSharePackage(),

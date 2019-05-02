@@ -1,20 +1,26 @@
-import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
+
+import { createSwitchNavigator, createStackNavigator, createAppContainer, createDrawerNavigator, DrawerItems } from 'react-navigation'
+import CustomDrawerNavigation from "../components/CustomDrawerNavigation/CustomDrawerNavigation"
 import PastQuestions from '../screens/PastQuestions'
 import Startup from '../screens/Startup'
 import Quiz from '../screens/Quiz.screen';
 import Payment from '../screens/Payment'
 import BankTransferScreen from '../screens/BankTransferScreen'
+import PutmeScreen from '../screens/PutmeScreen'
+import WaecScreen from '../screens/WaecScreen'
+import DownloadScreen from "../screens/DownloadScreen"
+import ActivationScreenOne from "../screens/ActivationScreenOne"
+import ActivationScreenTwo from "../screens/ActivationScreenTwo"
 
-const Navigation = createStackNavigator({
-    Startup: {
-        screen: Startup,
+
+
+const Main = createStackNavigator({
+    Quiz: {
+        screen: Quiz,
         navigationOptions: {
             header: null
         }
     },
-})
-
-const Main = createStackNavigator({
     PastQuestions: {
         screen: PastQuestions,
         navigationOptions: {
@@ -33,39 +39,58 @@ const Main = createStackNavigator({
             header: null
         }
     },
+    ActivationOne: {
+        screen: ActivationScreenOne,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ActivationTwo: {
+        screen: ActivationScreenTwo,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Download: {
+        screen: DownloadScreen,
+        navigationOptions: {
+            header: null
+        }
+    }
 })
-// const User = createStackNavigator({
-//     MyExam: {
-//         screen: 
-//     }    
-// })
+const StartScreen = createSwitchNavigator({
+    Startup: Startup,
+    Main: Main
 
 
+})
 
-export default createAppContainer(createSwitchNavigator(
+const DrawerNavigation = createDrawerNavigator({
+    Waec: {
+        screen: WaecScreen
+    },
+    Putme: {
+        screen: PutmeScreen
+    }
+},
     {
-        Navigation: Navigation,
-        Main: Main,
+        contentComponent: CustomDrawerNavigation
+    }
+)
+
+const AppSwitchNavigator = createSwitchNavigator(
+    {
+        StartScreen: StartScreen,
+        DrawerNavigation: DrawerNavigation
     },
     {
-        initialRouteName: 'Navigation',
+        initialRouteName: 'StartScreen',
     }
-));
+)
 
-// export const CreateRootNavigator = () => {
-//     return createAppContainer(createSwitchNavigator(
-//         {
-//             Navigation: {
-//                 screen: Navigation
-//             },
-//             Main: {
-//                 screen: Main
-//             }
-//         },
 
-//     )
-//     )
-// }
 
+
+export default createAppContainer(AppSwitchNavigator);
 
 
