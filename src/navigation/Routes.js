@@ -14,13 +14,12 @@ const Navigation = createStackNavigator({
     },
 })
 
-/**
- * @var setup: Setup Navigation Stack for First User.
- */
-const Setup = createStackNavigator({
-
-    BankTransfer: {
-        screen: BankTransferScreen
+const Main = createStackNavigator({
+    PastQuestions: {
+        screen: PastQuestions,
+        navigationOptions: {
+            header: null
+        }
     },
     Payment: {
         screen: Payment,
@@ -28,18 +27,17 @@ const Setup = createStackNavigator({
             header: null
         }
     },
-    PastQuestions: {
-        screen: PastQuestions,
+    BankTransfer: {
+        screen: BankTransferScreen,
         navigationOptions: {
             header: null
         }
-    }
-});
-
+    },
+})
 // const User = createStackNavigator({
 //     MyExam: {
 //         screen: 
-//     }
+//     }    
 // })
 
 
@@ -50,7 +48,7 @@ export default createAppContainer(createSwitchNavigator(
         Main: Main,
     },
     {
-        initialRouteName: 'Main',
+        initialRouteName: 'Navigation',
     }
 ));
 

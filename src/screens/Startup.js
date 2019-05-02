@@ -16,7 +16,7 @@ class Startup extends Component {
 
     awaitStartup = async () => {
         return new Promise(resolve => {
-            setTimeout(() => resolve('dummyString'), 500)
+            setTimeout(() => resolve('resolve'), 500)
         })
     }
 
@@ -36,7 +36,6 @@ class Startup extends Component {
     }
 
     handleSignin = async () => {
-
         this.props.navigation.navigate("Main")
     }
 

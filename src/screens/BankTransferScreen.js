@@ -33,12 +33,21 @@ class BankTransferScreen extends Component {
         const { faq } = this.state
         return (
             <View style={styles.container}>
-                <View style={styles.paymentDetails}>
-                    <Text style={styles.headerText}>PAY WITH BANK</Text>
-
-                </View>
-                <ScrollView style={styles.faqView} >
-                    <Text style={styles.faqText}>Details</Text>
+                <ImageBackground source={require("../../assets/images/background.jpg")} style={styles.paymentDetails}>
+                    <Text style={styles.headerText}>BANK PAYMENT</Text>
+                </ImageBackground>
+                <ScrollView style={[styles.faqView, styles]} >
+                    <Text style={styles.faqText}>Payment Details</Text>
+                    <View style={styles.faq}>
+                        <Text style={[styles.textPayment, styles.texPaymentJustify]}>Visit any GTBank Outlet(You can also make use of internet bank transfer) and pay N1500 only into:</Text>
+                        <Text></Text>
+                        <Text style={styles.textPayment}>Account Name: <Text style={styles.textPaymentBold}>Brimatel Global Networks</Text></Text>
+                        <Text></Text>
+                        <Text style={styles.textPayment}>Account Number: <Text style={styles.textPaymentBold}>0117562221</Text></Text>
+                        <Text ></Text>
+                        <Text style={[styles.textPayment, styles.texPaymentJustify]}>Then contact Olamide via whatsapp on this phone number (09093905099) to get your pin.</Text>
+                    </View>
+                    <Text style={styles.faqText} >F.A.Qs</Text>
                     {
                         faq.map(item => {
                             return (
@@ -67,21 +76,26 @@ const styles = StyleSheet.create({
 
     },
     paymentDetails: {
-        height: 100,
+        height: 180,
         alignItems: "center",
-        paddingTop: 30,
+        paddingTop: 70,
     },
     headerText: {
         fontSize: 30,
         fontWeight: "bold",
         fontFamily: 'monospace',
+        color: "#fff"
     },
     DetailsText: {
 
     },
     faqText: {
-        textAlign: "center",
-        fontSize: 20,
+        fontSize: 22,
+        fontWeight: "bold",
+        paddingTop: 10,
+
+        textAlign: "center"
+
 
     },
     faqView: {
@@ -91,20 +105,34 @@ const styles = StyleSheet.create({
         backgroundColor: "#fafafa",
         padding: 15,
         elevation: 2,
-        margin: 20
+        margin: 20,
+        borderRadius: 10,
+
     },
     questionText: {
-        fontSize: 15,
-        fontWeight: "bold"
+        fontSize: 18,
+        fontWeight: "bold",
+
+
 
     },
     answerText: {
         fontSize: 15,
-        textAlign: "justify"
+        textAlign: "justify",
+
 
     },
     answerView: {
         marginTop: 5
+    },
+    textPayment: {
+        fontSize: 17
+    },
+    textPaymentBold: {
+        fontWeight: "bold"
+    },
+    textPaymentJustify: {
+        textAlign: "justify"
     }
 })
 

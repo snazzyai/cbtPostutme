@@ -12,50 +12,118 @@ class PastQuestions extends Component {
                 id: 1,
                 typeName: "WAEC",
                 imageSource: require("../../assets/images/unilag.png"),
-                fullTypeName: "University of Lagos PostUtme"
+                fullTypeName: "WAEC QUESTIONS "
 
             },
             {
                 id: 2,
-                typeName: "POSTUTME",
+                typeName: "PUTME",
                 imageSource: require("../../assets/images/unilag.png"),
-                fullTypeName: "University of Lagos PostUtme"
+                fullTypeName: "PUTME QUESTIONS"
             },
             {
                 id: 3,
                 typeName: "UNILAG",
                 imageSource: require("../../assets/images/unilag.png"),
-                fullTypeName: "University of Lagos PostUtme"
+                fullTypeName: "UNILAG PUTME QUESTIONS"
             },
             {
                 id: 4,
-                typeName: "UNILAG",
+                typeName: "UNICAL",
                 imageSource: require("../../assets/images/unilag.png"),
-                fullTypeName: "University of Lagos PostUtme"
+                fullTypeName: "UNICAL PUTME QUESTIONS"
             },
             {
                 id: 5,
-                typeName: "UNILAG",
+                typeName: "UNIJOS",
                 imageSource: require("../../assets/images/unilag.png"),
-                fullTypeName: "University of Lagos PostUtme"
+                fullTypeName: "UNIJOS PUTUTME QUESTIONS"
             },
             {
                 id: 6,
-                typeName: "UNILAG",
+                typeName: "UNIZIK",
                 imageSource: require("../../assets/images/unilag.png"),
-                fullTypeName: "University of Lagos PostUtme"
+                fullTypeName: "UNIZIK PUTME QUESTIONS"
             },
+            {
+                id: 7,
+                typeName: "UNIBEN",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "UNIBEN PUTME QUESTIONS"
+            },
+            {
+                id: 8,
+                typeName: "UI",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "UI POSTUTME QUESTIONS"
+            },
+            {
+                id: 9,
+                typeName: "LAUTECH",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "LAUTECH POSTUME QUESTIONS"
+            },
+            {
+                id: 10,
+                typeName: "BUK",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "BUK POSTUME QUESTIONS"
+            },
+            {
+                id: 11,
+                typeName: "ABU",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "ABU POSTUME QUESTIONS"
+            },
+            {
+                id: 12,
+                typeName: "UNN",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "UNN POSTUME QUESTIONS"
+            },
+            {
+                id: 13,
+                typeName: "UNILORIN",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "UNILORIN POSTUME QUESTIONS"
+            },
+            {
+                id: 14,
+                typeName: "OAU",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "OAU PUTUME QUESTIONS"
+            },
+            {
+                id: 15,
+                typeName: "FUTA",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "FUTA PUTME QUESTIONS"
+            },
+            {
+                id: 16,
+                typeName: "FUNAAB",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "FUNAAB PUTME QUESTIONS"
+            },
+            {
+                id: 17,
+                typeName: "EKSU",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "EKSU PUTME QUESTIONS"
+            },
+            {
+                id: 18,
+                typeName: "AAUA",
+                imageSource: require("../../assets/images/unilag.png"),
+                fullTypeName: "AAUA PUTME QUESTIONS"
+            },
+
 
         ]
 
     }
 
-    onSelectType = (id, type) => {
-
-        this.props.navigation.navigate('Payment', {
-            id: id,
-            type: type
-        })
+    onSelectType = () => {
 
     }
 
@@ -64,9 +132,9 @@ class PastQuestions extends Component {
     }
 
     render() {
+        const { fullTypeName, id } = this.state
 
         return (
-
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
                     <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.topView}>
@@ -84,7 +152,8 @@ class PastQuestions extends Component {
                         <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => this.props.navigation.navigate('Payment', {
                             id: type.id,
                             name: type.typeName
-                        })} >
+                        })
+                        } >
                             <View style={styles.imageView}>
                                 <Image source={type.imageSource} style={styles.image} />
                             </View>
@@ -96,7 +165,6 @@ class PastQuestions extends Component {
                     ))
                     }
                 </View>
-
             </ScrollView>
         )
     }

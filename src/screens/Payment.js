@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground } from "react-native"
+import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, Share } from "react-native"
+
 
 
 class Payment extends Component {
-    state = {}
+    state = {
+        visible: false
+    }
+    onShare = async () => {
+        const result = Share.share({
+            title: "A message",
+            message: 'http://www.facebook.com',
+        });
+
+    }
+
     render() {
         const { navigation } = this.props
-        const id = navigation.getParam('id')
-        const type = navigation.getParam('type')
+        const name = navigation.getParam('name')
+        const id = navigation.getParam('id', "some id")
 
         return (
             <View style={styles.container}>
@@ -18,7 +29,7 @@ class Payment extends Component {
                     <Text style={styles.detailsText}>CHOOSE A PAYMENT METHOD</Text>
                 </ImageBackground>
                 <View style={styles.paymentMethodView}>
-                    <Text style={styles.paymentMethodText} >PAYMENT METHODS</Text>
+                    <Text style={styles.paymentMethodText} >{name}</Text>
                     <TouchableOpacity style={styles.paymentTouch}>
                         <Text style={styles.paymentText}>PAY ONLINE</Text>
                     </TouchableOpacity>
@@ -28,10 +39,12 @@ class Payment extends Component {
                 </View>
                 <View style={styles.paymentMethodView}>
                     <Text style={styles.paymentMethodText}>SHARE TO OTHER PEOPLE</Text>
-                    <TouchableOpacity style={styles.paymentTouch}>
+                    <TouchableOpacity style={styles.paymentTouch} onPress={this.onShare}>
                         <Text style={styles.paymentText}>SHARE</Text>
                     </TouchableOpacity>
                 </View>
+                {/* this is the share link view renderer */}
+
             </View>
 
 
@@ -44,7 +57,7 @@ const styles = StyleSheet.create({
     },
     details: {
         alignItems: "center",
-        height: 250,
+        height: 260,
         paddingTop: 30,
         backgroundColor: "#fafafa",
     },
@@ -65,7 +78,10 @@ const styles = StyleSheet.create({
         color: "#000",
         fontSize: 18,
         fontFamily: 'Arial',
-        fontWeight: "bold"
+        fontWeight: "bold",
+        paddingLeft: 20,
+        paddingRight: 20,
+        textAlign: "center"
     },
     paymentMethodView: {
         alignItems: "center",
@@ -87,6 +103,11 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 18
 
+    },
+    headerName: {
+        color: "#fff",
+        fontSize: 18,
+        fontWeight: "bold"
     }
 })
 

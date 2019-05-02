@@ -3,7 +3,7 @@ import { StyleSheet, ImageBackground } from 'react-native'
 
 const Splashscreen = () => {
     return (
-        <ImageBackground style={styles.backgroundImage} source={require('../../../assets/images/launch_screen.jpg')} >
+        <ImageBackground style={styles.backgroundImage} source={require('../../../assets/images/splashscreen.png')} >
 
         </ImageBackground>
     );
