@@ -126,23 +126,12 @@ class PastQuestions extends Component {
     }
 
 
-    shared = () => {
+
+    onShare = () => {
         Share.share({
             title: "Download FaceYourBook",
             message: "http://www.simbibot.com"
         })
-        setTimeout(Alert.alert("you have successfully shared"), 2000)
-        this.props.navigation.navigate('Download')
-    }
-
-
-    onShare = async () => {
-        try {
-            this.shared()
-        }
-        catch (error) {
-            alert("error");
-        }
     };
 
     handleAlert = () => {
@@ -162,12 +151,6 @@ class PastQuestions extends Component {
 
     }
 
-    QuestionList = () => {
-
-    }
-    onSelectType = () => {
-
-    }
 
     searchFilter = () => {
 

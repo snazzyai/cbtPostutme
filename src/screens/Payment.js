@@ -31,8 +31,11 @@ class Payment extends Component {
                 </ImageBackground>
                 <View style={styles.paymentMethodView}>
                     <Text style={styles.paymentMethodText} >{name}</Text>
-                    <ButtonComponent onPress={() => this.props.navigation.navigate("ActivationOne")} text={"PAY ONLINE"} />
-                    <ButtonComponent onPress={() => this.props.navigation.navigate("BankTransfer")} text={"BANK TRANSFER"} />
+                    <ButtonComponent onPress={() => this.props.navigation.navigate("ActivationOne", {
+                        id: id,
+                        name: name
+                    })} text={"PAY ONLINE"} />
+                    <ButtonComponent onPress={this.props.navigation.navigate("BankTransfer")} text={"BANK TRANSFER"} />
                 </View>
                 <View style={styles.paymentMethodView}>
                     <Text style={styles.paymentMethodText}>SHARE TO OTHER PEOPLE</Text>

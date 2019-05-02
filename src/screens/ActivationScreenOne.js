@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ToastAndroid } from 'react-native';
 import ActivationScreenHeader from "../components/ActivationScreenHeader/ActivationScreenHeader"
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
+import RadioGroup, { Radio } from "react-native-radio-input";
+
 
 
 
 class ActivationScreenOne extends Component {
     state = {
-        value: 0,
+        value: null,
         radio_props: [
             { label: 'Yes', value: 0 },
             { label: 'No', value: 1 },
@@ -16,24 +17,51 @@ class ActivationScreenOne extends Component {
         ]
     }
 
+
+    getChecked = (value) => {
+        this.setState({
+            value: value
+        })
+    }
+
     handlePress = () => {
         const { value } = this.state
-        return value == 0 ? this.props.navigation.navigate('ActivationTwo') : this.props.navigation.navigate('Download')
+        if (this.state.value === null) {
+            ToastAndroid.showWithGravity(
+                'Please choose an option',
+                ToastAndroid.SHORT,
+                ToastAndroid.CENTER,
+            );
+        }
+        else if (this.state.value === 0) {
+            this.props.navigation.navigate('ActivationTwo')
+        }
+        else {
+            this.props.navigation.navigate('Download')
+        }
     }
 
     render() {
+        const { navigation } = this.props
+        const name = navigation.getParam('name')
+        const id = navigation.getParam('id')
         return (
             <View>
                 <ActivationScreenHeader processText={"Activation Process One"} />
                 <View style={styles.question}>
-                    <Text style={styles.textQuestion}>DO YOU HAVE AN AGENT?</Text>
+                    <Text style={styles.textQuestion}>DO YOU HAVE AN AGENT FOR?</Text>
                     <View style={styles.radioView}>
-                        <RadioForm
-                            radio_props={this.state.radio_props}
-                            initial={0}
-                            onPress={(value) => { this.setState({ value: value }) }}
-                            buttonColor={'green'}
-                        />
+                        <RadioGroup getChecked={this.getChecked}
+                            RadioGroupStyle={{ flexDirection: "row", marginBottom: 20 }}
+                            RadioStyle={{ padding: 20 }}
+                            labelStyle={{ fontSize: 20, fontWeight: "bold" }}
+                            IconStyle={{ backgroundColor: "#fff", width: 30, height: 30 }}
+                            coreStyle={{ color: "#5FA046", fontSize: 20 }}
+                        >
+                            <Radio iconName={"lens"} label={"Yes"} value={0} />
+                            <Radio iconName={"lens"} label={"No"} value={1} />
+                            <Radio iconName={"lens"} label={"I dont know"} value={2} />
+                        </RadioGroup>
                         <ButtonComponent text={"NEXT"} onPress={this.handlePress} />
                     </View>
                 </View>
@@ -57,6 +85,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     radioView: {
+        backgroundColor: "#fafafa",
         paddingTop: 50,
         justifyContent: "center",
         alignItems: "center"

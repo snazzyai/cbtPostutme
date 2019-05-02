@@ -20,7 +20,7 @@ class ActivationScreenTwo extends Component {
                 <ActivationScreenHeader processText={"Activation Process Two"} />
                 <View style={styles.question}>
                     <Text style={styles.textQuestion}>ENTER AGENTS NAME HERE</Text>
-                    <TextInput placeholder="Enter Name here" style={styles.nameInput} />
+                    <TextInput placeholder="Enter Name here" onChangeText={(value) => this.setState({ value: value })} style={styles.nameInput} underlineColorAndroid="#000" />
                 </View>
                 <View style={styles.radioView}>
                     <ButtonComponent text={"NEXT"} onPress={this.handlePress} />
@@ -35,16 +35,13 @@ class ActivationScreenTwo extends Component {
 const styles = StyleSheet.create({
     nameInput: {
         borderColor: "#000",
-        elevation: 1,
-        borderWidth: 2,
-        borderRadius: 20,
-        width: "80%",
-        marginTop: "20%",
-        fontSize: 18
+        marginTop: 25,
+        fontSize: 20,
+        width: "80%"
 
     },
     question: {
-        marginTop: "20%",
+        marginTop: "10%",
         justifyContent: "center",
         alignItems: "center"
     },
@@ -58,7 +55,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     radioView: {
-        paddingTop: 50,
+        paddingTop: "30%",
         justifyContent: "center",
         alignItems: "center"
     }
