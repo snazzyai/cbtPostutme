@@ -20,14 +20,14 @@ const Main = createStackNavigator({
             header: null
         }
     },
-    Payment: {
-        screen: Payment,
+    BankTransfer: {
+        screen: BankTransferScreen,
         navigationOptions: {
             header: null
         }
     },
-    BankTransfer: {
-        screen: BankTransferScreen,
+    Payment: {
+        screen: Payment,
         navigationOptions: {
             header: null
         }
@@ -38,6 +38,7 @@ const Main = createStackNavigator({
             header: null
         }
     },
+
     ActivationTwo: {
         screen: ActivationScreenTwo,
         navigationOptions: {

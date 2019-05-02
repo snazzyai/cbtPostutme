@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, Share } from "react-native"
-
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
+
 
 
 
@@ -11,6 +11,7 @@ class Payment extends Component {
         visible: false
     }
     onShare = async () => {
+        console.log("working")
         const result = await Share.share({
             title: "Download FaceYourBook App from the playstore",
             message: 'http://www.simbibot.com',
@@ -20,7 +21,6 @@ class Payment extends Component {
         const { navigation } = this.props
         const name = navigation.getParam('name')
         const id = navigation.getParam('id')
-
         return (
             <View style={styles.container}>
                 <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.details}>
@@ -31,11 +31,11 @@ class Payment extends Component {
                 </ImageBackground>
                 <View style={styles.paymentMethodView}>
                     <Text style={styles.paymentMethodText} >{name}</Text>
-                    <ButtonComponent onPress={() => this.props.navigation.navigate("ActivationOne", {
+                    <ButtonComponent onPress={() => this.props.navigation.navigate('ActivationOne', {
                         id: id,
                         name: name
                     })} text={"PAY ONLINE"} />
-                    <ButtonComponent onPress={this.props.navigation.navigate("BankTransfer")} text={"BANK TRANSFER"} />
+                    <ButtonComponent onPress={() => this.props.navigation.navigate('BankTransfer')} text={"BANK TRANSFER"} />
                 </View>
                 <View style={styles.paymentMethodView}>
                     <Text style={styles.paymentMethodText}>SHARE TO OTHER PEOPLE</Text>

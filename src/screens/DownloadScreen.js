@@ -3,9 +3,13 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import Icon from "react-native-vector-icons/Ionicons"
 import AsyncStorage from '@react-native-community/async-storage'
 import ActivationScreenHeader from '../components/ActivationScreenHeader/ActivationScreenHeader'
+import console = require('console');
 
 
 class DownloadScreen extends Component {
+
+    name = this.props.navigation.getParam('name')
+    id = this.props.navigation.getParam('id')
     state = {
         hasDownloaded: false
     }
@@ -24,13 +28,17 @@ class DownloadScreen extends Component {
     //         hasDownloaded: true
     //     })
     // }
-
-    handleNavigation = () => {
-        this.props.navigation.navigate("WaecScreen")
+    startTimer = async () => {
+        return new Promise(setTimeout(resolve => resolve("downloadFunction"), 3000))
     }
-    // componentDidMount() {
-    //     this.downloadQuestions()
-    // }
+    async componentDidMount() {
+        console.log('loaded')
+        const finished = await this.startTimer()
+        if (finished !== null) {
+            console.log("has set hasDownloaded")
+            this.setState({ hasDownloaded: true })
+        }
+    }
 
     render() {
         if (!this.state.hasdownloaded) {
@@ -38,7 +46,7 @@ class DownloadScreen extends Component {
                 <View>
                     <ActivationScreenHeader processText={"Download Section"} />
                     <View style={styles.container}>
-                        <Text>Downloading files Please Wait...</Text>
+                        <Text>Downloading files for {this.name} Questions..Please Wait...</Text>
                     </View>
                 </View>
 
@@ -48,8 +56,8 @@ class DownloadScreen extends Component {
             return (
                 <View style={styles.container}>
                     <ActivationScreenHeader processText={"Download Section"} />
-                    <TouchableOpacity onPress={this.handleNavigation()} >
-                        <Text> Click here to go to Waec Screen</Text>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("WaecScreen")} >
+                        <Text> Click here to go to Waec Screen </Text>
                     </TouchableOpacity>
                 </View>
 

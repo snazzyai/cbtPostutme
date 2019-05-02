@@ -6,12 +6,20 @@ import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
 
 
 class ActivationScreenTwo extends Component {
+
+    name = this.props.navigation.getParam('name')
+    id = this.props.navigation.getParam('id')
+
     state = {
         value: null
     }
 
     handlePress = () => {
-
+        //store agents name and check if an agent with that name exists 
+        this.props.navigation.navigate('Download', {
+            id: this.id,
+            name: this.name
+        })
     }
 
     render() {
@@ -25,6 +33,7 @@ class ActivationScreenTwo extends Component {
                 <View style={styles.radioView}>
                     <ButtonComponent text={"NEXT"} onPress={this.handlePress} />
                 </View>
+
             </View>
 
         );

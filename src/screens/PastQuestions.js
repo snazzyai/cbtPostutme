@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, ScrollView, Image, ImageBackground, Alert, Share } from 'react-native'
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, ToastAndroid, ScrollView, Image, ImageBackground, Alert, Share } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 
@@ -13,14 +14,14 @@ class PastQuestions extends Component {
             {
                 id: 1,
                 typeName: "WAEC",
-                imageSource: require("../../assets/images/unilag.png"),
+                imageSource: require("../../assets/images/waec.png"),
                 fullTypeName: "WAEC QUESTIONS "
 
             },
             {
                 id: 2,
                 typeName: "UTME",
-                imageSource: require("../../assets/images/unilag.png"),
+                imageSource: require("../../assets/images/jamb.png"),
                 fullTypeName: "UTME QUESTIONS"
             },
             {
@@ -32,7 +33,7 @@ class PastQuestions extends Component {
             {
                 id: 4,
                 typeName: "UNICAL",
-                imageSource: require("../../assets/images/unilag.png"),
+                imageSource: require("../../assets/images/unical.png"),
                 fullTypeName: "UNICAL PUTME QUESTIONS"
             },
             {
@@ -128,11 +129,25 @@ class PastQuestions extends Component {
 
 
     onShare = () => {
-        Share.share({
+        const result = Share.share({
             title: "Download FaceYourBook",
             message: "http://www.simbibot.com"
         })
-    };
+        if (result.action !== Share.sharedAction) {
+            ToastAndroid.show('Please make sure you share', ToastAndroid.SHORT);
+            new Promise(resolve => {
+                if (AsyncStorage.getItem('shared') === null) {
+                    resolve(setTimeout(() => this.props.navigation.navigate('Download'), 2000))
+                }
+                else {
+
+                }
+            })
+
+        }
+
+    }
+
 
     handleAlert = () => {
         Alert.alert(

@@ -1,69 +1,83 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ToastAndroid } from 'react-native';
+import { StyleSheet, View, Text, ToastAndroid, TouchableOpacity } from 'react-native';
 import ActivationScreenHeader from "../components/ActivationScreenHeader/ActivationScreenHeader"
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
-import RadioGroup, { Radio } from "react-native-radio-input";
+import Icon from "react-native-vector-icons/Ionicons"
+
+
 
 
 
 
 class ActivationScreenOne extends Component {
+
+    name = this.props.navigation.getParam('name')
+    id = this.props.navigation.getParam('id')
+
+
     state = {
-        value: null,
-        radio_props: [
-            { label: 'Yes', value: 0 },
-            { label: 'No', value: 1 },
-            { label: 'I dont know', value: 2 }
-        ]
+        radioBtnsData: ['Yes', 'No', 'I dont know'],
+        checked: 0
     }
 
 
-    getChecked = (value) => {
-        this.setState({
-            value: value
-        })
-    }
 
     handlePress = () => {
         const { value } = this.state
-        if (this.state.value === null) {
+        if (this.state.checked === null) {
             ToastAndroid.showWithGravity(
                 'Please choose an option',
                 ToastAndroid.SHORT,
                 ToastAndroid.CENTER,
             );
         }
-        else if (this.state.value === 0) {
-            this.props.navigation.navigate('ActivationTwo')
+        else if (this.state.checked === 0) {
+            this.props.navigation.navigate('ActivationTwo', {
+                id: this.id,
+                name: this.name
+            })
         }
         else {
-            this.props.navigation.navigate('Download')
+            this.props.navigation.navigate('Download', {
+                id: this.id,
+                name: this.name
+            })
         }
     }
 
+    radioClick(id) {
+        this.setState({
+            value: id
+        })
+    }
+
     render() {
-        const { navigation } = this.props
-        const name = navigation.getParam('name')
-        const id = navigation.getParam('id')
+
         return (
             <View>
                 <ActivationScreenHeader processText={"Activation Process One"} />
                 <View style={styles.question}>
                     <Text style={styles.textQuestion}>DO YOU HAVE AN AGENT FOR?</Text>
                     <View style={styles.radioView}>
-                        <RadioGroup getChecked={this.getChecked}
-                            RadioGroupStyle={{ flexDirection: "row", marginBottom: 20 }}
-                            RadioStyle={{ padding: 20 }}
-                            labelStyle={{ fontSize: 20, fontWeight: "bold" }}
-                            IconStyle={{ backgroundColor: "#fff", width: 30, height: 30 }}
-                            coreStyle={{ color: "#5FA046", fontSize: 20 }}
-                        >
-                            <Radio iconName={"lens"} label={"Yes"} value={0} />
-                            <Radio iconName={"lens"} label={"No"} value={1} />
-                            <Radio iconName={"lens"} label={"I dont know"} value={2} />
-                        </RadioGroup>
-                        <ButtonComponent text={"NEXT"} onPress={this.handlePress} />
+                        {this.state.radioBtnsData.map((data, key) => {
+                            return (
+                                <View key={key}>
+                                    {this.state.checked == key ?
+                                        <TouchableOpacity style={styles.btn}>
+                                            <Icon color="green" size={30} name="md-radio-button-on" />
+                                            <Text style={{ fontSize: 20, paddingRight: 20, paddingLeft: 5 }}>{data}</Text>
+                                        </TouchableOpacity>
+                                        :
+                                        <TouchableOpacity onPress={() => { this.setState({ checked: key }) }} style={styles.btn}>
+                                            <Icon color="green" size={30} name="md-radio-button-off" />
+                                            <Text style={{ fontSize: 20, paddingRight: 20, paddingLeft: 5 }}>{data}</Text>
+                                        </TouchableOpacity>
+                                    }
+                                </View>
+                            )
+                        })}
                     </View>
+                    <ButtonComponent text={'NEXT'} onPress={this.handlePress} />
                 </View>
             </View>
 
@@ -71,10 +85,10 @@ class ActivationScreenOne extends Component {
     }
 }
 
-
 const styles = StyleSheet.create({
     question: {
-        marginTop: "20%"
+        marginTop: "20%",
+        alignItems: "center"
     },
     textQuestion: {
         fontSize: 25,
@@ -85,10 +99,16 @@ const styles = StyleSheet.create({
         padding: 20
     },
     radioView: {
-        backgroundColor: "#fafafa",
+        flexDirection: "row",
+        backgroundColor: "#fff",
         paddingTop: 50,
+        paddingBottom: 30,
+        paddingLeft: 20,
         justifyContent: "center",
         alignItems: "center"
+    },
+    btn: {
+        flexDirection: 'row'
     }
 })
 
