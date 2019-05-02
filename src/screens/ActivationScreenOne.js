@@ -4,15 +4,16 @@ import ActivationScreenHeader from "../components/ActivationScreenHeader/Activat
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
 
-let radio_props = [
-    { label: 'Yes', value: 0 },
-    { label: 'No', value: 1 },
-    { label: 'I dont know', value: 2 }
-];
+
 
 class ActivationScreenOne extends Component {
     state = {
-        value: 0
+        value: 0,
+        radio_props: [
+            { label: 'Yes', value: 0 },
+            { label: 'No', value: 1 },
+            { label: 'I dont know', value: 2 }
+        ]
     }
 
     handlePress = () => {
@@ -28,13 +29,11 @@ class ActivationScreenOne extends Component {
                     <Text style={styles.textQuestion}>DO YOU HAVE AN AGENT?</Text>
                     <View style={styles.radioView}>
                         <RadioForm
-                            radio_props={radio_props}
+                            radio_props={this.state.radio_props}
                             initial={0}
                             onPress={(value) => { this.setState({ value: value }) }}
                             buttonColor={'green'}
                         />
-
-
                         <ButtonComponent text={"NEXT"} onPress={this.handlePress} />
                     </View>
                 </View>

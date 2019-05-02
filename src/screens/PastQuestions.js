@@ -126,28 +126,22 @@ class PastQuestions extends Component {
     }
 
 
+    shared = () => {
+        Share.share({
+            title: "Download FaceYourBook",
+            message: "http://www.simbibot.com"
+        })
+        setTimeout(Alert.alert("you have successfully shared"), 2000)
+        this.props.navigation.navigate('Download')
+    }
+
+
     onShare = async () => {
         try {
-            const result = await Share.share({
-                title: "Download simbi",
-                message: "http://www.simbibot.com"
-            });
-
-            if (result.action === Share.sharedAction) {
-                if (result.activityType) {
-                    console.log("shared")
-                    Alert.alert("shared")
-                } else {
-                    console.log("you havent")
-                    Alert.alert("you havent shared yet")
-                }
-            }
-            else if (result.action === Share.dismissedAction) {
-                console.log("dismissed")
-                Alert.alert("dismissed")
-            }
-        } catch (error) {
-            alert(error.message);
+            this.shared()
+        }
+        catch (error) {
+            alert("error");
         }
     };
 
