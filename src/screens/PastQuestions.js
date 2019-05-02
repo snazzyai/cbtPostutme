@@ -33,7 +33,7 @@ class PastQuestions extends Component {
             {
                 id: 4,
                 typeName: "UNICAL",
-                imageSource: require("../../assets/images/unical.png"),
+                imageSource: require("../../assets/images/unical.jpg"),
                 fullTypeName: "UNICAL PUTME QUESTIONS"
             },
             {

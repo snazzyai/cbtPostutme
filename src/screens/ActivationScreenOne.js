@@ -70,7 +70,7 @@ class ActivationScreenOne extends Component {
                                         :
                                         <TouchableOpacity onPress={() => { this.setState({ checked: key }) }} style={styles.btn}>
                                             <Icon color="green" size={30} name="md-radio-button-off" />
-                                            <Text style={{ fontSize: 20, paddingRight: 20, paddingLeft: 5 }}>{data}</Text>
+                                            <Text style={{ fontSize: 20, paddingRight: 25, paddingLeft: 5 }}>{data}</Text>
                                         </TouchableOpacity>
                                     }
                                 </View>
@@ -92,8 +92,7 @@ const styles = StyleSheet.create({
     },
     textQuestion: {
         fontSize: 25,
-        textAlign: "center",
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     radio: {
         padding: 20

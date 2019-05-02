@@ -6,7 +6,7 @@ import Startup from '../screens/Startup'
 import Payment from '../screens/Payment'
 import BankTransferScreen from '../screens/BankTransferScreen'
 import PutmeScreen from '../screens/PutmeScreen'
-import WaecScreen from '../screens/WaecScreen'
+import MyExams from '../screens/MyExamScreen'
 import DownloadScreen from "../screens/DownloadScreen"
 import ActivationScreenOne from "../screens/ActivationScreenOne"
 import ActivationScreenTwo from "../screens/ActivationScreenTwo"
@@ -60,11 +60,11 @@ const StartScreen = createSwitchNavigator({
 })
 
 const DrawerNavigation = createDrawerNavigator({
-    Waec: {
-        screen: WaecScreen
+    ["My Exams"]: {
+        screen: MyExams
     },
-    Putme: {
-        screen: PutmeScreen
+    ["Add an Exam"]: {
+        screen: PastQuestions
     }
 },
     {
@@ -78,7 +78,7 @@ const AppSwitchNavigator = createSwitchNavigator(
         DrawerNavigation: DrawerNavigation
     },
     {
-        initialRouteName: 'StartScreen',
+        initialRouteName: 'DrawerNavigation',
     }
 )
 
