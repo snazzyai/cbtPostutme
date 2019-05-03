@@ -8,8 +8,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 
 
+
 class PastQuestions extends Component {
     state = {
+        searchValue: "",
         schools: [
             {
                 id: 1,
@@ -136,8 +138,8 @@ class PastQuestions extends Component {
         if (result.action !== Share.sharedAction) {
             ToastAndroid.show('Please make sure you share', ToastAndroid.SHORT);
             new Promise(resolve => {
-                if (AsyncStorage.getItem('shared') === null) {
-                    resolve(setTimeout(() => this.props.navigation.navigate('Download'), 2000))
+                if (AsyncStorage.getItem('shared') !== null) {
+                    resolve(setTimeout(() => this.props.navigation.navigate('Download'), 7000))
                 }
                 else {
 
@@ -166,14 +168,28 @@ class PastQuestions extends Component {
 
     }
 
+    filteredList = () => {
+        this.setState(prevState => {
 
-    searchFilter = () => {
+            return {
+                schools: QuestionListFiltered
+            }
+        })
+    }
+
+
+    searchFilter = (value) => {
+        this.setState({
+            searchValue: value
+        })
 
     }
 
     render() {
-        const { fullTypeName, id } = this.state
-        const QuestionList = this.state.schools.map(type => (
+        const QuestionListFiltered = this.state.schools.filter(type => {
+            return type.typeName.toLowerCase().includes(this.state.searchValue.toLowerCase())
+        })
+        const QuestionList = QuestionListFiltered.map(type => (
             <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => {
                 if (type.typeName == "WAEC") {
                     this.handleAlert()
@@ -199,6 +215,8 @@ class PastQuestions extends Component {
                 </View>
             </TouchableOpacity>
         ))
+
+
 
         return (
             <ScrollView showsVerticalScrollIndicator={false}>

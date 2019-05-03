@@ -8,7 +8,6 @@ import Icon from 'react-native-vector-icons/Ionicons'
 class Signin extends Component {
 
     render() {
-
         return (
             <ImageBackground source={require("../../../assets/images/signin.jpg")} style={styles.container} >
                 <ScrollView style={styles.scrollView}>

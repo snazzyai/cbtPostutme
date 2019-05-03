@@ -14,6 +14,12 @@ import ActivationScreenTwo from "../screens/ActivationScreenTwo"
 
 
 const Main = createStackNavigator({
+    Download: {
+        screen: DownloadScreen,
+        navigationOptions: {
+            header: null
+        }
+    },
     PastQuestions: {
         screen: PastQuestions,
         navigationOptions: {
@@ -45,12 +51,7 @@ const Main = createStackNavigator({
             header: null
         }
     },
-    Download: {
-        screen: DownloadScreen,
-        navigationOptions: {
-            header: null
-        }
-    }
+
 })
 const StartScreen = createSwitchNavigator({
     Startup: Startup,
@@ -78,7 +79,7 @@ const AppSwitchNavigator = createSwitchNavigator(
         DrawerNavigation: DrawerNavigation
     },
     {
-        initialRouteName: 'DrawerNavigation',
+        initialRouteName: 'StartScreen',
     }
 )
 
