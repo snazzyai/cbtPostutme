@@ -7,6 +7,8 @@ import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
 
 
 class Payment extends Component {
+    name = this.props.navigation.getParam('name')
+    id = this.props.navigation.getParam('id')
     state = {
         visible: false
     }
@@ -19,8 +21,7 @@ class Payment extends Component {
     }
     render() {
         const { navigation } = this.props
-        const name = navigation.getParam('name')
-        const id = navigation.getParam('id')
+
         return (
             <View style={styles.container}>
                 <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.details}>
@@ -32,8 +33,8 @@ class Payment extends Component {
                 <View style={styles.paymentMethodView}>
                     <Text style={styles.paymentMethodText} >{name}</Text>
                     <ButtonComponent onPress={() => this.props.navigation.navigate('ActivationOne', {
-                        id: id,
-                        name: name
+                        id: this.id,
+                        name: this.name
                     })} text={"PAY ONLINE"} />
                     <ButtonComponent onPress={() => this.props.navigation.navigate('BankTransfer')} text={"BANK TRANSFER"} />
                 </View>

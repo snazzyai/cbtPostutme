@@ -11,6 +11,7 @@ import DownloadScreen from "../screens/DownloadScreen"
 import ActivationScreenOne from "../screens/ActivationScreenOne"
 import ActivationScreenTwo from "../screens/ActivationScreenTwo"
 import SelectSubject from '../screens/SelectSubjectScreen'
+import Questions from '../screens/QuestionsScreen'
 
 
 
@@ -69,7 +70,11 @@ const ChooseQuestions = createStackNavigator({
     SelectSubject: {
         screen: SelectSubject,
 
+    },
+    Questions: {
+        screen: Questions
     }
+
 })
 
 const DrawerNavigation = createDrawerNavigator({
@@ -91,7 +96,7 @@ const AppSwitchNavigator = createSwitchNavigator(
         DrawerNavigation: DrawerNavigation
     },
     {
-        initialRouteName: 'DrawerNavigation',
+        initialRouteName: 'StartScreen',
     }
 )
 
