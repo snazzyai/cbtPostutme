@@ -10,16 +10,11 @@ import MyExams from '../screens/MyExamScreen'
 import DownloadScreen from "../screens/DownloadScreen"
 import ActivationScreenOne from "../screens/ActivationScreenOne"
 import ActivationScreenTwo from "../screens/ActivationScreenTwo"
+import SelectSubject from '../screens/SelectSubjectScreen'
 
 
 
 const Main = createStackNavigator({
-    Download: {
-        screen: DownloadScreen,
-        navigationOptions: {
-            header: null
-        }
-    },
     PastQuestions: {
         screen: PastQuestions,
         navigationOptions: {
@@ -44,9 +39,14 @@ const Main = createStackNavigator({
             header: null
         }
     },
-
     ActivationTwo: {
         screen: ActivationScreenTwo,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Download: {
+        screen: DownloadScreen,
         navigationOptions: {
             header: null
         }
@@ -59,10 +59,22 @@ const StartScreen = createSwitchNavigator({
 
 
 })
+const ChooseQuestions = createStackNavigator({
+    Exam: {
+        screen: MyExams,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SelectSubject: {
+        screen: SelectSubject,
+
+    }
+})
 
 const DrawerNavigation = createDrawerNavigator({
     ["My Exams"]: {
-        screen: MyExams
+        screen: ChooseQuestions
     },
     ["Add an Exam"]: {
         screen: PastQuestions
@@ -79,7 +91,7 @@ const AppSwitchNavigator = createSwitchNavigator(
         DrawerNavigation: DrawerNavigation
     },
     {
-        initialRouteName: 'StartScreen',
+        initialRouteName: 'DrawerNavigation',
     }
 )
 
