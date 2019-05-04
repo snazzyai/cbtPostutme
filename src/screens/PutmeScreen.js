@@ -12,7 +12,7 @@ class PutmeScreen extends Component {
                     <Icon name="md-menu" size={30} color="#000" />
                 </TouchableOpacity>
                 <View style={{ flex: 1 }}>
-                    <Text style={{ textAlign: "center" }}>Putme Questions</Text>
+                    <Text style={{ textAlign: "center" }}>UTME Questions</Text>
                 </View>
             </View >
         )

@@ -1,68 +1,77 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
 import Icon from "react-native-vector-icons/Ionicons"
 import AsyncStorage from '@react-native-community/async-storage'
 import ActivationScreenHeader from '../components/ActivationScreenHeader/ActivationScreenHeader'
 
 
+
 class DownloadScreen extends Component {
     state = {
-        hasDownloaded: false
+
+        isLoading: true
     }
 
-    // downloadQuestions = async () => {
-    //     await AsyncStorage.setItem("WaecQuestions", [
-    //         {
-    //             question: "What is your name",
-    //             option1: "Abdulsalam",
-    //             option2: "Taofeeq",
-    //             option3: "Abdul",
-    //             answer: "Abdulsalam"
-    //         }
-    //     ])
-    //     this.setState({
-    //         hasDownloaded: true
-    //     })
-    // }
 
-    handleNavigation = () => {
-        this.props.navigation.navigate("WaecScreen")
+    awaitStartup = async () => {
+        return new Promise(resolve => {
+            setTimeout(() => resolve("resolve"), 3000)
+        })
     }
-    // componentDidMount() {
-    //     this.downloadQuestions()
-    // }
+
+    async componentDidMount() {
+        const data = await this.awaitStartup()
+        if (data !== null)
+            this.setState({
+                isLoading: false
+            })
+
+    }
+
 
     render() {
-        if (!this.state.hasdownloaded) {
+        if (this.state.isLoading) {
             return (
                 <View>
                     <ActivationScreenHeader processText={"Download Section"} />
-                    <View style={styles.container}>
-                        <Text>Downloading files Please Wait...</Text>
+                    <View style={styles.downloadView}>
+                        <Text style={styles.textView}>Downloading files for {this.name} Questions..Please Wait...</Text>
+                        <ActivityIndicator size="large" color="#00ff00" />
                     </View>
                 </View>
-
             )
+
+
         }
         else {
             return (
-                <View style={styles.container}>
+                <View>
                     <ActivationScreenHeader processText={"Download Section"} />
-                    <TouchableOpacity onPress={this.handleNavigation()} >
-                        <Text> Click here to go to Waec Screen</Text>
-                    </TouchableOpacity>
+                    <View style={styles.donwloadView}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("My Exams")} >
+                            <Text style={styles.textView}> Click here to go to your Exams Screen </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-
             )
         }
+
     }
 }
-
 const styles = StyleSheet.create({
-    container: {
-
+    downloadView: {
+        textAlign: "center",
+        alignItems: 'center',
+        fontWeight: "bold",
+        padding: 20
     },
-
+    textView: {
+        textAlign: "center",
+        fontSize: 25,
+        fontWeight: "bold",
+        fontFamily: 'verdana',
+    }
 
 })
-export default DownloadScreen;
+
+export default DownloadScreen

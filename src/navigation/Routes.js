@@ -7,10 +7,12 @@ import Quiz from '../screens/Quiz.screen';
 import Payment from '../screens/Payment'
 import BankTransferScreen from '../screens/BankTransferScreen'
 import PutmeScreen from '../screens/PutmeScreen'
-import WaecScreen from '../screens/WaecScreen'
+import MyExams from '../screens/MyExamScreen'
 import DownloadScreen from "../screens/DownloadScreen"
 import ActivationScreenOne from "../screens/ActivationScreenOne"
 import ActivationScreenTwo from "../screens/ActivationScreenTwo"
+import SelectSubject from '../screens/SelectSubjectScreen'
+import Questions from '../screens/QuestionsScreen'
 
 
 
@@ -27,14 +29,14 @@ const Main = createStackNavigator({
             header: null
         }
     },
-    Payment: {
-        screen: Payment,
+    BankTransfer: {
+        screen: BankTransferScreen,
         navigationOptions: {
             header: null
         }
     },
-    BankTransfer: {
-        screen: BankTransferScreen,
+    Payment: {
+        screen: Payment,
         navigationOptions: {
             header: null
         }
@@ -56,7 +58,8 @@ const Main = createStackNavigator({
         navigationOptions: {
             header: null
         }
-    }
+    },
+
 })
 const StartScreen = createSwitchNavigator({
     Startup: Startup,
@@ -64,13 +67,29 @@ const StartScreen = createSwitchNavigator({
 
 
 })
+const ChooseQuestions = createStackNavigator({
+    Exam: {
+        screen: MyExams,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SelectSubject: {
+        screen: SelectSubject,
+
+    },
+    Questions: {
+        screen: Questions
+    }
+
+})
 
 const DrawerNavigation = createDrawerNavigator({
-    Waec: {
-        screen: WaecScreen
+    ["My Exams"]: {
+        screen: ChooseQuestions
     },
-    Putme: {
-        screen: PutmeScreen
+    ["Add an Exam"]: {
+        screen: PastQuestions
     }
 },
     {

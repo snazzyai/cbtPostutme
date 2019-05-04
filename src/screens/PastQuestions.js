@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, ScrollView, Image, ImageBackground, Alert, Share } from 'react-native'
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, ToastAndroid, ScrollView, Image, ImageBackground, Alert, Share } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 
 
@@ -9,18 +11,19 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 class PastQuestions extends Component {
     state = {
+        searchValue: "",
         schools: [
             {
                 id: 1,
                 typeName: "WAEC",
-                imageSource: require("../../assets/images/unilag.png"),
+                imageSource: require("../../assets/images/waec.png"),
                 fullTypeName: "WAEC QUESTIONS "
 
             },
             {
                 id: 2,
                 typeName: "UTME",
-                imageSource: require("../../assets/images/unilag.png"),
+                imageSource: require("../../assets/images/jamb.png"),
                 fullTypeName: "UTME QUESTIONS"
             },
             {
@@ -32,7 +35,7 @@ class PastQuestions extends Component {
             {
                 id: 4,
                 typeName: "UNICAL",
-                imageSource: require("../../assets/images/unilag.png"),
+                imageSource: require("../../assets/images/unical.jpg"),
                 fullTypeName: "UNICAL PUTME QUESTIONS"
             },
             {
@@ -126,24 +129,27 @@ class PastQuestions extends Component {
     }
 
 
-    shared = () => {
-        Share.share({
+
+    onShare = () => {
+        const result = Share.share({
             title: "Download FaceYourBook",
             message: "http://www.simbibot.com"
         })
-        setTimeout(Alert.alert("you have successfully shared"), 2000)
-        this.props.navigation.navigate('Download')
+        if (result.action !== Share.sharedAction) {
+            ToastAndroid.show('Please make sure you share', ToastAndroid.SHORT);
+            new Promise(resolve => {
+                if (AsyncStorage.getItem('shared') !== null) {
+                    resolve(setTimeout(() => this.props.navigation.navigate('Download'), 7000))
+                }
+                else {
+
+                }
+            })
+
+        }
+
     }
 
-
-    onShare = async () => {
-        try {
-            this.shared()
-        }
-        catch (error) {
-            alert("error");
-        }
-    };
 
     handleAlert = () => {
         Alert.alert(
@@ -162,20 +168,28 @@ class PastQuestions extends Component {
 
     }
 
-    QuestionList = () => {
+    filteredList = () => {
+        this.setState(prevState => {
 
+            return {
+                schools: QuestionListFiltered
+            }
+        })
     }
-    onSelectType = () => {
 
-    }
 
-    searchFilter = () => {
+    searchFilter = (value) => {
+        this.setState({
+            searchValue: value
+        })
 
     }
 
     render() {
-        const { fullTypeName, id } = this.state
-        const QuestionList = this.state.schools.map(type => (
+        const QuestionListFiltered = this.state.schools.filter(type => {
+            return type.typeName.toLowerCase().includes(this.state.searchValue.toLowerCase())
+        })
+        const QuestionList = QuestionListFiltered.map(type => (
             <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => {
                 if (type.typeName == "WAEC") {
                     this.handleAlert()
@@ -201,6 +215,8 @@ class PastQuestions extends Component {
                 </View>
             </TouchableOpacity>
         ))
+
+
 
         return (
             <ScrollView showsVerticalScrollIndicator={false}>
