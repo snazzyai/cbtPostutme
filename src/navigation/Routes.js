@@ -34,7 +34,9 @@ const Auth = createStackNavigator({
         navigationOptions: {
             header: null
         }
-    }
+    },
+
+
 })
 const Main = createStackNavigator({
     PastQuestions: {

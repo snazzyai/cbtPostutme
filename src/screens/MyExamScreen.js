@@ -39,7 +39,7 @@ class MyExams extends Component {
                             this.state.exams.schools.map((school, i) => {
                                 return (
                                     <View style={{ alignItems: "center" }} key={i}>
-                                        <ButtonComponent externalStyle={{ width: "90%", height: 55 }} text={school} onPress={() => this.props.navigation.navigate('SelectSubject', {
+                                        <ButtonComponent externalStyle={{ textAlign: "justify", width: "90%", height: 55 }} text={school} onPress={() => this.props.navigation.navigate('SelectSubject', {
                                             id: i,
                                             name: school
 

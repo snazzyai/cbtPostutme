@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
 
     inputField: {
         width: "95%",
-        height: 40,
+        height: 50,
         fontSize: 18,
         color: "#fff",
         margin: 10
