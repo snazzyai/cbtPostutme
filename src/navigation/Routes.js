@@ -12,9 +12,30 @@ import ActivationScreenOne from "../screens/ActivationScreenOne"
 import ActivationScreenTwo from "../screens/ActivationScreenTwo"
 import SelectSubject from '../screens/SelectSubjectScreen'
 import Questions from '../screens/QuestionsScreen'
+import SignUp from '../screens/SignUpScreen'
 
 
 
+
+
+
+
+
+const Auth = createStackNavigator({
+    Startup: {
+        screen: Startup,
+        navigationOptions: {
+            header: null
+        }
+
+    },
+    Signup: {
+        screen: SignUp,
+        navigationOptions: {
+            header: null
+        }
+    }
+})
 const Main = createStackNavigator({
     PastQuestions: {
         screen: PastQuestions,
@@ -54,12 +75,7 @@ const Main = createStackNavigator({
     },
 
 })
-const StartScreen = createSwitchNavigator({
-    Startup: Startup,
-    Main: Main
 
-
-})
 const ChooseQuestions = createStackNavigator({
     Exam: {
         screen: MyExams,
@@ -74,6 +90,12 @@ const ChooseQuestions = createStackNavigator({
     Questions: {
         screen: Questions
     }
+
+})
+const StartScreen = createSwitchNavigator({
+    Auth: Auth,
+    Main: Main
+
 
 })
 

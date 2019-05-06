@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Splashscreen from '../components/Splashscreen/Splashscreen'
-import Signin from '../components/Signin/Signin'
+import Signin from '../components/SigninComponent/SigninComponent'
 import AsyncStorage from '@react-native-community/async-storage'
 
 
@@ -9,82 +9,49 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 class Startup extends Component {
     state = {
-        isLoading: true,
         displayLogin: false,
-        hasLoggedIn: false,
-        name: "",
         email: "",
-        phone: "",
-    }
+        password: "",
+        deviceId: "",
 
-    setUserData = async () => {
-        try {
-            await AsyncStorage.setItem('userEmail', this.state.email)
-        }
-        catch (e) {
-            console.log(e)
-        }
-
-    }
-
-
-    getUserData = async () => {
-        try {
-            await AsyncStorage.getItem('userEmail')
-        }
-        catch (e) {
-            console.log(e)
-        }
     }
 
     awaitStartup = async () => {
-
-        return new Promise(resolve => {
-            setTimeout(() => resolve("resolve"), 300)
-        })
+        const Resolved = new Promise(resolve => setTimeout(() => resolve("resolve"), 300))
+        return Resolved
     }
 
+
     async componentDidMount() {
-        // await AsyncStorage.removeItem("userEmail")
-        const userId = await AsyncStorage.getItem('userEmail')
         const data = await this.awaitStartup()
-        if (data !== null && userId === null)
+        if (data !== null)
             this.setState({
                 displayLogin: true
             })
-        else if (data !== null && userId !== null) {
-            this.props.navigation.navigate("Main")
-            console.log(userId)
-        }
-
     }
+
+
     handleEmail = (value) => {
         this.setState({
             email: value
         })
     }
-    handlePhone = (value) => {
+    handlePassword = (value) => {
         this.setState({
-            phone: value
-        })
-    }
-    handleName = (value) => {
-        this.setState({
-            name: value
+            password: value
         })
     }
 
 
 
-    handleSignin = async () => {
-        await this.setUserData()
-        this.setState({
-            hasLoggedIn: true
-        })
-        this.props.navigation.navigate("Main")
+
+    handleSignin = () => {
+        this.props.navigation.navigate("Signup")
     }
 
-
+    handleSignupNavigation = () => {
+        this.props.navigation.navigate("Signup")
+    }
 
 
     render() {
@@ -93,7 +60,13 @@ class Startup extends Component {
         }
         else {
             return (
-                <Signin email={this.state.email} handleEmail={this.handleEmail} handleName={this.handleName} handlePhone={this.handlePhone} login={this.handleSignin} />
+                <Signin
+                    handleEmail={this.handleEmail}
+                    handlePassword={this.handlePassword}
+                    login={this.handleSignin}
+                    navigateSignup={this.handleSignupNavigation}
+                />
+
             )
         }
 

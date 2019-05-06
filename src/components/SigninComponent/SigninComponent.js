@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 
 class Signin extends Component {
-
     render() {
         return (
             <ImageBackground source={require("../../../assets/images/signin.jpg")} style={styles.container} >
@@ -16,29 +15,26 @@ class Signin extends Component {
 
                     </View>
                     <View style={styles.inputFieldView}>
-
-                        <View style={styles.inputContainer}>
-                            <TextInput onChangeText={this.props.handleName} style={styles.inputStyle} placeholder="Name" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
-                            <Icon style={styles.icon} name="ios-person" size={20} color="#fff" />
-                        </View>
                         <View style={styles.inputContainer}>
                             <TextInput keyboardType="email-address" onChangeText={this.props.handleEmail} style={styles.inputStyle} placeholder="Email" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="md-mail" size={20} color="#fff" />
                         </View>
                         <View style={styles.inputContainer}>
-                            <TextInput keyboardType="phone-pad" onChangeText={this.props.handlePhone} style={styles.inputStyle} placeholder="Phone Number" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
-                            <Icon style={styles.icon} name="md-call" size={20} color="#fff" />
+                            <TextInput secureTextEntry={true} onChangeText={this.props.handlePassword} style={styles.inputStyle} placeholder="Password" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
+                            <Icon style={styles.icon} name="md-lock" size={20} color="#fff" />
                         </View>
-
                     </View>
                     <View style={styles.clickableView}>
                         <TouchableOpacity onPress={this.props.login} style={styles.clickable}>
-                            <Text style={styles.clickableText}>SIGN IN</Text>
+                            <Text style={styles.clickableText}>LOGIN</Text>
                         </TouchableOpacity>
                     </View>
-
+                    <View style={styles.clickableView}>
+                        <TouchableOpacity onPress={this.props.navigateSignup} style={styles.clickable}>
+                            <Text style={styles.clickableText}>SIGN UP</Text>
+                        </TouchableOpacity>
+                    </View>
                 </ScrollView>
-
             </ImageBackground>
         );
     }
