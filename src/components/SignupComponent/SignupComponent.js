@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, Image, ScrollView } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, Image, ScrollView, ActivityIndicator } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import ShowAlert from '../ShowAlertComponent/ShowAlertComponent'
+
+
 
 
 
 
 class Signup extends Component {
+
+
 
     render() {
         return (
@@ -13,30 +18,39 @@ class Signup extends Component {
                 <ScrollView style={styles.scrollView}>
                     <View style={styles.logo}>
                         <Image style={styles.imageLogo} source={require("../../../assets/images/logo.png")} />
-
                     </View>
                     <View style={styles.inputFieldView}>
-
                         <View style={styles.inputContainer}>
                             <TextInput onChangeText={this.props.handleName} style={styles.inputStyle} placeholder="Name" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="ios-person" size={20} color="#fff" />
                         </View>
+
+                        {this.props.showAlert ? <ShowAlert ErrorMessage={this.props.errorName} /> : false}
+
+
                         <View style={styles.inputContainer}>
                             <TextInput keyboardType="email-address" onChangeText={this.props.handleEmail} style={styles.inputStyle} placeholder="Email" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="md-mail" size={20} color="#fff" />
                         </View>
+
+                        {this.props.showAlert ? <ShowAlert ErrorMessage={this.props.errorEmail} /> : false}
+
                         <View style={styles.inputContainer}>
                             <TextInput keyboardType="phone-pad" onChangeText={this.props.handlePhone} style={styles.inputStyle} placeholder="Phone Number" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="md-call" size={20} color="#fff" />
                         </View>
+
+                        {this.props.showAlert ? <ShowAlert ErrorMessage={this.props.errorPhone} /> : false}
+
                         <View style={styles.inputContainer}>
                             <TextInput secureTextEntry={true} onChangeText={this.props.handlePassword} style={styles.inputStyle} placeholder="Password" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="md-lock" size={20} color="#fff" />
                         </View>
+                        {this.props.showAlert ? <ShowAlert ErrorMessage={this.props.errorPassword} /> : false}
                     </View>
                     <View style={styles.clickableView}>
                         <TouchableOpacity disabled={this.props.handleDisabled} onPress={this.props.handleSignup} style={styles.clickable}>
-                            <Text style={styles.clickableText}>SIGN UP</Text>
+                            {this.props.isLoading ? <ActivityIndicator size="small" color="#00ff00" /> : <Text style={styles.clickableText}>SIGNUP</Text>}
                         </TouchableOpacity>
                     </View>
                     <View style={styles.clickableView}>

@@ -17,8 +17,8 @@ class ShowAlert extends Component {
     render() {
         if (this.state.open) {
             return (
-                <View>
-                    <Text style={{ color: "red" }}>{this.props.ErrorMessage}</Text>
+                <View key={this.props.mainkey}>
+                    <Text style={{ color: "#b73131", fontSize: 18 }}>{this.props.ErrorMessage}</Text>
                 </View>
             );
         }

@@ -12,7 +12,15 @@ export default class SignUp extends Component {
         name: "",
         password: "",
         phone: "",
-        device_id: ""
+        device_id: "",
+        error: [],
+        errorEmail: "",
+        errorName: "",
+        errorPassword: "",
+        errorPhone: "",
+        disabled: false,
+        showAlert: false,
+        isLoading: false
     }
 
 
@@ -54,30 +62,51 @@ export default class SignUp extends Component {
 
 
     handleSignup = () => {
-        const deviceId = this.state.device_id
-        const email = this.state.email
-        const phone = this.state.phone
-        const pass = this.state.password
-        const name = this.state.name
-
-        Postdata('register', {
-            email: email,
-            name: name,
-            password: pass,
-            phone: phone,
-            device_id: deviceId
+        this.setState({
+            disabled: true,
+            showAlert: false,
+            isLoading: true,
+            error: []
         })
-            .then(result => {
+        Postdata('register', {
+            email: this.state.email,
+            name: this.state.name,
+            password: this.state.pass,
+            phone: this.state.phone,
+            device_id: this.state.device_id
+        })
+            .then(async result => {
                 if (result.status === "success") {
                     alert("successfully registered")
-                    this.props.navigation.navigate('Startup')
+                    const data = {
+                        email: result.user.email,
+                        device_id: result.user.device_id
+                    }
+                    await AsyncStorage.setItem("userData", JSON.stringify(data))
+                    this.props.navigation.navigate('Menu')
                 }
                 else {
-                    for (let i in result) {
-                        alert(result[i][0])
-                    }
+                    this.setState(prevState => {
+                        return {
+                            ...prevState,
+                            error: prevState.error.concat(result),
+                        }
+                    })
+                    this.state.error.map(err => {
+                        this.setState({
+                            errorName: err.name,
+                            errorPassword: err.password,
+                            errorEmail: err.email,
+                            errorPhone: err.phone,
+                            showAlert: true,
+                            disabled: false,
+                            isLoading: false,
+                        })
+                    })
                 }
-            }).catch((err) => console.warn(err))
+
+
+            }).catch((err) => console.warn("there was an error"))
     }
 
     loginNavigation = () => {
@@ -93,7 +122,14 @@ export default class SignUp extends Component {
                 handlePassword={this.handlePassword}
                 handleSignup={this.handleSignup}
                 handleLoginNavigation={this.loginNavigation}
-
+                handleDisabled={this.state.disabled}
+                errorName={this.state.errorName}
+                errorEmail={this.state.errorEmail}
+                errorPhone={this.state.errorPhone}
+                errorPassword={this.state.errorPassword}
+                showAlert={this.state.showAlert}
+                isLoading={this.state.isLoading}
+                error={this.state.error}
             />
         )
     }

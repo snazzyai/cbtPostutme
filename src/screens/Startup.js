@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, ToastAndroid } from 'react-native'
+import { ToastAndroid } from 'react-native'
 import Splashscreen from '../components/Splashscreen/Splashscreen'
 import Signin from '../components/SigninComponent/SigninComponent'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -19,7 +19,8 @@ class Startup extends Component {
         isLoading: false,
         disabled: false,
         error: [],
-        showAlert: false
+        showAlert: false,
+        isLoading: false
     }
 
     awaitStartup = async () => {
@@ -70,19 +71,17 @@ class Startup extends Component {
 
 
     handleSignin = () => {
-        ToastAndroid.showWithGravity(
-            'Verifying...',
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM,
-        );
+        this.setState({
+            disabled: true,
+            showAlert: false,
+            isLoading: true,
+            error: []
+        })
         Postdata('login', {
             email: this.state.email,
             password: this.state.password,
             device_id: this.state.device_id
         }).then(async result => {
-            await this.setState({
-                disabled: true
-            })
             if (result.status === "success") {
                 try {
                     const data = {
@@ -100,24 +99,31 @@ class Startup extends Component {
 
             }
             else if (this.state.email === "" || this.state.password === "") {
-                alert("Please input a value into the field")
                 this.setState({
                     disabled: false,
+                    isLoading: false
                 })
+                alert("Please input a value into the field")
+
             }
             else if (result.email) {
                 this.setState(prevState => {
                     const newError = prevState.error.concat(result.email)
                     return {
                         ...prevState,
-                        disabled: false,
                         error: newError,
-                        showAlert: true
+                        showAlert: true,
+                        disabled: false,
+                        isLoading: false
                     }
 
                 })
             }
             else if (result.status === "error") {
+                this.setState({
+                    disabled: false,
+                    isLoading: false
+                })
                 alert(result.message)
             }
         }).catch(err => console.warn(err))
@@ -141,8 +147,9 @@ class Startup extends Component {
                     login={this.handleSignin}
                     navigateSignup={this.handleSignupNavigation}
                     handleDisabled={this.state.disabled}
-                    error={this.state.error[0]}
+                    errorEmail={this.state.error[0]}
                     showAlert={this.state.showAlert}
+                    isLoading={this.state.isLoading}
                 />
             )
         }

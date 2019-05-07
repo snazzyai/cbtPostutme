@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, Image, ScrollView } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, Image, ScrollView, ActivityIndicator } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import ShowAlert from '../ShowAlertComponent/ShowAlertComponent'
 
@@ -20,7 +20,7 @@ class Signin extends Component {
                             <TextInput keyboardType="email-address" onChangeText={this.props.handleEmail} style={styles.inputStyle} placeholder="Email" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="md-mail" size={20} color="#fff" />
                         </View>
-                        {this.props.showAlert ? <ShowAlert ErrorMessage={this.props.error} /> : false}
+                        {this.props.showAlert ? <ShowAlert ErrorMessage={this.props.errorEmail} /> : false}
                         <View style={styles.inputContainer}>
                             <TextInput secureTextEntry={true} onChangeText={this.props.handlePassword} style={styles.inputStyle} placeholder="Password" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="md-lock" size={20} color="#fff" />
@@ -28,7 +28,7 @@ class Signin extends Component {
                     </View>
                     <View style={styles.clickableView}>
                         <TouchableOpacity disabled={this.props.handleDisabled} onPress={this.props.login} style={styles.clickable}>
-                            <Text style={styles.clickableText}>LOGIN</Text>
+                            {this.props.isLoading ? <ActivityIndicator size="small" color="#00ff00" /> : <Text style={styles.clickableText}>LOGIN</Text>}
                         </TouchableOpacity>
                     </View>
                     <View style={styles.clickableView}>
