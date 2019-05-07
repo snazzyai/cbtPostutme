@@ -35,7 +35,7 @@ class Signup extends Component {
                         </View>
                     </View>
                     <View style={styles.clickableView}>
-                        <TouchableOpacity onPress={this.props.handleSignup} style={styles.clickable}>
+                        <TouchableOpacity disabled={this.props.handleDisabled} onPress={this.props.handleSignup} style={styles.clickable}>
                             <Text style={styles.clickableText}>SIGN UP</Text>
                         </TouchableOpacity>
                     </View>

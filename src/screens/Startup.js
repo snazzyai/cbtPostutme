@@ -10,15 +10,16 @@ import DeviceInfo from 'react-native-device-info'
 
 // import SplashScreen from 'react-native-splash-screen'
 
-
 class Startup extends Component {
     state = {
         displayLogin: false,
         email: "",
         password: "",
         device_id: "",
-        isLoading: false
-
+        isLoading: false,
+        disabled: false,
+        error: [],
+        showAlert: false
     }
 
     awaitStartup = async () => {
@@ -28,8 +29,18 @@ class Startup extends Component {
 
 
     async componentDidMount() {
+
         const deviceId = DeviceInfo.getDeviceId()
-        this.setState({ device_id: deviceId })
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                device_id: deviceId,
+                error: []
+            }
+        }
+        )
+        // const userData = await AsyncStorage.removeItem("userData")
+        // FOR TESTING AUTHENTICATION
         const userData = await AsyncStorage.getItem("userData")
         if (userData !== null) {
             this.props.navigation.navigate('Main')
@@ -41,9 +52,6 @@ class Startup extends Component {
                     displayLogin: true
                 })
         }
-
-
-
     }
 
 
@@ -72,7 +80,9 @@ class Startup extends Component {
             password: this.state.password,
             device_id: this.state.device_id
         }).then(async result => {
-
+            await this.setState({
+                disabled: true
+            })
             if (result.status === "success") {
                 try {
                     const data = {
@@ -91,6 +101,21 @@ class Startup extends Component {
             }
             else if (this.state.email === "" || this.state.password === "") {
                 alert("Please input a value into the field")
+                this.setState({
+                    disabled: false,
+                })
+            }
+            else if (result.email) {
+                this.setState(prevState => {
+                    const newError = prevState.error.concat(result.email)
+                    return {
+                        ...prevState,
+                        disabled: false,
+                        error: newError,
+                        showAlert: true
+                    }
+
+                })
             }
             else if (result.status === "error") {
                 alert(result.message)
@@ -109,15 +134,16 @@ class Startup extends Component {
             return <Splashscreen />
         }
         else {
-
             return (
                 <Signin
                     handleEmail={this.handleEmail}
                     handlePassword={this.handlePassword}
                     login={this.handleSignin}
                     navigateSignup={this.handleSignupNavigation}
+                    handleDisabled={this.state.disabled}
+                    error={this.state.error[0]}
+                    showAlert={this.state.showAlert}
                 />
-
             )
         }
 

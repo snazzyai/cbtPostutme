@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, Image, ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import ShowAlert from '../ShowAlertComponent/ShowAlertComponent'
+
 
 
 
@@ -12,20 +14,20 @@ class Signin extends Component {
                 <ScrollView style={styles.scrollView}>
                     <View style={styles.logo}>
                         <Image style={styles.imageLogo} source={require("../../../assets/images/logo.png")} />
-
                     </View>
                     <View style={styles.inputFieldView}>
                         <View style={styles.inputContainer}>
                             <TextInput keyboardType="email-address" onChangeText={this.props.handleEmail} style={styles.inputStyle} placeholder="Email" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="md-mail" size={20} color="#fff" />
                         </View>
+                        {this.props.showAlert ? <ShowAlert ErrorMessage={this.props.error} /> : false}
                         <View style={styles.inputContainer}>
                             <TextInput secureTextEntry={true} onChangeText={this.props.handlePassword} style={styles.inputStyle} placeholder="Password" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="md-lock" size={20} color="#fff" />
                         </View>
                     </View>
                     <View style={styles.clickableView}>
-                        <TouchableOpacity onPress={this.props.login} style={styles.clickable}>
+                        <TouchableOpacity disabled={this.props.handleDisabled} onPress={this.props.login} style={styles.clickable}>
                             <Text style={styles.clickableText}>LOGIN</Text>
                         </TouchableOpacity>
                     </View>
@@ -38,6 +40,7 @@ class Signin extends Component {
             </ImageBackground>
         );
     }
+
 }
 
 const styles = StyleSheet.create({
