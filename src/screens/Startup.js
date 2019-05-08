@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
-import { ToastAndroid } from 'react-native'
 import Splashscreen from '../components/Splashscreen/Splashscreen'
 import Signin from '../components/SigninComponent/SigninComponent'
 import AsyncStorage from '@react-native-community/async-storage'
 import { Postdata } from '../services/Postdata';
 import DeviceInfo from 'react-native-device-info'
+import ValidationComponent from 'react-native-form-validator';
 
 
 
 // import SplashScreen from 'react-native-splash-screen'
 
-class Startup extends Component {
+class Startup extends ValidationComponent {
     state = {
         displayLogin: false,
         email: "",
+        errorEmail: "",
+        errorPassword: "",
+        errorDeviceMessage: "",
         password: "",
         device_id: "",
         isLoading: false,
@@ -28,9 +31,21 @@ class Startup extends Component {
         return Resolved
     }
 
+    errorAdd = () => {
+        this.state.error.map(err => {
+            this.setState({
+                errorPassword: err.password,
+                errorEmail: err.email,
+                errorDeviceMessage: err.message,
+                showAlert: true,
+                disabled: false,
+                isLoading: false,
+            })
+        })
 
+    }
+    //gets device info and stores in state
     async componentDidMount() {
-
         const deviceId = DeviceInfo.getDeviceId()
         this.setState(prevState => {
             return {
@@ -64,63 +79,71 @@ class Startup extends Component {
             password: value
         })
     }
+    //handles signin
     handleSignin = () => {
-        this.setState({
-            disabled: true,
-            showAlert: false,
-            isLoading: true,
-            error: []
-        })
-        Postdata('login', {
-            email: this.state.email,
-            password: this.state.password,
-            device_id: this.state.device_id
-        }).then(async result => {
-            if (result.status === "success") {
-                try {
-                    const data = {
-                        email: this.state.email,
-                        device_id: this.state.device_id
+        this.validate({
+            email: { minlength: 5, email: true, },
+            password: { minlength: 5, required: true }
+        });
+
+        if (this.getErrorMessages()) {
+            alert(this.getErrorMessages())
+        }
+        else {
+            this.setState({
+                disabled: true,
+                showAlert: false,
+                isLoading: true,
+                error: []
+            })
+            Postdata('login', {
+                email: this.state.email,
+                password: this.state.password,
+                device_id: this.state.device_id
+            }).then(async result => {
+                if (result.status === "success") {
+                    console.warn("success")
+                    try {
+                        const data = {
+                            email: this.state.email,
+                            device_id: this.state.device_id
+                        }
+                        await AsyncStorage.setItem('userData', JSON.stringify(data))
+                        console.warn("successfully stored")
                     }
-                    await AsyncStorage.setItem('userData', JSON.stringify(data))
-                    console.warn("successfully stored")
+                    catch (e) {
+                        console.warn(e)
+                    }
+
+                    this.props.navigation.navigate('Main')
+
                 }
-                catch (e) {
-                    console.warn(e)
-                }
-
-                this.props.navigation.navigate('Main')
-
-            }
-            else if (this.state.email === "" || this.state.password === "") {
-                this.setState({
-                    disabled: false,
-                    isLoading: false
-                })
-                alert("Please input a value into the field")
-
-            }
-            else if (result.email) {
-                this.setState(prevState => {
-                    const newError = prevState.error.concat(result.email)
-                    return {
-                        ...prevState,
-                        error: newError,
-                        showAlert: true,
+                else if (result.message) {
+                    alert(result.message)
+                    this.setState({
                         disabled: false,
-                        isLoading: false
-                    }
+                        showAlert: false,
+                        isLoading: false,
+                    })
+                    return false
+                }
 
-                })
-            }
-            else if (result.status === "error") {
-                this.setState({
-                    disabled: false,
-                    isLoading: false
-                })
-                alert(result.message)
-            }
-        }).catch(err => console.warn(err))
+                else {
+
+                    console.warn(
+                        console.warn("unsuccessful")
+                    )
+                    this.setState(prevState => {
+                        return {
+                            ...prevState,
+                            error: prevState.error.concat(result),
+                        }
+                    })
+                    this.errorAdd()
+                }
+            }).catch(err => console.warn(err))
+        }
+
 
     }
 
@@ -141,7 +164,9 @@ class Startup extends Component {
                     login={this.handleSignin}
                     navigateSignup={this.handleSignupNavigation}
                     handleDisabled={this.state.disabled}
-                    errorEmail={this.state.error[0]}
+                    error={this.state.error}
+                    errorEmail={this.state.errorEmail}
+                    errorPassword={this.state.errorPassword}
                     showAlert={this.state.showAlert}
                     isLoading={this.state.isLoading}
                 />

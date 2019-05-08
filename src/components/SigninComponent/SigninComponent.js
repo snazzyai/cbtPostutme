@@ -25,6 +25,7 @@ class Signin extends Component {
                             <TextInput secureTextEntry={true} onChangeText={this.props.handlePassword} style={styles.inputStyle} placeholder="Password" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="md-lock" size={20} color="#fff" />
                         </View>
+                        {this.props.showAlert ? <ShowAlert ErrorMessage={this.props.errorPassword} /> : false}
                     </View>
                     <View style={styles.clickableView}>
                         <TouchableOpacity disabled={this.props.handleDisabled} onPress={this.props.login} style={styles.clickable}>
@@ -104,8 +105,6 @@ const styles = StyleSheet.create({
     clickableView: {
         marginTop: "7%",
         alignItems: "center",
-
-
     },
     clickable: {
         alignItems: "center",

@@ -3,16 +3,17 @@ import Signup from '../components/SignupComponent/SignupComponent'
 import { Postdata } from '../../src/services/Postdata'
 import DeviceInfo from 'react-native-device-info'
 import AsyncStorage from '@react-native-community/async-storage';
+import ValidationComponent from 'react-native-form-validator';
 
 
 
 
-export default class SignUp extends Component {
+export default class SignUp extends ValidationComponent {
     state = {
         email: "",
         name: "",
         password: "",
-        phone: null,
+        phone: "",
         device_id: "",
         error: [],
         errorEmail: "",
@@ -24,10 +25,11 @@ export default class SignUp extends Component {
         isLoading: false
     }
 
-
+    //get device info on mounting
     componentDidMount() {
         const buildId = DeviceInfo.getDeviceId()
         this.setState({ device_id: buildId })
+        console.warn(buildId)
     }
 
 
@@ -59,6 +61,7 @@ export default class SignUp extends Component {
 
     }
 
+    //loops through errors and adds to respective state
     errorAdd = () => {
         this.state.error.map(err => {
             this.setState({
@@ -74,35 +77,18 @@ export default class SignUp extends Component {
     }
 
 
+    //handles signup
 
     handleSignup = () => {
+        this.validate({
+            name: { minlength: 6, required: true },
+            email: { minlength: 6, email: true, },
+            phone: { minlength: 6, numbers: true, minlength: 11, required: true },
+            password: { minlength: 6, required: true }
+        });
 
-        this.setState({
-            error: []
-        })
-        const { email, name, password, phone } = this.state
-        const ConvertEmail = email.split("")
-        const PhoneValidate = /^\d{11}$/;
-
-
-
-
-        if (email === "" || name === "" || password === "" || phone === "") {
-            alert("required fields not filled...")
-            console.warn(typeof PhoneConvert)
-        }
-        else if (name.length < 6 || password.length < 6) {
-            alert("Fields must have at least 6 characters...")
-        }
-        else if (!(phone.length === 11)) {
-            alert("Phone Number length must be 11 numbers")
-        }
-        else if (typeof PhoneConvert === "NaN") {
-            alert("Phone Number invalid...")
-
-        }
-        else if (!ConvertEmail.includes("@", ".com")) {
-            alert("Email not a valid type...")
+        if (this.getErrorMessages()) {
+            alert(this.getErrorMessages())
         }
         else {
             this.setState({
@@ -137,15 +123,12 @@ export default class SignUp extends Component {
                             }
                         })
                         this.errorAdd()
-
-                        console.warn(this.state.error)
                     }
 
 
                 }).catch((err) => console.warn("there was an error"))
-
-
         }
+
 
     }
 

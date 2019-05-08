@@ -97,9 +97,12 @@ const ChooseQuestions = createStackNavigator({
 const StartScreen = createSwitchNavigator({
     Auth: Auth,
     Main: Main
+},
+    {
+        initialRouteName: 'Main',
+    }
 
-
-})
+)
 
 const DrawerNavigation = createDrawerNavigator({
     ["My Exams"]: {

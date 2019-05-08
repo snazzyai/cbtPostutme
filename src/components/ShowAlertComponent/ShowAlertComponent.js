@@ -18,8 +18,8 @@ class ShowAlert extends Component {
         if (this.state.open) {
             return (
                 <View key={this.props.mainkey}>
-                    <Text style={{ color: "#b73131", fontSize: 18 }}>{this.props.ErrorMessage}</Text>
-                </View>
+                    <Text style={{ backgroundColor: "#f75b49", fontSize: 18, color: "#fff" }}>{this.props.ErrorMessage}</Text>
+                </View >
             );
         }
         return false
