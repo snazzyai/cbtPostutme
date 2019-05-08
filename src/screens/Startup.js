@@ -54,8 +54,6 @@ class Startup extends Component {
                 })
         }
     }
-
-
     handleEmail = (value) => {
         this.setState({
             email: value
@@ -66,10 +64,6 @@ class Startup extends Component {
             password: value
         })
     }
-
-
-
-
     handleSignin = () => {
         this.setState({
             disabled: true,
