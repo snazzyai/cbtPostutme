@@ -99,7 +99,7 @@ const StartScreen = createSwitchNavigator({
     Main: Main
 },
     {
-        initialRouteName: 'Main',
+        initialRouteName: 'Auth',
     }
 
 )

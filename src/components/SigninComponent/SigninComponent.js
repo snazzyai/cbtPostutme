@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     clickableView: {
         marginTop: "7%",
         alignItems: "center",
+        marginBottom: "2%"
     },
     clickable: {
         alignItems: "center",

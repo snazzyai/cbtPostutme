@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 
 
+
 class PastQuestions extends Component {
     state = {
         searchValue: "",
@@ -130,7 +131,7 @@ class PastQuestions extends Component {
 
 
 
-    onShare = () => {
+    onShare = (type) => {
         const result = Share.share({
             title: "Download FaceYourBook",
             message: "http://www.simbibot.com"
@@ -139,7 +140,12 @@ class PastQuestions extends Component {
             ToastAndroid.show('Please make sure you share', ToastAndroid.SHORT);
             new Promise(resolve => {
                 if (AsyncStorage.getItem('shared') !== null) {
-                    resolve(setTimeout(() => this.props.navigation.navigate('Download'), 7000))
+                    resolve(setTimeout(() => {
+                        this.props.navigation.navigate('Download', {
+                            typeOne: type,
+                            typeTwo: type
+                        })
+                    }, 7000))
                 }
                 else {
 
@@ -151,14 +157,15 @@ class PastQuestions extends Component {
     }
 
 
-    handleAlert = () => {
+    handleAlert = (type) => {
+        console.warn(type)
         Alert.alert(
             'YOU NEED TO SHARE',
             'Share to your Friends to access this question',
             [
                 {
                     text: 'Share',
-                    onPress: this.onShare
+                    onPress: this.onShare(type)
                 },
 
                 { text: 'OK' }
@@ -192,11 +199,12 @@ class PastQuestions extends Component {
         const QuestionList = QuestionListFiltered.map(type => (
             <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => {
                 if (type.typeName == "WAEC") {
-                    this.handleAlert()
+
+                    this.handleAlert(type.typeName)
 
                 }
                 else if (type.typeName == "UTME") {
-                    this.handleAlert()
+                    this.handleAlert(type.typeName)
 
                 }
                 else {

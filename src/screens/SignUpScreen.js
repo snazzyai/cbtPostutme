@@ -29,7 +29,6 @@ export default class SignUp extends ValidationComponent {
     componentDidMount() {
         const buildId = DeviceInfo.getDeviceId()
         this.setState({ device_id: buildId })
-        console.warn(buildId)
     }
 
 

@@ -14,10 +14,11 @@ class MyExams extends Component {
 
 
     componentDidMount() {
+
         axios.get('https://learn.simbibot.com/public/api/putme_schools')
             .then((response) => this.setState({
                 exams: response.data
-            }))
+            })).catch(err => console.warn("unable to fetch"))
 
     }
     render() {
@@ -39,10 +40,9 @@ class MyExams extends Component {
                             this.state.exams.schools.map((school, i) => {
                                 return (
                                     <View style={{ alignItems: "center" }} key={i}>
-                                        <ButtonComponent externalStyle={{ textAlign: "justify", width: "90%", height: 55 }} text={school} onPress={() => this.props.navigation.navigate('SelectSubject', {
+                                        <ButtonComponent textStyle={{ fontSize: 13 }} externalStyle={{ textAlign: "justify", width: "70%", height: 35 }} text={school} onPress={() => this.props.navigation.navigate('SelectSubject', {
                                             id: i,
                                             name: school
-
                                         })} />
                                     </View>
 

@@ -50,7 +50,7 @@ class SelectSubject extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView >
-                    <Text style={styles.textSelect}>SELECT A SUBJECT {this.name}</Text>
+                    <Text style={styles.textSelect}>SELECT A SUBJECT</Text>
                     <Picker
                         selectedValue={this.state.subject}
                         style={styles.picker}
@@ -62,9 +62,7 @@ class SelectSubject extends Component {
                             this.state.subjects.map(subject => {
                                 const question = `${subject.question}`
                                 return (
-
                                     <Picker.item label={question} value={question} />
-
                                 )
                             })
                         }
