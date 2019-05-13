@@ -13,6 +13,7 @@ import ActivationScreenTwo from "../screens/ActivationScreenTwo"
 import SelectSubject from '../screens/SelectSubjectScreen'
 import Questions from '../screens/QuestionsScreen'
 import SignUp from '../screens/SignUpScreen'
+import PaymentPage from '../screens/PaymentPage'
 
 
 
@@ -39,6 +40,12 @@ const Auth = createStackNavigator({
 
 })
 const Main = createStackNavigator({
+    PaymentPage: {
+        screen: PaymentPage,
+        navigationOptions: {
+            header: null
+        }
+    },
     PastQuestions: {
         screen: PastQuestions,
         navigationOptions: {
@@ -69,6 +76,7 @@ const Main = createStackNavigator({
             header: null
         }
     },
+
     Download: {
         screen: DownloadScreen,
         navigationOptions: {
@@ -106,20 +114,30 @@ const StartScreen = createSwitchNavigator({
 
 const DrawerNavigation = createDrawerNavigator({
     ["My Exams"]: {
-        screen: ChooseQuestions
+        screen: ChooseQuestions,
+
     },
     ["Add an Exam"]: {
-        screen: PastQuestions
-    }
+        screen: PastQuestions,
+
+    },
+
 },
     {
-        contentComponent: CustomDrawerNavigation
+        contentComponent: CustomDrawerNavigation,
+        navigationOptions: {
+            header: null
+        }
     }
 )
 
-const AppSwitchNavigator = createSwitchNavigator(
+const AppSwitchNavigator = createStackNavigator(
     {
-        StartScreen: StartScreen,
+        StartScreen: {
+            screen: StartScreen, navigationOptions: {
+                header: null
+            }
+        },
         DrawerNavigation: DrawerNavigation
     },
     {

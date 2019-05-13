@@ -19,6 +19,8 @@ class Payment extends Component {
             message: 'http://www.simbibot.com',
         });
     }
+
+
     render() {
         const { navigation } = this.props
 

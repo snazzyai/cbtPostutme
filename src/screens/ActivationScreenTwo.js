@@ -16,7 +16,7 @@ class ActivationScreenTwo extends Component {
 
     handlePress = () => {
         //store agents name and check if an agent with that name exists 
-        this.props.navigation.navigate('Download', {
+        this.props.navigation.navigate('PaymentPage', {
             id: this.id,
             name: this.name
         })

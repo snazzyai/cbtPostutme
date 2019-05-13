@@ -9,6 +9,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 
 
 
+
 class ActivationScreenOne extends Component {
 
     name = this.props.navigation.getParam('name')
@@ -20,9 +21,14 @@ class ActivationScreenOne extends Component {
         checked: 0
     }
 
+    componentDidMount() {
+        console.warn(this.name)
+    }
+
 
 
     handlePress = () => {
+
         const { value } = this.state
         if (this.state.checked === null) {
             ToastAndroid.showWithGravity(
@@ -38,7 +44,7 @@ class ActivationScreenOne extends Component {
             })
         }
         else {
-            this.props.navigation.navigate('Download', {
+            this.props.navigation.navigate('PaymentPage', {
                 id: this.id,
                 name: this.name
             })

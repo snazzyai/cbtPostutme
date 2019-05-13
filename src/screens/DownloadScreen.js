@@ -6,14 +6,14 @@ import ActivationScreenHeader from '../components/ActivationScreenHeader/Activat
 
 
 
+
 class DownloadScreen extends Component {
-    typeOne = this.props.navigation.getParam('typeOne')
-    typeTwo = this.props.navigation.getParam('typeTwo')
+    name = this.props.navigation.getParam('name')
+    id = this.props.navigation.getParam('id')
 
 
 
     state = {
-
         isLoading: true
     }
 
@@ -30,6 +30,7 @@ class DownloadScreen extends Component {
             this.setState({
                 isLoading: false
             })
+        console.warn(this.name)
 
     }
 
@@ -56,7 +57,7 @@ class DownloadScreen extends Component {
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("My Exams")} >
                             <Text style={styles.textView}> Click here to go to your Exams Screen </Text>
                         </TouchableOpacity>
-                        <Text>{this.typeOne}</Text>
+                        <Text>{this.name}</Text>
                     </View>
                 </View>
             )

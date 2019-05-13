@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, ToastAndroid, ScrollView, Image, ImageBackground, Alert, Share } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios'
 
 
 
@@ -129,9 +130,66 @@ class PastQuestions extends Component {
 
     }
 
+    // async componentDidMount(){
+
+    //     axios.get(`http://backend.faceyourbookapps.com/verify-transaction?transaction_ref=c5940bw6xb&user_id=1&exam_name=University of lagos&device_id=09093905099`)
+    //     .then()
+    // }
+
+    checkUserPaid = async (type, id) => {
 
 
-    onShare = (type) => {
+        const paymentDetail = await AsyncStorage.getItem('payment')
+        const parsePaymentDetail = JSON.parse(paymentDetail)
+        if (paymentDetail === null) {
+            const data = {
+                hasPaid: false
+            }
+            await AsyncStorage.setItem('payment', JSON.stringify(data))
+            console.warn("successfully stored")
+
+            this.props.navigation.navigate('Payment', {
+                id: id,
+                name: type
+            })
+        }
+        else if (parsePaymentDetail.hasPaid === false) {
+            this.props.navigation.navigate('Payment', {
+                id: id,
+                name: type
+            })
+        }
+        else {
+            this.props.navigation.navigate('SubjectScreen', {
+                name: type
+            })
+        }
+
+    }
+
+    //checks if user has shared
+    checkUserShared = async (type) => {
+
+        const sharingDetail = await AsyncStorage.getItem('sharing')
+        const parsedSharingDetail = JSON.parse(sharingDetail)
+        if (parsedSharingDetail === null) {
+            const data = {
+                hasShared: true
+            }
+            await AsyncStorage.setItem('sharing', JSON.stringify(data))
+            console.warn("successfully set hasShared")
+            this.handleAlert(type)
+        }
+        else if (parsedSharingDetail.hasShared) {
+            console.warn('has shared and taken to subject page')
+            this.props.navigation.navigate('SelectSubject', {
+                subject: type
+            })
+        }
+
+    }
+
+    onShare = async (type) => {
         const result = Share.share({
             title: "Download FaceYourBook",
             message: "http://www.simbibot.com"
@@ -139,21 +197,13 @@ class PastQuestions extends Component {
         if (result.action !== Share.sharedAction) {
             ToastAndroid.show('Please make sure you share', ToastAndroid.SHORT);
             new Promise(resolve => {
-                if (AsyncStorage.getItem('shared') !== null) {
-                    resolve(setTimeout(() => {
-                        this.props.navigation.navigate('Download', {
-                            typeOne: type,
-                            typeTwo: type
-                        })
-                    }, 7000))
-                }
-                else {
-
-                }
+                resolve(setTimeout(() => {
+                    this.props.navigation.navigate('Download', {
+                        questionType: type
+                    })
+                }, 7000))
             })
-
         }
-
     }
 
 
@@ -196,24 +246,20 @@ class PastQuestions extends Component {
         const QuestionListFiltered = this.state.schools.filter(type => {
             return type.typeName.toLowerCase().includes(this.state.searchValue.toLowerCase())
         })
-        const QuestionList = QuestionListFiltered.map(type => (
+        const QuestionList = QuestionListFiltered.map((type) => (
             <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => {
+                console.warn(type.typeName)
                 if (type.typeName == "WAEC") {
-
-                    this.handleAlert(type.typeName)
-
+                    this.checkUserShared(type.typeName)
                 }
                 else if (type.typeName == "UTME") {
-                    this.handleAlert(type.typeName)
-
+                    this.checkUserShared(type.typeName)
                 }
                 else {
-                    this.props.navigation.navigate('Payment', {
-                        id: type.id,
-                        name: type.typeName
-                    })
+                    this.checkUserPaid(type.typeName, type.id)
                 }
-            }} >
+            }
+            }>
                 <View style={styles.imageView}>
                     <Image source={type.imageSource} style={styles.image} />
                 </View>
@@ -223,9 +269,6 @@ class PastQuestions extends Component {
                 </View>
             </TouchableOpacity>
         ))
-
-
-
         return (
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>

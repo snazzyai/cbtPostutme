@@ -102,14 +102,14 @@ class Startup extends ValidationComponent {
                 device_id: this.state.device_id
             }).then(async result => {
                 if (result.status === "success") {
-                    console.warn("success")
+
                     try {
                         const data = {
                             email: this.state.email,
                             device_id: this.state.device_id
                         }
                         await AsyncStorage.setItem('userData', JSON.stringify(data))
-                        console.warn("successfully stored")
+
                     }
                     catch (e) {
                         console.warn(e)
@@ -129,10 +129,6 @@ class Startup extends ValidationComponent {
                 }
 
                 else {
-
-                    console.warn(
-                        console.warn("unsuccessful")
-                    )
                     this.setState(prevState => {
                         return {
                             ...prevState,
