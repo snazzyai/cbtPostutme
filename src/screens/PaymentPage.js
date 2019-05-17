@@ -6,17 +6,20 @@ import AsyncStorage from '@react-native-community/async-storage';
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
 import ValidationComponent from 'react-native-form-validator';
 
+// import CardCharge from '../components/CardCharge/CardCharge'
 
 
 
 
-RNPaystack.init({ publicKey: 'YOUR_PUBLIC_KEY_HERE' });
+
+RNPaystack.init({ publicKey: 'pk_test_ad9da22e7023bd7dcf5f91147fc952ded8974ae3' });
 
 
 class PaymentPage extends ValidationComponent {
 
     state = {
         isLoading: false,
+        isDisabled: false,
         email: "",
         cardNumber: "",
         expiryMonth: "",
@@ -46,10 +49,11 @@ class PaymentPage extends ValidationComponent {
 
     }
 
-    validateCard = () => {
+    validateCard = async () => {
         this.setState(prevState => {
             return {
-                isLoading: !prevState.isLoading
+                isLoading: !prevState.isLoading,
+                isDisabled: !prevState.isDisabled
             }
         })
 
@@ -65,35 +69,57 @@ class PaymentPage extends ValidationComponent {
             this.setState(prevState => {
                 return {
                     ...prevState,
-                    isLoading: !prevState.isLoading
+                    isLoading: !prevState.isLoading,
+                    isDisabled: !prevState.isDisabled
                 }
             })
-            const splitted = this.monthYearSplitter()
-            const splittedFirst = splitted[0]
-            const splittedSecond = splitted[1]
-            this.setState(prevState => {
-                return {
-                    ...prevState,
-                    expiryMonth: "" + splittedFirst,
-                    expiryYear: "" + splittedSecond
-                }
-            })
-            console.warn("d: " + this.state.expiryMonth)
 
         }
         else {
             const splitted = this.monthYearSplitter()
             const splittedFirst = splitted[0]
             const splittedSecond = splitted[1]
-            this.setState(prevState => {
+            await this.setState(prevState => {
                 return {
                     ...prevState,
-                    expiryMonth: "" + splittedFirst,
-                    expiryYear: "" + splittedSecond
+                    expiryMonth: splittedFirst,
+                    expiryYear: splittedSecond
                 }
             })
+            this.chargeCard()
 
         }
+    }
+
+    chargeCard = () => {
+        RNPaystack.chargeCard({
+            cardNumber: this.state.cardNumber,
+            expiryMonth: this.state.expiryMonth,
+            expiryYear: this.state.expiryYear,
+            cvc: this.state.cvv,
+            email: this.state.email,
+            amountInKobo: 150000,
+        })
+            .then(response => {
+                console.warn(response); // card charged successfully, get reference here
+                this.setState(prevState => {
+                    return {
+                        isLoading: !prevState.isLoading,
+                        isDisabled: !prevState.isDisabled
+                    }
+                })
+            })
+            .catch(error => {
+                console.warn(error); // error is a javascript Error object
+                console.warn(error.message);
+                console.warn(error.code);
+                this.setState(prevState => {
+                    return {
+                        isLoading: !prevState.isLoading,
+                        isDisabled: !prevState.isDisabled
+                    }
+                })
+            })
     }
 
     render() {
@@ -123,18 +149,7 @@ class PaymentPage extends ValidationComponent {
                                     <TextInput secureTextEntry keyboardType="phone-pad" onChangeText={(value) => this.setState({ cvv: value })} style={styles.cvv} placeholder={`123`} />
                                 </View>
                             </View>
-                            <ButtonComponent onPress={this.validateCard} text={'PAY N2000'} isLoading={this.state.isLoading} externalStyle={{ marginLeft: 28 }} />
-                            <Text>{this.state.expiryMonth}</Text>
-
-                            <CardCharge
-                                isLoading={this.state.isLoading}
-                                email={this.state.email}
-                                cardNumber={this.state.cardNumber}
-                                expiryMonth={this.state.expiryMonth}
-                                expiryYear={this.state.expiryYear}
-                                cvv={this.state.cvv}
-                                amountInKobo={this.state.amountInKobo}
-                            />
+                            <ButtonComponent onPress={this.validateCard} isDisabled={this.state.isDisabled} text={'PAY N2000'} isLoading={this.state.isLoading} externalStyle={{ marginLeft: 28 }} />
                         </View>
                     </View>
                 </View>
