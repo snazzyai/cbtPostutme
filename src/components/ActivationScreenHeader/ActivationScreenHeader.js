@@ -3,10 +3,10 @@ import { StyleSheet, View, Text, ImageBackground } from 'react-native'
 
 
 
-const ActivationScreenHeader = ({ processText }) => {
+const ActivationScreenHeader = ({ processText, myStyle }) => {
     return (
-        <ImageBackground source={require("../../../assets/images/background.jpg")} style={styles.header}>
-            <Text style={styles.headerText}>{processText}</Text>
+        <ImageBackground source={require("../../../assets/images/background.jpg")} style={[styles.header, myStyle]}>
+            <Text style={styles.headerText} > {processText}</Text>
         </ImageBackground>
     )
 }

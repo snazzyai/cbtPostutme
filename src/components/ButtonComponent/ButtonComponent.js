@@ -1,10 +1,11 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
-const ButtonComponent = ({ onPress, text, externalStyle, textStyle }) => {
+
+const ButtonComponent = ({ onPress, text, externalStyle, textStyle, isLoading }) => {
     return (
         <TouchableOpacity style={[styles.paymentTouch, externalStyle]} onPress={onPress}>
-            <Text style={[styles.paymentText, textStyle]}>{text}</Text>
+            {isLoading ? <ActivityIndicator size="small" color="#00ff00" /> : <Text style={[styles.paymentText, textStyle]}>{text}</Text>}
         </TouchableOpacity >
 
     )
