@@ -71,7 +71,7 @@ class SelectSubject extends Component {
                     <View style={styles.iconView}>
                         <Icon size={30} color="#fff" name="ios-arrow-dropdown" />
                     </View>
-                    <ButtonComponent externalStyle={{ marginLeft: 30 }} onPress={this.handlePress} text="SELECT TOPIC" />
+                    <ButtonComponent externalStyle={{ marginLeft: 30 }} onPress={this.handlePress} text="SELECT SUBJECT" />
                 </ScrollView>
 
             </View >

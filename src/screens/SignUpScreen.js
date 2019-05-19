@@ -109,7 +109,9 @@ export default class SignUp extends ValidationComponent {
                         alert("successfully registered")
                         const data = {
                             email: result.user.email,
-                            device_id: result.user.device_id
+                            device_id: result.user.device_id,
+                            user_id: result.user.user_id,
+                            phone: result.user.phone
                         }
                         await AsyncStorage.setItem("userData", JSON.stringify(data))
                         this.props.navigation.navigate('Menu')

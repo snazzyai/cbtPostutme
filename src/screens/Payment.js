@@ -33,7 +33,7 @@ class Payment extends Component {
                     <Text style={styles.detailsText}>CHOOSE A PAYMENT METHOD</Text>
                 </ImageBackground>
                 <View style={styles.paymentMethodView}>
-                    <Text style={styles.paymentMethodText} >{this.name}</Text>
+                    <Text style={styles.paymentMethodText} >{this.name.toUpperCase()}</Text>
                     <ButtonComponent onPress={() => this.props.navigation.navigate('ActivationOne', {
                         id: this.id,
                         name: this.name

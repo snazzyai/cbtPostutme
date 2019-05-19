@@ -21,9 +21,6 @@ class ActivationScreenOne extends Component {
         checked: 0
     }
 
-    componentDidMount() {
-        console.warn(this.name)
-    }
 
 
 

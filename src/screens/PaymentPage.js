@@ -5,6 +5,7 @@ import RNPaystack from 'react-native-paystack';
 import AsyncStorage from '@react-native-community/async-storage';
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
 import ValidationComponent from 'react-native-form-validator';
+import Axios from 'axios';
 
 // import CardCharge from '../components/CardCharge/CardCharge'
 
@@ -12,22 +13,29 @@ import ValidationComponent from 'react-native-form-validator';
 
 
 
-RNPaystack.init({ publicKey: 'pk_test_ad9da22e7023bd7dcf5f91147fc952ded8974ae3' });
+RNPaystack.init({ publicKey: 'pk_test_a3c6507e7a82c63308de9c5863bbe0950492d508' });
 
 
 class PaymentPage extends ValidationComponent {
+    name = this.props.navigation.getParam('name')
+    id = this.props.navigation.getParam('id')
 
     state = {
         isLoading: false,
         isDisabled: false,
         email: "",
         cardNumber: "",
+        testcardNumber: "",
         expiryMonth: "",
+        testexpiryMonth: "",
         expiryYear: "",
+        testexpiryYear: "",
         monthYear: "",
         cvv: "",
-        amountInKobo: 200000
+        testcvv: "",
+        schoolName: this.name
     }
+
 
 
     async componentDidMount() {
@@ -91,32 +99,59 @@ class PaymentPage extends ValidationComponent {
         }
     }
 
-    chargeCard = () => {
+    chargeCard = async () => {
+        const data = await AsyncStorage.getItem('userData')
+        const converted = JSON.parse(data)
+        const userId = converted.user_id
+        const deviceId = converted.device_id
+        //testmode
+        this.setState(prevState => {
+            return {
+                isLoading: true,
+                isDisabled: true
+            }
+        })
+
         RNPaystack.chargeCard({
             cardNumber: this.state.cardNumber,
             expiryMonth: this.state.expiryMonth,
             expiryYear: this.state.expiryYear,
             cvc: this.state.cvv,
             email: this.state.email,
-            amountInKobo: 150000,
+            amountInKobo: 200000,
         })
             .then(response => {
-                console.warn(response); // card charged successfully, get reference here
+
+                const reference = response.reference
+                const schoolName = this.state.schoolName
+
+                Axios.get(`http://backend.faceyourbookapps.com/verify-transaction?transaction_ref=${reference}&user_id=${userId}&exam_name=${schoolName}&device_id=${deviceId}`)
+                    .then((response) => {
+                        if (response.status === "error") {
+                            alert("unable to successfully validate")
+                        }
+                        this.props.navigation.navigate('Download', {
+                            name: this.name
+                        })
+                    }).catch(e => console.warn(e))
+
+
                 this.setState(prevState => {
                     return {
-                        isLoading: !prevState.isLoading,
-                        isDisabled: !prevState.isDisabled
+                        isLoading: false,
+                        isDisabled: false
                     }
                 })
+
             })
             .catch(error => {
-                console.warn(error); // error is a javascript Error object
+
                 console.warn(error.message);
-                console.warn(error.code);
+
                 this.setState(prevState => {
                     return {
-                        isLoading: !prevState.isLoading,
-                        isDisabled: !prevState.isDisabled
+                        isLoading: false,
+                        isDisabled: false
                     }
                 })
             })
@@ -131,7 +166,7 @@ class PaymentPage extends ValidationComponent {
                     <View style={styles.paymentMain}>
                         <View>
                             <Text style={styles.email}>{this.state.email}</Text>
-                            <Text style={styles.amount}>N2000</Text>
+                            <Text style={{ fontSize: 30, color: "#5FA046", textAlign: "center" }}>N2000</Text>
                         </View>
 
                         <View style={styles.paymentView}>
@@ -165,18 +200,25 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: 'center',
     },
+    amount: {
+
+    },
     paymentView: {
         width: "90%",
-        elevation: 2,
+        elevation: 3,
         marginTop: 30,
-        backgroundColor: "#fafafa",
+        backgroundColor: "#fff",
         padding: 20,
+        marginBottom: 10
 
     },
     cardNumber: {
-        height: 70,
-        width: "90%",
-        fontSize: 20,
+        height: 50,
+        width: "100%",
+        fontSize: 18,
+        backgroundColor: "#ECF2F3",
+        borderRadius: 10,
+        paddingLeft: 5
     },
     cardNumberText: {
         fontSize: 20
@@ -186,9 +228,11 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     validTill: {
-        height: 70,
+        height: 50,
         width: 100,
-        fontSize: 20,
+        fontSize: 18,
+        backgroundColor: "#ECF2F3",
+        borderRadius: 10
     },
     email: {
         fontSize: 20,
@@ -212,9 +256,11 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     cvv: {
-        height: 70,
+        height: 50,
         width: 100,
-        fontSize: 20,
+        fontSize: 18,
+        backgroundColor: "#ECF2F3",
+        borderRadius: 10
     }
 
 });

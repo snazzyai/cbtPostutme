@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, ActivityIndicator, BackHandler } from 'react-native'
 import Icon from "react-native-vector-icons/Ionicons"
 import AsyncStorage from '@react-native-community/async-storage'
 import ActivationScreenHeader from '../components/ActivationScreenHeader/ActivationScreenHeader'
-
+import Axios from 'axios'
 
 
 
 class DownloadScreen extends Component {
     name = this.props.navigation.getParam('name')
-    id = this.props.navigation.getParam('id')
-
 
 
     state = {
@@ -19,19 +17,29 @@ class DownloadScreen extends Component {
 
 
     awaitStartup = async () => {
-        return new Promise(resolve => {
-            setTimeout(() => resolve("resolve"), 3000)
-        })
+
     }
 
     async componentDidMount() {
-        const data = await this.awaitStartup()
-        if (data !== null)
-            this.setState({
-                isLoading: false
+        BackHandler.addEventListener('hardwareBackPress', () => true);
+        const schoolName = this.name
+        console.warn(schoolName)
+        await Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/questions`)
+            .then(async response => {
+                console.warn(response)
+                // const data = await AsyncStorage.getItem([`${schoolName}`])
+                // if (data === null) {
+                //     console.warn("nothing found")
+                // }
+                // else {
+                //     console.warn("found")
+                // }
             })
-        console.warn(this.name)
+            .catch(e => alert(e))
 
+        this.setState({
+            isLoading: false
+        })
     }
 
 
@@ -41,7 +49,7 @@ class DownloadScreen extends Component {
                 <View>
                     <ActivationScreenHeader processText={"Download Section"} />
                     <View style={styles.downloadView}>
-                        <Text style={styles.textView}>Downloading files for {this.name} Questions..Please Wait...</Text>
+                        <Text style={styles.textView}>Downloading files for {this.name} Questions..Please Wait, this might take a few minutes...</Text>
                         <ActivityIndicator size="large" color="#00ff00" />
                     </View>
                 </View>
