@@ -27,13 +27,7 @@ class DownloadScreen extends Component {
         await Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/questions`)
             .then(async response => {
                 console.warn(response)
-                // const data = await AsyncStorage.getItem([`${schoolName}`])
-                // if (data === null) {
-                //     console.warn("nothing found")
-                // }
-                // else {
-                //     console.warn("found")
-                // }
+                //And at this point my brain has automatically shutdown!!
             })
             .catch(e => alert(e))
 
