@@ -12,22 +12,39 @@ class DownloadScreen extends Component {
 
 
     state = {
-        isLoading: true
-    }
-
-
-    awaitStartup = async () => {
-
+        isLoading: true,
+        error: false
     }
 
     async componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', () => true);
+        // BackHandler.addEventListener('hardwareBackPress', () => true);
+        console.warn(this.name)
+        if (this.name === "WAEC" || this.name === "UTME") {
+            alert('waec/putme')
+            this.setState({
+                isLoading: false,
+                error: true
+            })
+            return false
+        }
         const schoolName = this.name
         console.warn(schoolName)
-        await Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/questions`)
+        await Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/subjects`)
             .then(async response => {
-                console.warn(response)
-                //And at this point my brain has automatically shutdown!!
+                console.warn("successfully downloaded subjects")
+                const data = {
+                    subjects: response
+                }
+                await AsyncStorage.setItem(`${schoolName}`, JSON.stringify(data))
+                const getSchool = await AsyncStorage.getItem(`${schoolName}`)
+                const parsedGetSchool = JSON.parse(getSchool)
+                Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/questions`)
+                    .then(response => {
+
+                    })
+
+
+
             })
             .catch(e => alert(e))
 
@@ -51,12 +68,27 @@ class DownloadScreen extends Component {
 
 
         }
-        else {
+        else if (this.state.error === true && !this.state.isLoading) {
             return (
                 <View>
                     <ActivationScreenHeader processText={"Download Section"} />
                     <View style={styles.donwloadView}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("My Exams")} >
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("")} >
+                            <Text style={styles.textView}>There was an error fetching file</Text>
+                        </TouchableOpacity>
+                        <Text>{this.name}</Text>
+                    </View>
+                </View>
+            )
+        }
+        else if (!this.state.loading) {
+            return (
+                <View>
+                    <ActivationScreenHeader processText={"Download Section"} />
+                    <View style={styles.donwloadView}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("SelectSubject", {
+                            subjects: this.state.subjects
+                        })} >
                             <Text style={styles.textView}> Click here to go to your Exams Screen </Text>
                         </TouchableOpacity>
                         <Text>{this.name}</Text>

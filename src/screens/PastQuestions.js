@@ -169,6 +169,7 @@ class PastQuestions extends Component {
     //     .then()
     // }
 
+    //check if user hasPaid
     checkUserPaid = async (type, id) => {
 
 
@@ -200,12 +201,14 @@ class PastQuestions extends Component {
 
     }
 
-    //checks if user has shared
+    //checks if user has shared and navigate based on questions been downloaded or not
     checkUserShared = async (type) => {
 
         const sharingDetail = await AsyncStorage.getItem('sharing')
         const parsedSharingDetail = JSON.parse(sharingDetail)
+        console.warn("part1")
         if (parsedSharingDetail === null) {
+            console.warn("part2")
             const data = {
                 hasShared: true
             }
@@ -214,10 +217,22 @@ class PastQuestions extends Component {
             this.handleAlert(type)
         }
         else if (parsedSharingDetail.hasShared) {
-            console.warn('has shared and taken to subject page')
-            this.props.navigation.navigate('SelectSubject', {
-                subject: type
-            })
+            // for testing
+            // await AsyncStorage.removeItem(`WAEC`)
+            console.warn("removed waed")
+            const questionType = await AsyncStorage.getItem(`${type}`)
+            const parsedType = JSON.parse(questionType)
+            if (parsedType !== null) {
+                this.props.navigation.navigate('SelectSubject', {
+                    name: type
+                })
+            }
+            else {
+                this.props.navigation.navigate('Download', {
+                    name: type
+                })
+            }
+
         }
 
     }

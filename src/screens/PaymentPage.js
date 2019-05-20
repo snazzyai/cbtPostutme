@@ -25,14 +25,14 @@ class PaymentPage extends ValidationComponent {
         isDisabled: false,
         email: "",
         cardNumber: "",
-        testcardNumber: "",
+        testcardNumber: "4084084084084081",
         expiryMonth: "",
-        testexpiryMonth: "",
+        testexpiryMonth: "10",
         expiryYear: "",
-        testexpiryYear: "",
+        testexpiryYear: "25",
         monthYear: "",
         cvv: "",
-        testcvv: "",
+        testcvv: "408",
         schoolName: this.name
     }
 
@@ -113,10 +113,10 @@ class PaymentPage extends ValidationComponent {
         })
 
         RNPaystack.chargeCard({
-            cardNumber: this.state.cardNumber,
-            expiryMonth: this.state.expiryMonth,
-            expiryYear: this.state.expiryYear,
-            cvc: this.state.cvv,
+            cardNumber: this.state.testcardNumber,
+            expiryMonth: this.state.testexpiryMonth,
+            expiryYear: this.state.testexpiryYear,
+            cvc: this.state.testcvv,
             email: this.state.email,
             amountInKobo: 200000,
         })
@@ -184,7 +184,7 @@ class PaymentPage extends ValidationComponent {
                                     <TextInput secureTextEntry keyboardType="phone-pad" onChangeText={(value) => this.setState({ cvv: value })} style={styles.cvv} placeholder={`123`} />
                                 </View>
                             </View>
-                            <ButtonComponent onPress={this.validateCard} isDisabled={this.state.isDisabled} text={'PAY N2000'} isLoading={this.state.isLoading} externalStyle={{ marginLeft: 28 }} />
+                            <ButtonComponent onPress={this.chargeCard} isDisabled={this.state.isDisabled} text={'PAY N2000'} isLoading={this.state.isLoading} externalStyle={{ marginLeft: 28 }} />
                         </View>
                     </View>
                 </View>

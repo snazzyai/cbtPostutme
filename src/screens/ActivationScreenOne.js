@@ -36,13 +36,11 @@ class ActivationScreenOne extends Component {
         }
         else if (this.state.checked === 0) {
             this.props.navigation.navigate('ActivationTwo', {
-                id: this.id,
                 name: this.name
             })
         }
         else {
             this.props.navigation.navigate('PaymentPage', {
-                id: this.id,
                 name: this.name
             })
         }

@@ -10,26 +10,17 @@ import axios from 'axios'
 class SelectSubject extends Component {
 
     name = this.props.navigation.getParam('name')
-    id = this.props.navigation.getParam('id')
 
 
     state = {
         subject: "",
-        subjects: [
-            {
-                id: 1,
-                question: "English"
-            },
-            {
-                id: 2,
-                question: "Mathematics"
-            },
-            {
-                id: 3,
-                question: "Physics"
-            }
-        ],
+        subjects: null,
         pastQuestionName: this.name
+
+    }
+
+    async componentDidMount() {
+
 
     }
 
