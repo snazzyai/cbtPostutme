@@ -84,10 +84,16 @@ const Main = createStackNavigator({
 const ChooseQuestions = createStackNavigator({
     SelectSubject: {
         screen: SelectSubject,
+        navigationOptions: {
+            header: null
+        }
 
     },
     Questions: {
-        screen: Questions
+        screen: Questions,
+        navigationOptions: {
+            header: null
+        }
     }
 
 })
@@ -102,10 +108,6 @@ const StartScreen = createSwitchNavigator({
 )
 
 const DrawerNavigation = createDrawerNavigator({
-    ["My Exams"]: {
-        screen: ChooseQuestions,
-
-    },
     ["Add an Exam"]: {
         screen: PastQuestions,
 
@@ -124,6 +126,11 @@ const AppSwitchNavigator = createStackNavigator(
     {
         StartScreen: {
             screen: StartScreen, navigationOptions: {
+                header: null
+            }
+        },
+        ChooseQuestion: {
+            screen: ChooseQuestions, navigationOptions: {
                 header: null
             }
         },

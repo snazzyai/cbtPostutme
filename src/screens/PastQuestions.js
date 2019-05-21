@@ -14,6 +14,7 @@ import axios from 'axios'
 class PastQuestions extends Component {
     state = {
         searchValue: "",
+        subjects: {},
         schools: [
             {
                 id: 1,
@@ -159,42 +160,30 @@ class PastQuestions extends Component {
             },
 
 
-        ]
+        ],
+
 
     }
 
-    // async componentDidMount(){
 
-    //     axios.get(`http://backend.faceyourbookapps.com/verify-transaction?transaction_ref=c5940bw6xb&user_id=1&exam_name=University of lagos&device_id=09093905099`)
-    //     .then()
-    // }
 
-    //check if user hasPaid
+    //check if user hasPaid and direct as appropriate8ikm
     checkUserPaid = async (type, id) => {
-
-
-        const paymentDetail = await AsyncStorage.getItem('payment')
-        const parsePaymentDetail = JSON.parse(paymentDetail)
-        if (paymentDetail === null) {
-            const data = {
-                hasPaid: false
-            }
-            await AsyncStorage.setItem('payment', JSON.stringify(data))
-            console.warn("successfully stored")
-
-            this.props.navigation.navigate('Payment', {
-                id: id,
-                name: type
+        const getSubjects = await AsyncStorage.getItem(`${type}`)
+        if (getSubjects !== null) {
+            const parsedGetSubject = JSON.parse(getSubjects)
+            const subjects = parsedGetSubject.subjects
+            await this.setState({
+                subjects: subjects
             })
-        }
-        else if (parsePaymentDetail.hasPaid === false) {
-            this.props.navigation.navigate('Payment', {
-                id: id,
-                name: type
+            this.props.navigation.navigate('SelectSubject', {
+                subject: subjects
             })
         }
         else {
-            this.props.navigation.navigate('SubjectScreen', {
+            console.warn("second if")
+            this.props.navigation.navigate('Payment', {
+                id: id,
                 name: type
             })
         }
@@ -203,12 +192,9 @@ class PastQuestions extends Component {
 
     //checks if user has shared and navigate based on questions been downloaded or not
     checkUserShared = async (type) => {
-
         const sharingDetail = await AsyncStorage.getItem('sharing')
         const parsedSharingDetail = JSON.parse(sharingDetail)
-        console.warn("part1")
         if (parsedSharingDetail === null) {
-            console.warn("part2")
             const data = {
                 hasShared: true
             }
@@ -219,7 +205,8 @@ class PastQuestions extends Component {
         else if (parsedSharingDetail.hasShared) {
             // for testing
             // await AsyncStorage.removeItem(`WAEC`)
-            console.warn("removed waed")
+            // await AsyncStorage.removeItem(`UTME`)
+            console.warn("removed waec and utme")
             const questionType = await AsyncStorage.getItem(`${type}`)
             const parsedType = JSON.parse(questionType)
             if (parsedType !== null) {
@@ -237,9 +224,10 @@ class PastQuestions extends Component {
 
     }
 
+    //
     onShare = async (type) => {
         const result = Share.share({
-            title: "Download FaceYourBook",
+            title: "Download FaceYourBook Aoo",
             message: "http://www.simbibot.com"
         })
         if (result.action !== Share.sharedAction) {

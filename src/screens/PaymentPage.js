@@ -133,15 +133,18 @@ class PaymentPage extends ValidationComponent {
                         this.props.navigation.navigate('Download', {
                             name: this.name
                         })
-                    }).catch(e => console.warn(e))
+                    }).catch(e => {
+                        console.warn(e)
+                        this.setState(prevState => {
+                            return {
+                                isLoading: false,
+                                isDisabled: false
+                            }
+                        })
+                    })
 
 
-                this.setState(prevState => {
-                    return {
-                        isLoading: false,
-                        isDisabled: false
-                    }
-                })
+
 
             })
             .catch(error => {

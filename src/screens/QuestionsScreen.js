@@ -7,7 +7,7 @@ import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator, Picker, St
 
 class Questions extends Component {
 
-    subject = this.props.navigation.getParam('subject')
+    subjectId = this.props.navigation.getParam('subjectId')
     name = this.props.navigation.getParam('name')
 
 
@@ -22,7 +22,7 @@ class Questions extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <Text style={styles.textSelect}>Questions {this.subject}</Text>
+                    <Text style={styles.textSelect}>Questions for id {this.subjectId}</Text>
                 </ScrollView>
             </View >
         )

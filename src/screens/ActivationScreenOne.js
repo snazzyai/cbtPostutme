@@ -17,7 +17,7 @@ class ActivationScreenOne extends Component {
 
 
     state = {
-        radioBtnsData: ['Yes', 'No', 'I dont know'],
+        radioBtnsData: ['Yes', 'No'],
         checked: 0
     }
 
@@ -71,7 +71,7 @@ class ActivationScreenOne extends Component {
                                         :
                                         <TouchableOpacity onPress={() => { this.setState({ checked: key }) }} style={styles.btn}>
                                             <Icon color="green" size={30} name="md-radio-button-off" />
-                                            <Text style={{ fontSize: 20, paddingRight: 25, paddingLeft: 5 }}>{data}</Text>
+                                            <Text style={{ fontSize: 20, paddingRight: 20, paddingLeft: 5 }}>{data}</Text>
                                         </TouchableOpacity>
                                     }
                                 </View>
@@ -92,14 +92,14 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     textQuestion: {
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: "bold",
     },
     radio: {
         padding: 20
     },
     radioView: {
-        flexDirection: "row",
+        flexDirection: "column",
         backgroundColor: "#fff",
         paddingTop: 50,
         paddingBottom: 30,
@@ -108,8 +108,9 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     btn: {
-        flexDirection: 'row'
-    }
+        flexDirection: 'row',
+        padding: 10
+    },
 })
 
 export default ActivationScreenOne;

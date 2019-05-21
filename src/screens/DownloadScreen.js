@@ -32,7 +32,6 @@ class DownloadScreen extends Component {
         console.warn(schoolName)
         await Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/subjects`)
             .then(async response => {
-                console.warn("successfully downloaded subjects")
                 const data = {
                     subjects: response
                 }
@@ -46,11 +45,11 @@ class DownloadScreen extends Component {
                 //     })
 
                 this.props.navigation.navigate('SelectSubject', {
-                    subject: parsedGetSchool
+                    subject: response
                 })
 
             })
-            .catch(e => alert(e))
+            .catch(e => console.warn(e))
 
         this.setState({
             isLoading: false

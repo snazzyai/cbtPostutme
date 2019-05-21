@@ -7,40 +7,40 @@ import axios from 'axios'
 
 
 
+
 class SelectSubject extends Component {
 
     name = this.props.navigation.getParam('name')
     subject = this.props.navigation.getParam('subject')
 
     state = {
-        subject: "",
-        subjects: null,
+        subjectId: "",
+        subjects: this.subject,
         pastQuestionName: this.name
 
     }
 
-    componentDidMount() {
-        const subjectArray = this.subject
-        console.warn(subjectArray)
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                subjects: subjectArray
-            }
-        })
-        console.warn(this.state.subjects)
-
-    }
+    // async componentDidMount() {
+    //     await this.setState(prevState => {
+    //         return {
+    //             ...prevState,
+    //             subjects: this.subject
+    //         }
+    //     })
+    // }
 
     handlePress = () => {
-        if (this.state.subject === "") {
+        if (this.state.subjectId === "") {
             alert("Please choose a subject")
-            return null
+            return false
+
         }
         this.props.navigation.navigate('Questions', {
-            subject: this.state.subject,
+            subjectName: this.state.subjectName,
+            subjectId: this.state.subjectId,
             name: this.state.pastQuestionName
         })
+
 
     }
 
@@ -51,17 +51,16 @@ class SelectSubject extends Component {
                 <ScrollView >
                     <Text style={styles.textSelect}>SELECT A SUBJECT</Text>
                     <Picker
-                        selectedValue={this.state.subject}
+                        selectedValue={this.state.subjectId}
                         style={styles.picker}
                         onValueChange={(itemValue, itemIndex) =>
-                            this.setState({ subject: itemValue })
+                            this.setState({ subjectId: itemValue })
                         }>
                         <Picker.item label="Choose a subject" value="" />
                         {
-                            this.state.subjects.map(sub => {
-                                const subject = sub.name
+                            this.state.subjects.data.map(sub => {
                                 return (
-                                    <Picker.item label={subject} value={subject} />
+                                    <Picker.item label={sub.name} value={sub.id} />
                                 )
                             })
                         }
