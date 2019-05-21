@@ -2,7 +2,7 @@ package com.cbtpostume;
 
 import android.app.Application;
 
-
+import org.pgsqlite.SQLitePluginPackage;
 import com.facebook.react.ReactApplication;
 import com.arttitude360.reactnative.rnpaystack.RNPaystackPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -38,6 +38,7 @@ public class MainApplication extends Application implements ReactApplication {
             new SplashScreenReactPackage(),
             new RNSharePackage(),
             new RNDeviceInfo(),
+            new SQLitePluginPackage(),
             new VectorIconsPackage(),
             new AsyncStoragePackage(),
             new SvgPackage(),

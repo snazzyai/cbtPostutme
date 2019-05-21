@@ -10,7 +10,7 @@ import axios from 'axios'
 class SelectSubject extends Component {
 
     name = this.props.navigation.getParam('name')
-
+    subject = this.props.navigation.getParam('subject')
 
     state = {
         subject: "",
@@ -19,8 +19,16 @@ class SelectSubject extends Component {
 
     }
 
-    async componentDidMount() {
-
+    componentDidMount() {
+        const subjectArray = this.subject
+        console.warn(subjectArray)
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                subjects: subjectArray
+            }
+        })
+        console.warn(this.state.subjects)
 
     }
 
@@ -50,10 +58,10 @@ class SelectSubject extends Component {
                         }>
                         <Picker.item label="Choose a subject" value="" />
                         {
-                            this.state.subjects.map(subject => {
-                                const question = `${subject.question}`
+                            this.state.subjects.map(sub => {
+                                const subject = sub.name
                                 return (
-                                    <Picker.item label={question} value={question} />
+                                    <Picker.item label={subject} value={subject} />
                                 )
                             })
                         }

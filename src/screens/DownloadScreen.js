@@ -4,6 +4,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import AsyncStorage from '@react-native-community/async-storage'
 import ActivationScreenHeader from '../components/ActivationScreenHeader/ActivationScreenHeader'
 import Axios from 'axios'
+import SQLite from 'react-native-sqlite-storage'
 
 
 
@@ -38,12 +39,15 @@ class DownloadScreen extends Component {
                 await AsyncStorage.setItem(`${schoolName}`, JSON.stringify(data))
                 const getSchool = await AsyncStorage.getItem(`${schoolName}`)
                 const parsedGetSchool = JSON.parse(getSchool)
-                Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/questions`)
-                    .then(response => {
 
-                    })
+                // Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/questions`)
+                //     .then(response => {
 
+                //     })
 
+                this.props.navigation.navigate('SelectSubject', {
+                    subject: parsedGetSchool
+                })
 
             })
             .catch(e => alert(e))
