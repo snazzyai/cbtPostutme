@@ -6,7 +6,7 @@ import axios from 'axios'
 
 
 
-class MyExams extends Component {
+class About extends Component {
     state = {
         exams: [],
         status: ""
@@ -19,11 +19,11 @@ class MyExams extends Component {
     render() {
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                <Text>Exams</Text>
+                <Text>About</Text>
             </View>
         )
     }
 
 }
 
-export default MyExams;
+export default About;

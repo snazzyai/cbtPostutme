@@ -3,6 +3,9 @@ import { View, TextInput, Text, StyleSheet, TouchableOpacity, ToastAndroid, Scro
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios'
+import SideMenu from 'react-native-side-menu'
+import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
+import Icon from "react-native-vector-icons/Ionicons"
 
 
 
@@ -13,6 +16,8 @@ import axios from 'axios'
 
 class PastQuestions extends Component {
     state = {
+
+        openBar: false,
         searchValue: "",
         subjects: {},
         schools: [
@@ -227,8 +232,7 @@ class PastQuestions extends Component {
     //
     onShare = async (type) => {
         const result = Share.share({
-            title: "Download FaceYourBook Aoo",
-            message: "http://www.simbibot.com"
+            message: "Share Faceyourbook App to your lovely friends | click this link to download http://www.faceyourbookapp.com"
         })
         if (result.action !== Share.sharedAction) {
             ToastAndroid.show('Please make sure you share', ToastAndroid.SHORT);
@@ -270,6 +274,24 @@ class PastQuestions extends Component {
         })
     }
 
+    onClickDrawerOpener = () => {
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                openBar: true
+            }
+
+        })
+    }
+    onClickDrawerCloser = () => {
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                openBar: false
+            }
+
+        })
+    }
 
     searchFilter = (value) => {
         this.setState({
@@ -279,6 +301,12 @@ class PastQuestions extends Component {
     }
 
     render() {
+        const menu = <SideDrawerComponent
+            handleHomeNavigation={() => this.props.navigation.navigate('PastQuestions')}
+            handleExamsNavigation={() => this.props.navigation.navigate('MyExams')}
+            handleAboutNavigation={() => this.props.navigation.navigate('About')}
+            onClickDrawerCloser={this.onClickDrawerCloser}
+        />
         const QuestionListFiltered = this.state.schools.filter(type => {
             return type.typeName.toLowerCase().includes(this.state.searchValue.toLowerCase())
         })
@@ -304,23 +332,31 @@ class PastQuestions extends Component {
                 </View>
             </TouchableOpacity>
         ))
+
+
         return (
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.container}>
-                    <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.topView}>
-                        <View style={styles.textHeaderView}>
-                            <Text style={styles.textHeader}>SELECT A CATEGORY</Text>
+            <SideMenu isOpen={this.state.openBar} menu={menu}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={styles.container}>
+                        <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.topView}>
+                            <TouchableOpacity onPress={this.onClickDrawerOpener}>
+                                <Icon name="ios-menu" size={35} color="#fff" />
+                            </TouchableOpacity>
+
+                            <View style={styles.textHeaderView}>
+                                <Text style={styles.textHeader}>SELECT AN EXAM</Text>
+                            </View>
+                            <View style={styles.searchBar}>
+                                <TextInput style={styles.searchBarInput} placeholder="Search..." onChangeText={this.searchFilter} />
+                            </View>
+                        </ImageBackground>
+                        <View style={styles.textCategoryView}>
+                            <Text style={styles.textCategory}>CATEGORIES</Text>
                         </View>
-                        <View style={styles.searchBar}>
-                            <TextInput style={styles.searchBarInput} placeholder="Search..." onChangeText={this.searchFilter} />
-                        </View>
-                    </ImageBackground>
-                    <View style={styles.textCategoryView}>
-                        <Text style={styles.textCategory}>CATEGORIES</Text>
+                        {QuestionList}
                     </View>
-                    {QuestionList}
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </SideMenu >
         )
     }
 }
@@ -339,7 +375,7 @@ const styles = StyleSheet.create({
     },
     textHeader: {
         color: "#ffffff",
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: "bold",
         fontFamily: 'sans-serif',
     },

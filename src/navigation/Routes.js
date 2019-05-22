@@ -7,6 +7,7 @@ import Payment from '../screens/Payment'
 import BankTransferScreen from '../screens/BankTransferScreen'
 import PutmeScreen from '../screens/PutmeScreen'
 import MyExams from '../screens/MyExamScreen'
+import About from '../screens/AboutScreen'
 import DownloadScreen from "../screens/DownloadScreen"
 import ActivationScreenOne from "../screens/ActivationScreenOne"
 import ActivationScreenTwo from "../screens/ActivationScreenTwo"
@@ -74,6 +75,18 @@ const Main = createStackNavigator({
 
     Download: {
         screen: DownloadScreen,
+        navigationOptions: {
+            header: null
+        }
+    },
+    MyExams: {
+        screen: MyExams,
+        navigationOptions: {
+            header: null
+        }
+    },
+    About: {
+        screen: About,
         navigationOptions: {
             header: null
         }
