@@ -23,13 +23,14 @@ class SideDrawerComponent extends Component {
     }
 
 
+
     render() {
         return (
-            <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#fafafa" }}>
                 <View style={{ height: 240 }}>
 
                     <ImageBackground style={{ height: 200, width: 240 }} source={require("../../../assets/images/background.jpg")}>
-                        <TouchableOpacity style={{ paddingLeft: 200 }} onPress={this.props.onClickDrawerCloser}>
+                        <TouchableOpacity style={{ paddingLeft: 200, paddingTop: 10 }} onPress={this.props.onClickDrawerCloser}>
                             <Icon name="ios-close" size={50} color="#fff" />
                         </TouchableOpacity>
                     </ImageBackground>
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20,
-        color: "#fff"
+        color: "#000"
     }
 })
 

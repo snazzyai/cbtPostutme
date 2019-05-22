@@ -147,7 +147,7 @@ const AppSwitchNavigator = createStackNavigator(
                 header: null
             }
         },
-        DrawerNavigation: DrawerNavigation
+
     },
     {
         initialRouteName: 'StartScreen',

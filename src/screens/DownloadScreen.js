@@ -21,8 +21,10 @@ class DownloadScreen extends Component {
 
     async componentDidMount() {
         // BackHandler.addEventListener('hardwareBackPress', () => true);
-        console.warn(this.name)
+
         if (this.name === "WAEC" || this.name === "UTME") {
+            //donwload files for waec or utme using api
+            //set as part of paidExams
             alert('waec/putme')
             this.setState({
                 isLoading: false,
@@ -30,6 +32,7 @@ class DownloadScreen extends Component {
             })
             return false
         }
+
         const schoolName = this.name
         await Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/subjects`)
             .then(async response => {
@@ -105,7 +108,7 @@ class DownloadScreen extends Component {
                         })} >
                             <Text style={styles.textView}> Click here to go to your Exams Screen </Text>
                         </TouchableOpacity>
-                        {console.warn(this.state.subjects)}
+
                     </View>
                 </View>
             )

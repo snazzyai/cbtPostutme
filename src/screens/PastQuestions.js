@@ -6,7 +6,7 @@ import axios from 'axios'
 import SideMenu from 'react-native-side-menu'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
 import schools from '../components/SchoolListComponent/SchoolListComponent'
-import Icon from "react-native-vector-icons/Ionicons"
+import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
 
 
 
@@ -50,6 +50,8 @@ class PastQuestions extends Component {
 
     //checks if user has shared and navigate based on questions been downloaded or not
     checkUserShared = async (type) => {
+        //for testing
+        // await AsyncStorage.removeItem('sharing')
         const sharingDetail = await AsyncStorage.getItem('sharing')
         const parsedSharingDetail = JSON.parse(sharingDetail)
         if (parsedSharingDetail === null) {
@@ -65,11 +67,25 @@ class PastQuestions extends Component {
             // await AsyncStorage.removeItem(`WAEC`)
             // await AsyncStorage.removeItem(`UTME`)
             console.warn("removed waec and utme")
-            const questionType = await AsyncStorage.getItem(`${type}`)
-            const parsedType = JSON.parse(questionType)
-            if (parsedType !== null) {
+            // const questionType = await AsyncStorage.getItem(`${type}`)
+            // const parsedType = JSON.parse(questionType)
+            // if (parsedType !== null) {
+            //     this.props.navigation.navigate('SelectSubject', {
+            //         name: type
+            //     })
+            // }
+            // else {
+            //     this.props.navigation.navigate('Download', {
+            //         name: type
+            //     })
+            // }
+            //if user has shared check if subjects have been download
+            const getSubjects = await AsyncStorage.getItem(`${type}`)
+            if (getSubjects !== null) {
+                const parsedGetSubject = JSON.parse(getSubjects)
+                const subjects = parsedGetSubject.subjects
                 this.props.navigation.navigate('SelectSubject', {
-                    name: type
+                    subject: subjects
                 })
             }
             else {
@@ -126,6 +142,7 @@ class PastQuestions extends Component {
         })
     }
 
+    //slide drawer component
     onClickDrawerOpener = () => {
         this.setState(prevState => {
             return {
@@ -144,6 +161,7 @@ class PastQuestions extends Component {
 
         })
     }
+    //end of slide drawer component
 
     searchFilter = (value) => {
         this.setState({
@@ -192,10 +210,7 @@ class PastQuestions extends Component {
                     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
                         <View style={styles.container}>
                             <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.topView}>
-                                <TouchableOpacity onPress={this.onClickDrawerOpener}>
-                                    <Icon name="ios-menu" size={35} color="#fff" />
-                                </TouchableOpacity>
-
+                                <MenuDrawer onClickDrawerOpener={this.onClickDrawerOpener} />
                                 <View style={styles.textHeaderView}>
                                     <Text style={styles.textHeader}>SELECT AN EXAM</Text>
                                 </View>
@@ -229,7 +244,7 @@ const styles = StyleSheet.create({
     topView: {
         height: 200,
         alignItems: "center",
-        paddingTop: 20
+        paddingTop: 15
     },
     textHeaderView: {
         padding: 30

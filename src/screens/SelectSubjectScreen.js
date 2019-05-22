@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator, Picker, StyleSheet } from 'react-native'
+import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator, Picker, StyleSheet, BackHandler } from 'react-native'
 import Icon from "react-native-vector-icons/Ionicons"
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent';
 import axios from 'axios'
@@ -21,12 +21,15 @@ class SelectSubject extends Component {
 
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.navigate("MyExams"));
         // const get = await AsyncStorage.getItem("paidExams")
         // const use = JSON.parse(get)
         // console.warn(use[0], use[1])
         // console.warn(this.subject)
     }
+
+
 
     handlePress = () => {
         if (this.state.subjectId === "") {

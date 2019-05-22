@@ -7,6 +7,7 @@ import SideMenu from 'react-native-side-menu'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
 import schools from '../components/SchoolListComponent/SchoolListComponent'
 import AsyncStorage from '@react-native-community/async-storage';
+import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
 
 
 
@@ -26,9 +27,18 @@ class MyExams extends Component {
             openBar: false
         })
         const getExams = await AsyncStorage.getItem('paidExams')
-        const parsed = JSON.parse(getExams)
-        console.warn(parsed)
-
+        const parsedExams = JSON.parse(getExams)
+        const finalArray = []
+        this.state.schools.forEach(question => {
+            parsedExams.forEach(exam => {
+                if (question.typeNameFull === exam) {
+                    finalArray.push(question)
+                }
+            })
+        })
+        this.setState({
+            paid: finalArray
+        })
     }
 
     searchFilter = (value) => {
@@ -56,11 +66,19 @@ class MyExams extends Component {
         })
     }
 
+    handlePaidExam = async (type) => {
+        const getSubjects = await AsyncStorage.getItem(`${type}`)
+        const parsedGetSubject = JSON.parse(getSubjects)
+        const subjects = parsedGetSubject.subjects
+        this.props.navigation.navigate('SelectSubject', {
+            subject: subjects
+        })
+    }
 
     filteredList = () => {
         this.setState(prevState => {
             return {
-                schools: QuestionListFiltered
+                paid: QuestionListFiltered
             }
         })
     }
@@ -72,7 +90,7 @@ class MyExams extends Component {
             handleAboutNavigation={() => this.props.navigation.navigate('About')}
             onClickDrawerCloser={this.onClickDrawerCloser}
         />
-        const QuestionListFiltered = this.state.schools.filter(type => {
+        const QuestionListFiltered = this.state.paid.filter(type => {
             return type.typeName.toLowerCase().includes(this.state.searchValue.toLowerCase())
         })
         const QuestionList = QuestionListFiltered.map((type) => (
@@ -84,7 +102,7 @@ class MyExams extends Component {
                     this.checkUserShared(type.typeNameFull)
                 }
                 else {
-                    this.checkUserPaid(type.typeNameFull, type.id)
+                    this.handlePaidExam(type.typeNameFull)
                 }
             }
             }>
@@ -99,15 +117,12 @@ class MyExams extends Component {
         ))
 
         return (
-            <SideMenu isOpen={this.state.openBar} autoClosing={this.state.autoClose} menu={menu}>
+            <SideMenu isOpen={this.state.openBar} menu={menu}>
                 <View style={{ flex: 1, backgroundColor: "#f7f7f7" }}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
                         <View style={styles.container}>
                             <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.topView}>
-                                <TouchableOpacity onPress={this.onClickDrawerOpener}>
-                                    <Icon name="ios-menu" size={35} color="#fff" />
-                                </TouchableOpacity>
-
+                                <MenuDrawer onClickDrawerOpener={this.onClickDrawerOpener} />
                                 <View style={styles.textHeaderView}>
                                     <Text style={styles.textHeader}>MY EXAMS</Text>
                                 </View>
