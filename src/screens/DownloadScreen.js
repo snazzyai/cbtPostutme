@@ -8,13 +8,15 @@ import SQLite from 'react-native-sqlite-storage'
 
 
 
+
 class DownloadScreen extends Component {
     name = this.props.navigation.getParam('name')
 
 
     state = {
         isLoading: true,
-        error: false
+        error: false,
+        subjects: {}
     }
 
     async componentDidMount() {
@@ -29,24 +31,33 @@ class DownloadScreen extends Component {
             return false
         }
         const schoolName = this.name
-        console.warn(schoolName)
         await Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/subjects`)
             .then(async response => {
+                //for testing 
+                // await AsyncStorage.removeItem(`paidExams`)
+                const subjects = response
+                const getSchool = await AsyncStorage.getItem(`${schoolName}`)
+                const getExams = await AsyncStorage.getItem(`paidExams`)
+                const examToAdd = [`${schoolName}`]
                 const data = {
                     subjects: response
                 }
                 await AsyncStorage.setItem(`${schoolName}`, JSON.stringify(data))
-                const getSchool = await AsyncStorage.getItem(`${schoolName}`)
-                const parsedGetSchool = JSON.parse(getSchool)
-
+                if (getExams !== null) {
+                    const newExam = JSON.parse(getExams).concat(examToAdd);
+                    AsyncStorage.setItem('paidExams', JSON.stringify(newExam));
+                }
+                else {
+                    AsyncStorage.setItem('paidExams', JSON.stringify(examToAdd));
+                }
+                this.setState({
+                    subjects: subjects
+                })
                 // Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/questions`)
-                //     .then(response => {
+                //     .then(response => {  z   z`
 
                 //     })
 
-                this.props.navigation.navigate('SelectSubject', {
-                    subject: response
-                })
 
             })
             .catch(e => console.warn(e))
@@ -90,11 +101,11 @@ class DownloadScreen extends Component {
                     <ActivationScreenHeader processText={"Download Section"} />
                     <View style={styles.donwloadView}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("SelectSubject", {
-                            subjects: this.state.subjects
+                            subject: this.state.subjects
                         })} >
                             <Text style={styles.textView}> Click here to go to your Exams Screen </Text>
                         </TouchableOpacity>
-                        <Text>{this.name}</Text>
+                        {console.warn(this.state.subjects)}
                     </View>
                 </View>
             )

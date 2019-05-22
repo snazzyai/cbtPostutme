@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator, Picker, St
 import Icon from "react-native-vector-icons/Ionicons"
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent';
 import axios from 'axios'
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 
@@ -20,14 +21,12 @@ class SelectSubject extends Component {
 
     }
 
-    // async componentDidMount() {
-    //     await this.setState(prevState => {
-    //         return {
-    //             ...prevState,
-    //             subjects: this.subject
-    //         }
-    //     })
-    // }
+    async componentDidMount() {
+        // const get = await AsyncStorage.getItem("paidExams")
+        // const use = JSON.parse(get)
+        // console.warn(use[0], use[1])
+        // console.warn(this.subject)
+    }
 
     handlePress = () => {
         if (this.state.subjectId === "") {
@@ -71,7 +70,6 @@ class SelectSubject extends Component {
                     </View>
                     <ButtonComponent externalStyle={{ marginLeft: 30 }} onPress={this.handlePress} text="SELECT SUBJECT" />
                 </ScrollView>
-
             </View >
         )
     }

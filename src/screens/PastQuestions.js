@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios'
 import SideMenu from 'react-native-side-menu'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
+import schools from '../components/SchoolListComponent/SchoolListComponent'
 import Icon from "react-native-vector-icons/Ionicons"
 
 
@@ -16,177 +17,29 @@ import Icon from "react-native-vector-icons/Ionicons"
 
 class PastQuestions extends Component {
     state = {
-
-        openBar: false,
         searchValue: "",
+        openBar: false,
         subjects: {},
-        schools: [
-            {
-                id: 1,
-                typeName: "WAEC",
-                typeNameFull: "WAEC",
-                imageSource: require("../../assets/images/waec.png"),
-                fullTypeName: "WAEC QUESTIONS"
-
-            },
-            {
-                id: 2,
-                typeName: "UTME",
-                typeNameFull: "UTME",
-                imageSource: require("../../assets/images/jamb.png"),
-                fullTypeName: "UTME QUESTIONS"
-            },
-            {
-                id: 3,
-                typeName: "UNILAG",
-                typeNameFull: "University of Lagos",
-                imageSource: require("../../assets/images/unilag.png"),
-                fullTypeName: "UNILAG PUTME QUESTIONS"
-            },
-            {
-                id: 4,
-                typeName: "UNICAL",
-                typeNameFull: "University of Calabar",
-                imageSource: require("../../assets/images/unical.jpg"),
-                fullTypeName: "UNICAL PUTME QUESTIONS"
-            },
-            {
-                id: 5,
-                typeName: "UNIJOS",
-                typeNameFull: "University of Jos",
-                imageSource: require("../../assets/images/unijos.jpg"),
-                fullTypeName: "UNIJOS PUTUTME QUESTIONS"
-            },
-            {
-                id: 6,
-                typeName: "UNIZIK",
-                typeNameFull: "Nnamdi Azikiwe University",
-                imageSource: require("../../assets/images/unizik.jpg"),
-                fullTypeName: "UNIZIK PUTME QUESTIONS"
-            },
-            {
-                id: 7,
-                typeName: "UNIBEN",
-                typeNameFull: "University of Benin",
-                imageSource: require("../../assets/images/uniben.jpg"),
-                fullTypeName: "UNIBEN PUTME QUESTIONS"
-            },
-            {
-                id: 8,
-                typeName: "UI",
-                typeNameFull: "University of Ibadan",
-                imageSource: require("../../assets/images/ui.jpg"),
-                fullTypeName: "UI POSTUTME QUESTIONS"
-            },
-            {
-                id: 9,
-                typeName: "LAUTECH",
-                typeNameFull: "Ladoke Akintola University",
-                imageSource: require("../../assets/images/lautech.jpg"),
-                fullTypeName: "LAUTECH POSTUME QUESTIONS"
-            },
-            {
-                id: 10,
-                typeName: "BUK",
-                typeNameFull: "Bayero University",
-                imageSource: require("../../assets/images/bayero.jpg"),
-                fullTypeName: "BUK POSTUME QUESTIONS"
-            },
-            {
-                id: 11,
-                typeName: "ABU",
-                typeNameFull: "Ahmadu Bello University",
-                imageSource: require("../../assets/images/abu.jpg"),
-                fullTypeName: "ABU POSTUME QUESTIONS"
-            },
-            {
-                id: 12,
-                typeName: "UNN",
-                typeNameFull: "University of Nigeria",
-                imageSource: require("../../assets/images/unn.jpg"),
-                fullTypeName: "UNN POSTUME QUESTIONS"
-            },
-            {
-                id: 13,
-                typeName: "UNILORIN",
-                typeNameFull: "University of Ilorin",
-                imageSource: require("../../assets/images/unilorin.jpg"),
-                fullTypeName: "UNILORIN POSTUME QUESTIONS"
-            },
-            {
-                id: 14,
-                typeName: "OAU",
-                typeNameFull: "Obafemi Awolowo University",
-                imageSource: require("../../assets/images/oau.jpg"),
-                fullTypeName: "OAU PUTUME QUESTIONS"
-            },
-            {
-                id: 15,
-                typeName: "FUTA",
-                typeNameFull: "federal university of technology akure",
-                typeNameFull: "University of Ilorin",
-                imageSource: require("../../assets/images/futa.jpg"),
-                fullTypeName: "FUTA PUTME QUESTIONS"
-            },
-            {
-                id: 16,
-                typeName: "FUNAAB",
-                typeNameFull: "Federal University of Agriculture Abeokuta",
-                imageSource: require("../../assets/images/funaab.jpg"),
-                fullTypeName: "FUNAAB PUTME QUESTIONS"
-            },
-            {
-                id: 17,
-                typeName: "EKSU",
-                typeNameFull: "Ekiti State University",
-                imageSource: require("../../assets/images/eksu.jpg"),
-                fullTypeName: "EKSU PUTME QUESTIONS"
-            },
-            {
-                id: 18,
-                typeName: "AAUA",
-                typeNameFull: "Adekunle Ajasin University",
-                imageSource: require("../../assets/images/aau.jpg"),
-                fullTypeName: "AAUA PUTME QUESTIONS"
-            },
-            {
-                id: 19,
-                typeName: "OOU",
-                typeNameFull: "Olabisi Onabanjo University",
-                imageSource: require("../../assets/images/oou.jpg"),
-                fullTypeName: "OOU PUTME QUESTIONS"
-            },
-            {
-                id: 20,
-                typeName: "MCIU",
-                typeNameFull: "Micheal & Cecilia Ibru University",
-                imageSource: require("../../assets/images/mc.jpg"),
-                fullTypeName: "MCIU PUTME QUESTIONS"
-            },
-
-
-        ],
-
+        schools: schools,
 
     }
 
-
-
     //check if user hasPaid and direct as appropriate8ikm
     checkUserPaid = async (type, id) => {
+        //for testing purpose
+        // await AsyncStorage.removeItem(`${type}`)
+        // await AsyncStorage.removeItem("paidExams")
+
         const getSubjects = await AsyncStorage.getItem(`${type}`)
         if (getSubjects !== null) {
             const parsedGetSubject = JSON.parse(getSubjects)
             const subjects = parsedGetSubject.subjects
-            await this.setState({
-                subjects: subjects
-            })
+
             this.props.navigation.navigate('SelectSubject', {
                 subject: subjects
             })
         }
         else {
-            console.warn("second if")
             this.props.navigation.navigate('Payment', {
                 id: id,
                 name: type
@@ -267,7 +120,6 @@ class PastQuestions extends Component {
 
     filteredList = () => {
         this.setState(prevState => {
-
             return {
                 schools: QuestionListFiltered
             }
@@ -336,34 +188,43 @@ class PastQuestions extends Component {
 
         return (
             <SideMenu isOpen={this.state.openBar} menu={menu}>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={styles.container}>
-                        <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.topView}>
-                            <TouchableOpacity onPress={this.onClickDrawerOpener}>
-                                <Icon name="ios-menu" size={35} color="#fff" />
-                            </TouchableOpacity>
+                <View style={{ flex: 1, backgroundColor: "#f7f7f7" }}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+                        <View style={styles.container}>
+                            <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.topView}>
+                                <TouchableOpacity onPress={this.onClickDrawerOpener}>
+                                    <Icon name="ios-menu" size={35} color="#fff" />
+                                </TouchableOpacity>
 
-                            <View style={styles.textHeaderView}>
-                                <Text style={styles.textHeader}>SELECT AN EXAM</Text>
+                                <View style={styles.textHeaderView}>
+                                    <Text style={styles.textHeader}>SELECT AN EXAM</Text>
+                                </View>
+                                <View style={styles.searchBar}>
+                                    <TextInput style={styles.searchBarInput} placeholder="Search..." onChangeText={this.searchFilter} />
+                                </View>
+                            </ImageBackground>
+                            <View style={styles.textCategoryView}>
+                                <Text style={styles.textCategory}>CATEGORIES</Text>
                             </View>
-                            <View style={styles.searchBar}>
-                                <TextInput style={styles.searchBarInput} placeholder="Search..." onChangeText={this.searchFilter} />
+                            <View style={styles.cardView}>
+                                {QuestionList}
                             </View>
-                        </ImageBackground>
-                        <View style={styles.textCategoryView}>
-                            <Text style={styles.textCategory}>CATEGORIES</Text>
+
                         </View>
-                        {QuestionList}
-                    </View>
-                </ScrollView>
-            </SideMenu >
+                    </ScrollView>
+                </View>
+            </SideMenu>
+
+
+
         )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#f7f7f7"
+        backgroundColor: "#f7f7f7",
+
     },
     topView: {
         height: 200,
@@ -402,6 +263,9 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         fontWeight: "bold"
 
+    },
+    cardView: {
+        // paddingBottom: 100
     },
     imageView: {
         borderRadius: 50,
