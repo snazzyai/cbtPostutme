@@ -54,8 +54,8 @@ const Main = createStackNavigator({
             header: null
         }
     },
-    Payment: {
-        screen: Payment,
+    ActivationTwo: {
+        screen: ActivationScreenTwo,
         navigationOptions: {
             header: null
         }
@@ -66,12 +66,14 @@ const Main = createStackNavigator({
             header: null
         }
     },
-    ActivationTwo: {
-        screen: ActivationScreenTwo,
+    Payment: {
+        screen: Payment,
         navigationOptions: {
             header: null
         }
     },
+
+
 
     Download: {
         screen: DownloadScreen,
@@ -91,6 +93,7 @@ const Main = createStackNavigator({
             header: null
         }
     },
+
 
 })
 

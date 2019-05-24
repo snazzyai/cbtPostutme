@@ -14,7 +14,7 @@ const ButtonComponent = ({ onPress, text, externalStyle, textStyle, isLoading, i
 const styles = StyleSheet.create({
     paymentTouch: {
         backgroundColor: "#5FA046",
-        elevation: 1,
+        // elevation: 1,
         width: "80%",
         borderRadius: 30,
         height: 45,

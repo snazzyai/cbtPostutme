@@ -1,28 +1,31 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, ToastAndroid, ScrollView, Image, ImageBackground, Alert, Share } from 'react-native'
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, ToastAndroid, ScrollView, Image, ImageBackground, Alert, Share, Linking } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios'
 import SideMenu from 'react-native-side-menu'
-import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
 import schools from '../components/SchoolListComponent/SchoolListComponent'
 import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
-
-
-
-
+import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
+import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
 
 
 
 
 class PastQuestions extends Component {
+
     state = {
         searchValue: "",
-        openBar: false,
+        drawerClosed: true,
         subjects: {},
         schools: schools,
 
+
     }
+
+    drawer = null;
+
+
 
     //check if user hasPaid and direct as appropriate8ikm
     checkUserPaid = async (type, id) => {
@@ -143,23 +146,30 @@ class PastQuestions extends Component {
     }
 
     //slide drawer component
-    onClickDrawerOpener = () => {
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                openBar: true
-            }
+    viewOpened = () => {
+        return (
+            <SideDrawerComponent
+                handleHomeNavigation={() => {
+                    this.props.navigation.navigate('Startup')
 
+                }}
+                handleExamsNavigation={() => this.props.navigation.navigate('MyExams')}
+                handleAboutNavigation={() => this.props.navigation.navigate('About')}
+                inviteFriends={this.inviteFriends}
+                goToWhatsApp={this.goToWhatsApp}
+                closeDrawer={() => this.drawer.closeDrawer()}
+            />
+        )
+    }
+
+    inviteFriends = async () => {
+        await Share.share({
+            message: "Share Faceyourbook App to your lovely friends | click this link to download http://www.faceyourbookapp.com"
         })
     }
-    onClickDrawerCloser = () => {
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                openBar: false
-            }
 
-        })
+    goToWhatsApp = () => {
+        Linking.openURL(`https://chat.whatsapp.com/CBVGniVkviM5SjPknnDdgz`);
     }
     //end of slide drawer component
 
@@ -171,12 +181,15 @@ class PastQuestions extends Component {
     }
 
     render() {
-        const menu = <SideDrawerComponent
-            handleHomeNavigation={() => this.props.navigation.navigate('PastQuestions')}
-            handleExamsNavigation={() => this.props.navigation.navigate('MyExams')}
-            handleAboutNavigation={() => this.props.navigation.navigate('About')}
-            onClickDrawerCloser={this.onClickDrawerCloser}
-        />
+        // const menu = <SideDrawerComponent
+        //     handleHomeNavigation={() => {
+        //         this.props.navigation.navigate('PastQuestions') 
+
+        // }}
+        //     handleExamsNavigation={() => this.props.navigation.navigate('MyExams')}
+        //     handleAboutNavigation={() => this.props.navigation.navigate('About')}
+        //     onClickDrawerCloser={this.onClickDrawerCloser}
+        // />
         const QuestionListFiltered = this.state.schools.filter(type => {
             return type.typeName.toLowerCase().includes(this.state.searchValue.toLowerCase())
         })
@@ -205,12 +218,19 @@ class PastQuestions extends Component {
 
 
         return (
-            <SideMenu isOpen={this.state.openBar} menu={menu}>
-                <View style={{ flex: 1, backgroundColor: "#f7f7f7" }}>
+            <View style={{ flex: 1, backgroundColor: "#f7f7f7" }}>
+                <DrawerLayout
+                    ref={drawer => this.drawer = drawer}
+                    drawerWidth={240}
+                    drawerPosition={DrawerLayout.positions.Left}
+                    drawerType='front'
+                    drawerBackgroundColor="#ddd"
+                    renderNavigationView={this.viewOpened}
+                >
                     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
                         <View style={styles.container}>
                             <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.topView}>
-                                <MenuDrawer onClickDrawerOpener={this.onClickDrawerOpener} />
+                                <MenuDrawer onClickDrawerOpener={() => this.drawer.openDrawer()} />
                                 <View style={styles.textHeaderView}>
                                     <Text style={styles.textHeader}>SELECT AN EXAM</Text>
                                 </View>
@@ -227,10 +247,8 @@ class PastQuestions extends Component {
 
                         </View>
                     </ScrollView>
-                </View>
-            </SideMenu>
-
-
+                </DrawerLayout>
+            </View>
 
         )
     }

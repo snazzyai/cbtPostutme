@@ -8,11 +8,13 @@ import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerCom
 import schools from '../components/SchoolListComponent/SchoolListComponent'
 import AsyncStorage from '@react-native-community/async-storage';
 import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
+import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 
 
 
 
 class MyExams extends Component {
+
     state = {
         searchValue: "",
         openBar: false,
@@ -47,24 +49,34 @@ class MyExams extends Component {
         })
 
     }
-    onClickDrawerOpener = () => {
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                openBar: true
-            }
 
+    //slide drawer component
+    viewOpened = () => {
+        return (
+            <SideDrawerComponent
+                handleHomeNavigation={() => {
+                    this.props.navigation.navigate('Startup')
+
+                }}
+                handleExamsNavigation={() => this.props.navigation.navigate('MyExams')}
+                handleAboutNavigation={() => this.props.navigation.navigate('About')}
+                inviteFriends={this.inviteFriends}
+                goToWhatsApp={this.goToWhatsApp}
+                closeDrawer={() => this.drawer.closeDrawer()}
+            />
+        )
+    }
+
+    inviteFriends = async () => {
+        await Share.share({
+            message: "Share Faceyourbook App to your lovely friends | click this link to download http://www.faceyourbookapp.com"
         })
     }
-    onClickDrawerCloser = () => {
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                openBar: false
-            }
 
-        })
+    goToWhatsApp = () => {
+        Linking.openURL(`https://chat.whatsapp.com/CBVGniVkviM5SjPknnDdgz`);
     }
+    //end of slide drawer component
 
     handlePaidExam = async (type) => {
         const getSubjects = await AsyncStorage.getItem(`${type}`)
@@ -84,12 +96,7 @@ class MyExams extends Component {
     }
 
     render() {
-        const menu = <SideDrawerComponent
-            handleHomeNavigation={() => this.props.navigation.navigate('PastQuestions')}
-            handleExamsNavigation={() => this.props.navigation.navigate('MyExams')}
-            handleAboutNavigation={() => this.props.navigation.navigate('About')}
-            onClickDrawerCloser={this.onClickDrawerCloser}
-        />
+
         const QuestionListFiltered = this.state.paid.filter(type => {
             return type.typeName.toLowerCase().includes(this.state.searchValue.toLowerCase())
         })
@@ -117,12 +124,20 @@ class MyExams extends Component {
         ))
 
         return (
-            <SideMenu isOpen={this.state.openBar} menu={menu}>
-                <View style={{ flex: 1, backgroundColor: "#f7f7f7" }}>
+
+            <View style={{ flex: 1, backgroundColor: "#f7f7f7" }}>
+                <DrawerLayout
+                    ref={drawer => this.drawer = drawer}
+                    drawerWidth={240}
+                    drawerPosition={DrawerLayout.positions.Left}
+                    drawerType='front'
+                    drawerBackgroundColor="#ddd"
+                    renderNavigationView={this.viewOpened}
+                >
                     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
                         <View style={styles.container}>
                             <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.topView}>
-                                <MenuDrawer onClickDrawerOpener={this.onClickDrawerOpener} />
+                                <MenuDrawer onClickDrawerOpener={() => this.drawer.openDrawer()} />
                                 <View style={styles.textHeaderView}>
                                     <Text style={styles.textHeader}>MY EXAMS</Text>
                                 </View>
@@ -139,8 +154,8 @@ class MyExams extends Component {
 
                         </View>
                     </ScrollView>
-                </View>
-            </SideMenu>
+                </DrawerLayout>
+            </View>
         )
     }
 

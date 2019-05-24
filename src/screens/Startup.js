@@ -114,7 +114,7 @@ class Startup extends ValidationComponent {
                         console.warn(e)
                     }
 
-                    this.props.navigation.navigate('Main')
+                    this.props.navigation.navigate('PastQuestion')
 
                 }
                 else if (result.message) {

@@ -4,6 +4,8 @@ import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
 import SideMenu from 'react-native-side-menu'
 import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
+import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
+
 
 
 
@@ -23,41 +25,51 @@ class Payment extends Component {
             message: 'http://www.simbibot.com',
         });
     }
+
     //slide drawer component
-    onClickDrawerOpener = () => {
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                openBar: true
-            }
+    viewOpened = () => {
+        return (
+            <SideDrawerComponent
+                handleHomeNavigation={() => {
+                    this.props.navigation.navigate('Startup')
 
+                }}
+                handleExamsNavigation={() => this.props.navigation.navigate('MyExams')}
+                handleAboutNavigation={() => this.props.navigation.navigate('About')}
+                inviteFriends={this.inviteFriends}
+                goToWhatsApp={this.goToWhatsApp}
+                closeDrawer={() => this.drawer.closeDrawer()}
+            />
+        )
+    }
+
+    inviteFriends = async () => {
+        await Share.share({
+            message: "Share Faceyourbook App to your lovely friends | click this link to download http://www.faceyourbookapp.com"
         })
     }
-    onClickDrawerCloser = () => {
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                openBar: false
-            }
 
-        })
+    goToWhatsApp = () => {
+        Linking.openURL(`https://chat.whatsapp.com/CBVGniVkviM5SjPknnDdgz`);
     }
-    //end of slide drawer components
+    //end of slide drawer component
 
 
     render() {
         const { navigation } = this.props
-        const menu = <SideDrawerComponent
-            handleHomeNavigation={() => this.props.navigation.navigate('PastQuestions')}
-            handleExamsNavigation={() => this.props.navigation.navigate('MyExams')}
-            handleAboutNavigation={() => this.props.navigation.navigate('About')}
-            onClickDrawerCloser={this.onClickDrawerCloser}
-        />
         return (
-            <SideMenu isOpen={this.state.openBar} menu={menu}>
-                <View style={styles.container}>
+
+            <View style={styles.container}>
+                <DrawerLayout
+                    ref={drawer => this.drawer = drawer}
+                    drawerWidth={240}
+                    drawerPosition={DrawerLayout.positions.Left}
+                    drawerType='front'
+                    drawerBackgroundColor="#ddd"
+                    renderNavigationView={this.viewOpened}
+                >
                     <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.details}>
-                        <MenuDrawer onClickDrawerOpener={this.onClickDrawerOpener} />
+                        <MenuDrawer onClickDrawerOpener={() => this.drawer.openDrawer()} />
                         <View style={styles.paymentImageView}>
                             <Image style={styles.image} source={require("../../assets/images/wallet.png")} />
                         </View>
@@ -73,18 +85,18 @@ class Payment extends Component {
                     </View>
                     <View style={styles.paymentMethodView}>
                         <Text style={styles.paymentMethodText}>SHARE TO OTHER PEOPLE</Text>
-                        <TouchableOpacity style={styles.paymentTouch} onPress={this.onShare}>
-                            <Text style={styles.paymentText}>SHARE</Text>
-                        </TouchableOpacity>
+                        <ButtonComponent onPress={this.onShare} text={"SHARE"} />
                     </View>
-                </View>
-            </SideMenu>
+                </DrawerLayout>
+            </View>
+
         );
     }
 }
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#f7f7f7"
+        backgroundColor: "#f7f7f7",
+        flex: 1
     },
     details: {
         alignItems: "center",
