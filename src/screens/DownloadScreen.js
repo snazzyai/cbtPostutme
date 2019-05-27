@@ -7,6 +7,8 @@ import Axios from 'axios'
 import SQLite from 'react-native-sqlite-storage'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
+import Datastore from 'react-native-local-mongodb'
+import SQlite from 'react-native-sqlite-storage'
 
 
 
@@ -20,6 +22,61 @@ class DownloadScreen extends Component {
         error: false,
         subjects: {}
     }
+
+    db = SQLite.openDatabase({ name: test.db, createFromLocation: '~PastQuestion.db' })
+    getSubjects = (schoolName) => {
+        Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/subjects`)
+            .then(async response => {
+                //for testing 
+                // await AsyncStorage.removeItem(`paidExams`)
+                console.warn("paid section")
+                const subjects = response
+                const getSchool = await AsyncStorage.getItem(`${schoolName}`)
+                const getExams = await AsyncStorage.getItem(`paidExams`)
+                const examToAdd = [`${schoolName}`]
+                const data = {
+                    subjects: response
+                }
+                await AsyncStorage.setItem(`${schoolName}`, JSON.stringify(data))
+                if (getExams !== null) {
+                    const newExam = JSON.parse(getExams).concat(examToAdd);
+                    AsyncStorage.setItem('paidExams', JSON.stringify(newExam));
+                }
+                else {
+                    AsyncStorage.setItem('paidExams', JSON.stringify(examToAdd));
+                }
+                console.warn("this worked")
+                this.setState({
+                    subjects: subjects
+                })
+                console.warn("subjects set")
+                await this.getQuestions(schoolName)
+
+            })
+            .catch(e => console.warn(e))
+    }
+
+    getQuestions = (schoolName) => {
+        Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/questions`)
+            .then(response => {
+                console.warn("fetched questions")
+
+
+
+                this.setState({
+                    isLoading: false
+                })
+            }).catch(e => alert(e))
+    }
+
+    // storeQuestions = (response, schoolName) => {
+    //     var Datastore = require('react-native-local-mongodb')
+    //         , db = new Datastore({ filename: '' });
+    //     db.loadDatabase(function (err) {   
+
+    //     });
+    // }
+
 
     async componentDidMount() {
         // BackHandler.addEventListener('hardwareBackPress', () => true);
@@ -36,40 +93,10 @@ class DownloadScreen extends Component {
         }
 
         const schoolName = this.name
-        await Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/subjects`)
-            .then(async response => {
-                //for testing 
-                // await AsyncStorage.removeItem(`paidExams`)
-                const subjects = response
-                const getSchool = await AsyncStorage.getItem(`${schoolName}`)
-                const getExams = await AsyncStorage.getItem(`paidExams`)
-                const examToAdd = [`${schoolName}`]
-                const data = {
-                    subjects: response
-                }
-                await AsyncStorage.setItem(`${schoolName}`, JSON.stringify(data))
-                if (getExams !== null) {
-                    const newExam = JSON.parse(getExams).concat(examToAdd);
-                    AsyncStorage.setItem('paidExams', JSON.stringify(newExam));
-                }
-                else {
-                    AsyncStorage.setItem('paidExams', JSON.stringify(examToAdd));
-                }
-                this.setState({
-                    subjects: subjects
-                })
-                // Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/questions`)
-                //     .then(response => {  z   z`
+        await this.getSubjects(schoolName)
 
-                //     })
+        console.warn("isloading false")
 
-
-            })
-            .catch(e => console.warn(e))
-
-        this.setState({
-            isLoading: false
-        })
     }
 
     //slide drawer component
@@ -117,7 +144,7 @@ class DownloadScreen extends Component {
                 >
                     <View>
 
-                        <ActivationScreenHeader onClickDrawerOpen={() => this.drawer.openDrawer()} processText={"Activation Process One"} />
+                        <ActivationScreenHeader onClickDrawerOpen={() => this.drawer.openDrawer()} processText={"DOWNLOAD SCREEN"} />
                         <View style={styles.downloadView}>
                             <Text style={styles.textView}>Downloading files for {this.name} Questions..Please Wait, this might take a few minutes...</Text>
                             <ActivityIndicator size="large" color="#00ff00" />
@@ -140,7 +167,7 @@ class DownloadScreen extends Component {
                 >
                     <View>
 
-                        <ActivationScreenHeader onClickDrawerOpen={() => this.drawer.openDrawer()} processText={"DOWNLOAD"} />
+                        <ActivationScreenHeader onClickDrawerOpen={() => this.drawer.openDrawer()} processText={"DOWNLOAD SCREEN"} />
                         <View style={styles.donwloadView}>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate("")} >
                                 <Text style={styles.textView}>There was an error fetching file</Text>

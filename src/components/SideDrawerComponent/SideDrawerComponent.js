@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View, Text, SafeAreaView, ImageBackground, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, SafeAreaView, ImageBackground, StyleSheet, Image } from 'react-native';
 import Icon from "react-native-vector-icons/Ionicons"
 
 
@@ -14,6 +14,7 @@ SideDrawerComponent = ({ handleHomeNavigation, inviteFriends, goToWhatsApp, hand
                     <TouchableOpacity style={{ paddingLeft: 200, paddingTop: 10 }} onPress={closeDrawer}>
                         <Icon name="ios-close" size={50} color="#fff" />
                     </TouchableOpacity>
+                    <Image style={{ width: 100, height: 100, marginLeft: "30%" }} source={require("../../../assets/images/fyb.png")} />
                 </ImageBackground>
             </View>
             <View style={{ flex: 1 }}>
