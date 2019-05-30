@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native'
+import React from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Linking } from 'react-native'
 import ActivationScreenHeader from '../components/ActivationScreenHeader/ActivationScreenHeader'
 import RNPaystack from 'react-native-paystack';
 import AsyncStorage from '@react-native-community/async-storage';

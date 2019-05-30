@@ -2,11 +2,8 @@ package com.cbtpostume;
 
 import android.app.Application;
 
-import org.pgsqlite.SQLitePluginPackage;
 import com.facebook.react.ReactApplication;
 import com.arttitude360.reactnative.rnpaystack.RNPaystackPackage;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import cl.json.RNSharePackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
@@ -16,6 +13,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import dog.craftz.sqlite_2.RNSqlite2Package;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,10 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNPaystackPackage(),
-            new SplashScreenReactPackage(),
-            new RNSharePackage(),
+            new RNSqlite2Package(),
             new RNDeviceInfo(),
-            new SQLitePluginPackage(),
             new VectorIconsPackage(),
             new AsyncStoragePackage(),
             new SvgPackage(),

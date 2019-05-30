@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, ToastAndroid, ScrollView, Image, ImageBackground, Alert, Share, Dimensions } from 'react-native'
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, ToastAndroid, ScrollView, Image, ImageBackground, Alert, Share, Dimensions, Linking, BackHandler } from 'react-native'
 import Icon from "react-native-vector-icons/Ionicons"
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent';
 import axios from 'axios'
-import SideMenu from 'react-native-side-menu'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
 import schools from '../components/SchoolListComponent/SchoolListComponent'
 import AsyncStorage from '@react-native-community/async-storage';
@@ -25,19 +24,23 @@ class MyExams extends Component {
 
 
     async componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.navigate("PastQuestions"));
         await this.setState({
             openBar: false
         })
         const getExams = await AsyncStorage.getItem('paidExams')
         const parsedExams = JSON.parse(getExams)
         const finalArray = []
-        this.state.schools.forEach(question => {
-            parsedExams.forEach(exam => {
-                if (question.typeNameFull === exam) {
-                    finalArray.push(question)
-                }
+        if(parsedExams !== null){
+            this.state.schools.forEach(question => {
+                parsedExams.forEach(exam => {
+                    if (question.typeNameFull === exam) {
+                        finalArray.push(question)
+                    }
+                })
             })
-        })
+        }
+      
         this.setState({
             paid: finalArray
         })
@@ -48,6 +51,12 @@ class MyExams extends Component {
             searchValue: value
         })
 
+    }
+
+    componentWillUnmount(){
+        this.setState({
+            paid: []
+        })
     }
 
     //slide drawer component

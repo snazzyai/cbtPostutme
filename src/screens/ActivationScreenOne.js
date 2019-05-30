@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ToastAndroid, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ToastAndroid, TouchableOpacity, Linking} from 'react-native';
 import ActivationScreenHeader from "../components/ActivationScreenHeader/ActivationScreenHeader"
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
 import Icon from "react-native-vector-icons/Ionicons"

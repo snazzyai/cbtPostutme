@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator, Picker, StyleSheet } from 'react-native'
+import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator, Picker, StyleSheet, Linking } from 'react-native'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
 
@@ -14,6 +14,10 @@ class Questions extends Component {
 
     state = {
         questions: []
+
+    }
+
+    componentDidMount(){
 
     }
 
@@ -62,7 +66,11 @@ class Questions extends Component {
             >
                 <View style={styles.container}>
                     <ScrollView>
-                        <Text style={styles.textSelect}>Questions for id {this.subjectId}</Text>
+                        <Text style={styles.textSelect}>Questions for id {this.subjectId}</Text>\
+                        <View>
+                          
+                        
+                        </View>
                     </ScrollView>
                 </View >
             </DrawerLayout>

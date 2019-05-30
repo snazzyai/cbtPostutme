@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, Share } from "react-native"
+import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground, Share, Linking } from "react-native"
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
-import SideMenu from 'react-native-side-menu'
 import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 

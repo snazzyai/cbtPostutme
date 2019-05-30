@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Linking } from 'react-native'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
 import ActivationScreenHeader from "../components/ActivationScreenHeader/ActivationScreenHeader"

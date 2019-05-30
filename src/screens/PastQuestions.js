@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, ToastAndroid, ScrollView, Image, ImageBackground, Alert, Share, Linking } from 'react-native'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios'
-import SideMenu from 'react-native-side-menu'
 import schools from '../components/SchoolListComponent/SchoolListComponent'
 import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
@@ -26,28 +24,47 @@ class PastQuestions extends Component {
     drawer = null;
 
 
-
-    //check if user hasPaid and direct as appropriate8ikm
+    async componentDidMount(){
+        // await AsyncStorage.removeItem(`hasShared`)
+        // await AsyncStorage.removeItem(`paidExams`)
+        //shows all AsyncStorage
+        // AsyncStorage.getAllKeys((err, keys) => {
+        //     AsyncStorage.multiGet(keys, (error, stores) => {
+        //       stores.map((result, i, store) => {
+        //         console.warn({ [store[i][0]]: store[i][1] });
+        //         return true;
+        //       });
+        //     });
+        //   });
+       
+    }
+    //check if user hasPaid and direct as appropriate
     checkUserPaid = async (type, id) => {
-        //for testing purpose
-        // await AsyncStorage.removeItem(`${type}`)
-        // await AsyncStorage.removeItem("paidExams")
+        /*for testing purpose
+        await AsyncStorage.removeItem(`${type}`)
+        */
 
-        const getSubjects = await AsyncStorage.getItem(`${type}`)
-        if (getSubjects !== null) {
-            const parsedGetSubject = JSON.parse(getSubjects)
-            const subjects = parsedGetSubject.subjects
-
-            this.props.navigation.navigate('SelectSubject', {
-                subject: subjects
-            })
-        }
-        else {
+        const getPayments = await AsyncStorage.getItem(`paidExams`)
+        const parsedGetPayment = JSON.parse(getPayments)
+     
+        
+        if(parsedGetPayment === null) {
             this.props.navigation.navigate('Payment', {
-                id: id,
                 name: type
             })
         }
+            const payments =  parsedGetPayment.includes(type)
+            console.warn(payments)
+            if(payments){
+                this.props.navigation.navigate('SelectSubject', {
+                    name: type
+                })
+            }
+            else{
+                this.props.navigation.navigate('Payment', {
+                    name: type
+                })
+            }
 
     }
 
@@ -279,7 +296,7 @@ const styles = StyleSheet.create({
         height: 40,
         elevation: 3,
         backgroundColor: "#ffffff",
-        paddingLeft: wp("5%"),
+        paddingLeft: "5%",
 
     },
     searchBarInput: {

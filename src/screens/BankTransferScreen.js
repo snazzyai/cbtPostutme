@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Linking } from 'react-native'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
 import ActivationScreenHeader from "../components/ActivationScreenHeader/ActivationScreenHeader"
@@ -11,7 +11,7 @@ class BankTransferScreen extends Component {
         faq: [
             {
                 id: 1,
-                question: "How do i get a pin?",
+                question: "How do I get a pin?",
                 answer: "Visit any GTBank Outlet(You can also make use of internet bank transfer) and pay N1500 only into Account Name: Brimatel Global Network.Account Number: 0117562221. Then contact Olamide via whatsapp on this number(09093905099) to get your pin"
             },
             {

@@ -35,6 +35,12 @@ const Auth = createStackNavigator({
 
 })
 const Main = createStackNavigator({
+    Download: {
+        screen: DownloadScreen,
+        navigationOptions: {
+            header: null
+        }
+    },
     PastQuestions: {
         screen: PastQuestions,
         navigationOptions: {
@@ -47,7 +53,6 @@ const Main = createStackNavigator({
             header: null
         }
     },
-
     BankTransfer: {
         screen: BankTransferScreen,
         navigationOptions: {
@@ -72,15 +77,7 @@ const Main = createStackNavigator({
             header: null
         }
     },
-
-
-
-    Download: {
-        screen: DownloadScreen,
-        navigationOptions: {
-            header: null
-        }
-    },
+    
     MyExams: {
         screen: MyExams,
         navigationOptions: {
@@ -93,11 +90,6 @@ const Main = createStackNavigator({
             header: null
         }
     },
-
-
-})
-
-const ChooseQuestions = createStackNavigator({
     SelectSubject: {
         screen: SelectSubject,
         navigationOptions: {
@@ -112,7 +104,10 @@ const ChooseQuestions = createStackNavigator({
         }
     }
 
+
 })
+
+
 const StartScreen = createSwitchNavigator({
     Auth: Auth,
     Main: Main
@@ -138,29 +133,29 @@ const DrawerNavigation = createDrawerNavigator({
     }
 )
 
-const AppSwitchNavigator = createStackNavigator(
-    {
-        StartScreen: {
-            screen: StartScreen, navigationOptions: {
-                header: null
-            }
-        },
-        ChooseQuestion: {
-            screen: ChooseQuestions, navigationOptions: {
-                header: null
-            }
-        },
+// const AppSwitchNavigator = createStackNavigator(
+//     {
+//         StartScreen: {
+//             screen: StartScreen, navigationOptions: {
+//                 header: null
+//             }
+//         },
+//         ChooseQuestion: {
+//             screen: ChooseQuestions, navigationOptions: {
+//                 header: null
+//             }
+//         },
 
-    },
-    {
-        initialRouteName: 'StartScreen',
-    }
-)
-
-
+//     },
+//     {
+//         initialRouteName: 'StartScreen',
+//     }
+// )
 
 
-export default createAppContainer(AppSwitchNavigator);
+
+
+export default createAppContainer(StartScreen);
 
 
 
