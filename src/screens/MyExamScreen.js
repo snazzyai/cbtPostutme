@@ -88,12 +88,12 @@ class MyExams extends Component {
     //end of slide drawer component
 
     handlePaidExam = async (type) => {
-        const getSubjects = await AsyncStorage.getItem(`${type}`)
-        const parsedGetSubject = JSON.parse(getSubjects)
-        const subjects = parsedGetSubject.subjects
-        this.props.navigation.navigate('SelectSubject', {
-            subject: subjects
-        })
+        // const getSubjects = await AsyncStorage.getItem(`${type}`)
+        // const parsedGetSubject = JSON.parse(getSubjects)
+        // const subjects = parsedGetSubject.subjects
+        // this.props.navigation.navigate('SelectSubject', {
+        //     subject: subjects
+        // })
     }
 
     filteredList = () => {

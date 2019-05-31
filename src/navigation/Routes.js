@@ -35,12 +35,20 @@ const Auth = createStackNavigator({
 
 })
 const Main = createStackNavigator({
+    Questions: {
+        screen: Questions,
+        navigationOptions: {
+            header: null
+        }
+    },
     Download: {
         screen: DownloadScreen,
         navigationOptions: {
             header: null
         }
     },
+
+
     PastQuestions: {
         screen: PastQuestions,
         navigationOptions: {
@@ -77,7 +85,7 @@ const Main = createStackNavigator({
             header: null
         }
     },
-    
+
     MyExams: {
         screen: MyExams,
         navigationOptions: {
@@ -97,12 +105,6 @@ const Main = createStackNavigator({
         }
 
     },
-    Questions: {
-        screen: Questions,
-        navigationOptions: {
-            header: null
-        }
-    }
 
 
 })

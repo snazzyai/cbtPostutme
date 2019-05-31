@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator, Picker, StyleSheet, Linking } from 'react-native'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
+import SQLite from 'react-native-sqlite-2';
+
+
+const db = SQLite.openDatabase('faceyourbook.db', '1.0', '', 1);
 
 
 
@@ -13,11 +17,44 @@ class Questions extends Component {
 
 
     state = {
-        questions: []
-
+        questions: [],
+        options: [],
+        filteredQuestions: []
     }
 
-    componentDidMount(){
+    componentDidMount() {
+        const schoolName = this.name
+        const filtered = []
+        //db query
+        db.transaction((txn) => {
+            // txn.executeSql('DROP TABLE IF EXISTS questions', [], async (tx, res) => {
+
+            // });
+            txn.executeSql('SELECT * FROM questions WHERE school_name = :school_name ', ["University of Lagos"], async (tx, res) => {
+                let questionArray = []
+                for (let i = 0; i < res.rows.length; i++) {
+
+                    questionArray.push(res.rows.item(i))
+
+                }
+                await this.setState({ questions: this.state.questions.concat(questionArray) });
+            });
+            txn.executeSql('SELECT * FROM options', [], async (tx, res) => {
+                let optionArray = []
+                for (let i = 0; i < res.rows.length; i++) {
+
+                    optionArray.push(res.rows.item(i))
+
+                }
+                await this.setState({ options: this.state.options.concat(optionArray) });
+            });
+        })
+
+
+        // for (let i = 1; i < 2; i++) {
+        //     filtered.push(questions[Math.floor(Math.random() * (1 + 1 - 0)) + 0])
+        //     console.warn(filtered)
+        // }
 
     }
 
@@ -66,10 +103,30 @@ class Questions extends Component {
             >
                 <View style={styles.container}>
                     <ScrollView>
-                        <Text style={styles.textSelect}>Questions for id {this.subjectId}</Text>\
+                        <Text style={styles.textSelect}>Questions for id {this.subjectId}</Text>
                         <View>
-                          
-                        
+                            {
+                                this.state.questions.map(data => {
+                                    return (
+                                        <View>
+                                            <Text>{data.question_text}</Text>
+                                            {
+                                                this.state.options.map(opt => {
+                                                    if (opt.question_id == data.question_id) {
+                                                        return (
+                                                            <View>
+                                                                <Text>{opt.option_text}</Text>
+                                                            </View>
+                                                        )
+                                                    }
+
+
+                                                })
+                                            }
+                                        </View>
+                                    )
+                                })
+                            }
                         </View>
                     </ScrollView>
                 </View >

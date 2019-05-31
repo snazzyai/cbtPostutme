@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, ActivityIndicator, BackHandler, Linking} from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, ActivityIndicator, BackHandler, Linking } from 'react-native'
 import Icon from "react-native-vector-icons/Ionicons"
 import AsyncStorage from '@react-native-community/async-storage'
 import ActivationScreenHeader from '../components/ActivationScreenHeader/ActivationScreenHeader'
@@ -32,18 +32,18 @@ class DownloadScreen extends Component {
             txn.executeSql('CREATE TABLE IF NOT EXISTS subjects(subject_id INTEGER PRIMARY KEY NOT NULL, subject_name VARCHAR(30), school_name VARCHAR(30))', []);
             console.warn("second query")
             response.data.map(data => {
-                txn.executeSql('INSERT INTO subjects(subject_id, subject_name, school_name) VALUES (:subject_id, :subject_name, :school_name)', [data.id,data.name, schoolName], function (tx, res) {
+                txn.executeSql('INSERT INTO subjects(subject_id, subject_name, school_name) VALUES (:subject_id, :subject_name, :school_name)', [data.id, data.name, schoolName], function (tx, res) {
                 });
             })
             console.warn("third query")
             txn.executeSql(`SELECT * 
-                        FROM subjects`, 
-                        [], function (tx, res) {
-                for (let i = 0; i < res.rows.length; ++i){
-                    console.warn('item:', res.rows.item(i));
-                }
-            });
-            
+                        FROM subjects`,
+                [], function (tx, res) {
+                    for (let i = 0; i < res.rows.length; ++i) {
+                        console.warn('item:', res.rows.item(i));
+                    }
+                });
+
             console.warn('final query loaded')
 
         });
@@ -54,200 +54,211 @@ class DownloadScreen extends Component {
     populateQuestions = (schoolName) => {
         console.warn(schoolName)
         console.warn("now in populate")
-        const response = {"data":[
-            {
-                "id": 10531,
-                "author_id": 0,
-                "test_id": 151,
-                "question": "<p><strong>If the distance between a 13-foot ladder and a vertical wall is 5 feet along the ground, how high can a person climb if the ladder is inclined against the wall?</strong></p>",
-                "topic_tag": "Trigonometry",
-                "year_tag": null,
-                "duplicated": null,
-                "created_at": "2018-11-23 14:19:28",
-                "updated_at": "2019-03-23 10:09:29",
-                "explanation": "<p>Applying Pythagoras theorem, which states that in a right-angled triangle, the square of the hypotenuse(longest) side is equal to the square of the sum of the other two sides.</p>\r\n<p>Thus, the problems above&nbsp;make&nbsp;up a triangle with the ladder inclined to the vertical wall(c).</p>\r\n<p>Thus c<sup>2</sup>=a<sup>2</sup> + b<sup>2</sup></p>\r\n<p>Given that: c = 13ft, b = 5ft, a =?. Therefore, we have:</p>\r\n<p>13<sup>2</sup>=a<sup>2</sup> + 5<sup>2</sup></p>\r\n<p>169 = a<sup>2</sup> + 25</p>\r\n<p>a<sup>2</sup> = 169 - 25</p>\r\n<p>a<sup>2</sup> = 144</p>\r\n<p>a =&nbsp;&radic;144</p>\r\n<p>a = 12feet</p>",
-                "explanation_by": 19,
-                "explanation_user_name": "Habeeb bdev",
-                "deleted_at": null,
-                "deleted_by": null,
-                "subject_id": 1,
-                "difficulty_number": 8,
-                "track_type": "learning and evaluation",
-                "topic_id": 29,
-                "options": [
-                    {
-                        "id": 37976,
+        const response = {
+            "data": [
+                {
+                    "id": 10531,
+                    "author_id": 0,
+                    "test_id": 151,
+                    "question": "<p><strong>If the distance between a 13-foot ladder and a vertical wall is 5 feet along the ground, how high can a person climb if the ladder is inclined against the wall?</strong></p>",
+                    "topic_tag": "Trigonometry",
+                    "year_tag": null,
+                    "duplicated": null,
+                    "created_at": "2018-11-23 14:19:28",
+                    "updated_at": "2019-03-23 10:09:29",
+                    "explanation": "<p>Applying Pythagoras theorem, which states that in a right-angled triangle, the square of the hypotenuse(longest) side is equal to the square of the sum of the other two sides.</p>\r\n<p>Thus, the problems above&nbsp;make&nbsp;up a triangle with the ladder inclined to the vertical wall(c).</p>\r\n<p>Thus c<sup>2</sup>=a<sup>2</sup> + b<sup>2</sup></p>\r\n<p>Given that: c = 13ft, b = 5ft, a =?. Therefore, we have:</p>\r\n<p>13<sup>2</sup>=a<sup>2</sup> + 5<sup>2</sup></p>\r\n<p>169 = a<sup>2</sup> + 25</p>\r\n<p>a<sup>2</sup> = 169 - 25</p>\r\n<p>a<sup>2</sup> = 144</p>\r\n<p>a =&nbsp;&radic;144</p>\r\n<p>a = 12feet</p>",
+                    "explanation_by": 19,
+                    "explanation_user_name": "Habeeb bdev",
+                    "deleted_at": null,
+                    "deleted_by": null,
+                    "subject_id": 1,
+                    "difficulty_number": 8,
+                    "track_type": "learning and evaluation",
+                    "topic_id": 29,
+                    "options": [
+                        {
+                            "id": 37976,
+                            "q_id": 10531,
+                            "option_text": "18 feet",
+                            "correct": "0",
+                            "created_at": "2018-11-23 15:32:20",
+                            "updated_at": "2018-11-23 15:32:20",
+                            "deleted_at": null,
+                            "explanation": null
+                        },
+                        {
+                            "id": 37977,
+                            "q_id": 10531,
+                            "option_text": "13 feet",
+                            "correct": "0",
+                            "created_at": "2018-11-23 15:32:20",
+                            "updated_at": "2018-11-23 15:32:20",
+                            "deleted_at": null,
+                            "explanation": null
+                        },
+                        {
+                            "id": 37978,
+                            "q_id": 10531,
+                            "option_text": "8 feet",
+                            "correct": "0",
+                            "created_at": "2018-11-23 15:32:20",
+                            "updated_at": "2018-11-23 15:32:20",
+                            "deleted_at": null,
+                            "explanation": null
+                        },
+                        {
+                            "id": 37979,
+                            "q_id": 10531,
+                            "option_text": "12 feet",
+                            "correct": "0",
+                            "created_at": "2018-11-23 15:32:20",
+                            "updated_at": "2018-11-23 15:32:20",
+                            "deleted_at": null,
+                            "explanation": null
+                        }
+                    ],
+                    "answer": {
+                        "id": 135407,
                         "q_id": 10531,
-                        "option_text": "18 feet",
-                        "correct": "0",
-                        "created_at": "2018-11-23 15:32:20",
-                        "updated_at": "2018-11-23 15:32:20",
-                        "deleted_at": null,
-                        "explanation": null
-                    },
-                    {
-                        "id": 37977,
-                        "q_id": 10531,
-                        "option_text": "13 feet",
-                        "correct": "0",
-                        "created_at": "2018-11-23 15:32:20",
-                        "updated_at": "2018-11-23 15:32:20",
-                        "deleted_at": null,
-                        "explanation": null
-                    },
-                    {
-                        "id": 37978,
-                        "q_id": 10531,
-                        "option_text": "8 feet",
-                        "correct": "0",
-                        "created_at": "2018-11-23 15:32:20",
-                        "updated_at": "2018-11-23 15:32:20",
-                        "deleted_at": null,
-                        "explanation": null
-                    },
-                    {
-                        "id": 37979,
-                        "q_id": 10531,
-                        "option_text": "12 feet",
-                        "correct": "0",
-                        "created_at": "2018-11-23 15:32:20",
-                        "updated_at": "2018-11-23 15:32:20",
-                        "deleted_at": null,
-                        "explanation": null
+                        "option_id": 37979,
+                        "option_text": "12 feet"
                     }
-                ],
-                "answer": {
-                    "id": 135407,
-                    "q_id": 10531,
-                    "option_id": 37979,
-                    "option_text": "12 feet"
-                }
-            },
-            {
-                "id": 10532,
-                "author_id": 0,
-                "test_id": 151,
-                "question": "<p><strong><span style=\"font-size: 11pt; line-height: 115%; font-family: Calibri, sans-serif;\">What is the length of an arc of a circle with a radius of 5 if it subtends an angle of 60</span><span style=\"font-size: 11pt; line-height: 115%; font-family: Calibri, sans-serif;\">&nbsp;at the center?</span></strong></p>",
-                "topic_tag": "Circle Geometry",
-                "year_tag": null,
-                "duplicated": null,
-                "created_at": "2018-11-23 14:19:28",
-                "updated_at": "2019-03-05 00:35:07",
-                "explanation": "<p><span style=\"text-decoration: underline;\">&nbsp; &nbsp;ϴ&nbsp;&nbsp;</span> X 2&pi;r</p>\r\n<p>360&nbsp;</p>\r\n<p>where r is the radius of the circle and&nbsp;&pi; = <span style=\"text-decoration: underline;\">22</span></p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;7</p>\r\n<p>So, we have;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"text-decoration: underline;\">&nbsp; &nbsp;60&nbsp;&nbsp;</span> X 2 X <span style=\"text-decoration: underline;\">22</span> X 5</p>\r\n<p>&nbsp; 360&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 7&nbsp;</p>\r\n<p><span style=\"text-decoration: underline;\">110</span>&nbsp;&nbsp;= 5.24m (<strong>B</strong>)</p>\r\n<p>&nbsp; 21</p>",
-                "explanation_by": 19,
-                "explanation_user_name": "Habeeb bdev",
-                "deleted_at": null,
-                "deleted_by": null,
-                "subject_id": 1,
-                "difficulty_number": 100,
-                "track_type": "learning and evaluation",
-                "topic_id": 16,
-                "options": [
-                    {
-                        "id": 37980,
+                },
+                {
+                    "id": 10532,
+                    "author_id": 0,
+                    "test_id": 151,
+                    "question": "<p><strong><span style=\"font-size: 11pt; line-height: 115%; font-family: Calibri, sans-serif;\">What is the length of an arc of a circle with a radius of 5 if it subtends an angle of 60</span><span style=\"font-size: 11pt; line-height: 115%; font-family: Calibri, sans-serif;\">&nbsp;at the center?</span></strong></p>",
+                    "topic_tag": "Circle Geometry",
+                    "year_tag": null,
+                    "duplicated": null,
+                    "created_at": "2018-11-23 14:19:28",
+                    "updated_at": "2019-03-05 00:35:07",
+                    "explanation": "<p><span style=\"text-decoration: underline;\">&nbsp; &nbsp;ϴ&nbsp;&nbsp;</span> X 2&pi;r</p>\r\n<p>360&nbsp;</p>\r\n<p>where r is the radius of the circle and&nbsp;&pi; = <span style=\"text-decoration: underline;\">22</span></p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;7</p>\r\n<p>So, we have;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p><span style=\"text-decoration: underline;\">&nbsp; &nbsp;60&nbsp;&nbsp;</span> X 2 X <span style=\"text-decoration: underline;\">22</span> X 5</p>\r\n<p>&nbsp; 360&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 7&nbsp;</p>\r\n<p><span style=\"text-decoration: underline;\">110</span>&nbsp;&nbsp;= 5.24m (<strong>B</strong>)</p>\r\n<p>&nbsp; 21</p>",
+                    "explanation_by": 19,
+                    "explanation_user_name": "Habeeb bdev",
+                    "deleted_at": null,
+                    "deleted_by": null,
+                    "subject_id": 1,
+                    "difficulty_number": 100,
+                    "track_type": "learning and evaluation",
+                    "topic_id": 16,
+                    "options": [
+                        {
+                            "id": 37980,
+                            "q_id": 10532,
+                            "option_text": "3.14",
+                            "correct": "0",
+                            "created_at": "2018-11-23 15:32:20",
+                            "updated_at": "2018-11-23 15:32:20",
+                            "deleted_at": null,
+                            "explanation": null
+                        },
+                        {
+                            "id": 37981,
+                            "q_id": 10532,
+                            "option_text": "5.24",
+                            "correct": "0",
+                            "created_at": "2018-11-23 15:32:20",
+                            "updated_at": "2018-11-23 15:32:20",
+                            "deleted_at": null,
+                            "explanation": null
+                        },
+                        {
+                            "id": 37982,
+                            "q_id": 10532,
+                            "option_text": "2.62",
+                            "correct": "0",
+                            "created_at": "2018-11-23 15:32:20",
+                            "updated_at": "2018-11-23 15:32:20",
+                            "deleted_at": null,
+                            "explanation": null
+                        },
+                        {
+                            "id": 37983,
+                            "q_id": 10532,
+                            "option_text": "4.85",
+                            "correct": "0",
+                            "created_at": "2018-11-23 15:32:20",
+                            "updated_at": "2018-11-23 15:32:20",
+                            "deleted_at": null,
+                            "explanation": null
+                        }
+                    ],
+                    "answer": {
+                        "id": 135408,
                         "q_id": 10532,
-                        "option_text": "3.14",
-                        "correct": "0",
-                        "created_at": "2018-11-23 15:32:20",
-                        "updated_at": "2018-11-23 15:32:20",
-                        "deleted_at": null,
-                        "explanation": null
-                    },
-                    {
-                        "id": 37981,
-                        "q_id": 10532,
-                        "option_text": "5.24",
-                        "correct": "0",
-                        "created_at": "2018-11-23 15:32:20",
-                        "updated_at": "2018-11-23 15:32:20",
-                        "deleted_at": null,
-                        "explanation": null
-                    },
-                    {
-                        "id": 37982,
-                        "q_id": 10532,
-                        "option_text": "2.62",
-                        "correct": "0",
-                        "created_at": "2018-11-23 15:32:20",
-                        "updated_at": "2018-11-23 15:32:20",
-                        "deleted_at": null,
-                        "explanation": null
-                    },
-                    {
-                        "id": 37983,
-                        "q_id": 10532,
-                        "option_text": "4.85",
-                        "correct": "0",
-                        "created_at": "2018-11-23 15:32:20",
-                        "updated_at": "2018-11-23 15:32:20",
-                        "deleted_at": null,
-                        "explanation": null
+                        "option_id": 37981,
+                        "option_text": "5.24"
                     }
-                ],
-                "answer": {
-                    "id": 135408,
-                    "q_id": 10532,
-                    "option_id": 37981,
-                    "option_text": "5.24"
-                }
-            },
-        ]}
-        db.transaction((txn)=> {
+                },
+            ]
+        }
+
+
+        console.warn(response.data[0].id)
+        db.transaction((txn) => {
             console.warn("first question query")
-            // txn.executeSql('DROP TABLE IF EXISTS questions', []);
-            // txn.executeSql('DROP TABLE IF EXISTS answers', []);
-            // txn.executeSql('DROP TABLE IF EXISTS options', []);
-            // txn.executeSql('DROP TABLE IF EXISTS schools', []);
+            // txn.executeSql('SELECT * FROM options', [], (tx, res) => {
+            //     for (let i = 0; i < res.rows.length; i++) {
+            //         console.warn(res.rows.item(i))
+            //     }
+            // });
+            txn.executeSql('DROP TABLE IF EXISTS questions', []);
+            txn.executeSql('DROP TABLE IF EXISTS answers', []);
+            txn.executeSql('DROP TABLE IF EXISTS options', []);
+            txn.executeSql('DROP TABLE IF EXISTS schools', []);
 
             txn.executeSql(`CREATE TABLE IF NOT EXISTS questions(
                 question_id INTEGER PRIMARY KEY NOT NULL, 
-                question_text VARCHAR(250), subject_id INTEGER, 
-                question_explanation VARCHAR(250), 
+                question_text VARCHAR(500), subject_id INTEGER, 
+                question_explanation VARCHAR(500), 
                 answer_id INTEGER, 
-                school_name VARCHAR(50))`, [],()=>{
-              console.warn("question table created")
-            });
+                school_name VARCHAR(100))`, [], () => {
+                    console.warn("question table created")
+                });
             txn.executeSql(`CREATE TABLE IF NOT EXISTS answers(
                 answer_id INTEGER PRIMARY KEY NOT NULL,
 	            question_id INTEGER NOT NULL,
 	            option_id INTEGER NOT NULL,
-	            option_text TEXT NOT NULL)`, [],()=>{
-              console.warn('answer table created')
-            });
+	            option_text TEXT NOT NULL)`, [], () => {
+                    console.warn('answer table created')
+                });
             txn.executeSql(`CREATE TABLE IF NOT EXISTS schools(
                 school_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-	            school_name	TEXT)`, [],()=>{
-              console.warn('school table created')
-            });
+	            school_name	VARCHAR(100))`, [], () => {
+                    console.warn('school table created')
+                });
             txn.executeSql(`CREATE TABLE IF NOT EXISTS options(
                 option_id INTEGER PRIMARY KEY NOT NULL,
-	            option_text	TEXT,
-	            question_id	INTEGER NOT NULL)`, [],()=>{
-              console.warn('option table created')
-            });
-        
+	            option_text	VARCHAR(500),
+	            question_id	INTEGER NOT NULL)`, [], () => {
+                    console.warn('option table created')
+                });
+
 
             txn.executeSql(`INSERT INTO schools(school_name) VALUES (:school_name)`, [schoolName], function (tx, res) {
-                    console.warn("inserted schools")
+                console.warn("inserted schools")
             });
-            response.data.map( data => {
-                txn.executeSql(`INSERT INTO questions(question_id, question_text, subject_id, question_explanation, answer_id, school_name) VALUES (:question_id, :question_text,:subject_id, :question_explanation, :answer_id,  :school_name)`, [data.id,data.question,data.subject_id,data.explanation,data.answer.id, schoolName], function (tx, res) {
-                    console.warn("inserted questions")
-                    });
-                data.options.map(opt=>{
+            response.data.map(data => {
+                data.options.map((opt, i) => {
                     txn.executeSql(`INSERT INTO answers(answer_id,question_id,option_id, option_text) VALUES (:answer_id, :question_id,:option_id, :option_text)`, [data.answer.id, data.id, opt.id, opt.option_text], function (tx, res) {
                         console.warn("inserted answers")
                     });
-                
-                    txn.executeSql(`INSERT INTO options(option_id, option_text,question_id) VALUES (:option_id, :option_text, :question_id)`, [opt.id, opt.option_text, data.id], function (tx, res) {
+
+                    txn.executeSql(`INSERT INTO options(option_id, option_text,question_id) VALUES (:option_id, :option_text, :question_id)`, [opt.id, opt.option_text, data.id], async function (tx, res) {
                         console.warn("inserted options")
+
                     });
-                 
                 })
+                txn.executeSql(`INSERT INTO questions(question_id, question_text, subject_id, question_explanation, answer_id, school_name) VALUES (:question_id, :question_text, :subject_id, :question_explanation, :answer_id,  :school_name)`, [data.id, data.question, data.subject_id, data.explanation, data.answer.id, schoolName], function (tx, res) {
+                    console.warn("inserted questions")
+                });
             })
-        }); 
+
+        });
     }
-  
+
 
     getSubjects = (schoolName) => {
 
@@ -281,10 +292,9 @@ class DownloadScreen extends Component {
                 // console.warn("subjects set")
                 const responseName = response
                 console.log("going to setsubject")
-                await this.setSubjectToDb(responseName, schoolName)
-                await this.getQuestions(schoolName)
-                
-
+                // await this.setSubjectToDb(responseName, schoolName)
+                // await this.getQuestions(schoolName)
+                await this.populateQuestions(schoolName)
             })
             .catch(e => console.warn(e))
     }
@@ -294,9 +304,9 @@ class DownloadScreen extends Component {
         Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/questions`)
             .then(response => {
                 console.warn(response)
-                console.warn("fetched questions")
-                this.populateQuestions(schoolName)
-                console.warn("populated")
+                // console.warn("fetched questions")
+                // this.populateQuestions(schoolName)
+                // console.warn("populated")
             }).catch(e => alert(e))
     }
 
@@ -324,9 +334,12 @@ class DownloadScreen extends Component {
             })
             return false
         }
+
         const schoolName = "University of Lagos"
-        await this.getSubjects(schoolName)
-        console.warn("isloading false")
+        await this.populateQuestions(schoolName)
+
+        // await this.getSubjects(schoolName)
+        // console.warn("isloading false")
 
     }
 
@@ -339,7 +352,6 @@ class DownloadScreen extends Component {
             <SideDrawerComponent
                 handleHomeNavigation={() => {
                     this.props.navigation.navigate('Startup')
-
                 }}
                 handleExamsNavigation={() => this.props.navigation.navigate('MyExams')}
                 handleAboutNavigation={() => this.props.navigation.navigate('About')}
