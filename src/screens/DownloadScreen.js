@@ -199,15 +199,15 @@ class DownloadScreen extends Component {
         console.warn(response.data[0].id)
         db.transaction((txn) => {
             console.warn("first question query")
-            // txn.executeSql('SELECT * FROM options', [], (tx, res) => {
-            //     for (let i = 0; i < res.rows.length; i++) {
-            //         console.warn(res.rows.item(i))
-            //     }
-            // });
-            txn.executeSql('DROP TABLE IF EXISTS questions', []);
-            txn.executeSql('DROP TABLE IF EXISTS answers', []);
-            txn.executeSql('DROP TABLE IF EXISTS options', []);
-            txn.executeSql('DROP TABLE IF EXISTS schools', []);
+            txn.executeSql('SELECT * FROM options', [], (tx, res) => {
+                for (let i = 0; i < res.rows.length; i++) {
+                    console.warn(res.rows.item(i))
+                }
+            });
+            // txn.executeSql('DROP TABLE IF EXISTS questions', []);
+            // txn.executeSql('DROP TABLE IF EXISTS answers', []);
+            // txn.executeSql('DROP TABLE IF EXISTS options', []);
+            // txn.executeSql('DROP TABLE IF EXISTS schools', []);
 
             txn.executeSql(`CREATE TABLE IF NOT EXISTS questions(
                 question_id INTEGER PRIMARY KEY NOT NULL, 
@@ -246,7 +246,7 @@ class DownloadScreen extends Component {
                         console.warn("inserted answers")
                     });
 
-                    txn.executeSql(`INSERT INTO options(option_id, option_text,question_id) VALUES (:option_id, :option_text, :question_id)`, [opt.id, opt.option_text, data.id], async function (tx, res) {
+                    txn.executeSql(`INSERT INTO options(option_id, option_text,question_id) VALUES (:option_id, :option_text, :question_id)`, [opt.id, opt.option_text, data.id], function (tx, res) {
                         console.warn("inserted options")
 
                     });

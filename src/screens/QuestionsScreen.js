@@ -3,6 +3,8 @@ import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator, Picker, St
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
 import SQLite from 'react-native-sqlite-2';
+import HTMLView from 'react-native-htmlview';
+
 
 
 const db = SQLite.openDatabase('faceyourbook.db', '1.0', '', 1);
@@ -33,8 +35,8 @@ class Questions extends Component {
             txn.executeSql('SELECT * FROM questions WHERE school_name = :school_name ', ["University of Lagos"], async (tx, res) => {
                 let questionArray = []
                 for (let i = 0; i < res.rows.length; i++) {
-
-                    questionArray.push(res.rows.item(i))
+                    console.warn(res.rows.item(i))
+                    // questionArray.push(res.rows.item(i))
 
                 }
                 await this.setState({ questions: this.state.questions.concat(questionArray) });
@@ -42,7 +44,7 @@ class Questions extends Component {
             txn.executeSql('SELECT * FROM options', [], async (tx, res) => {
                 let optionArray = []
                 for (let i = 0; i < res.rows.length; i++) {
-
+                    console.warn(res.rows.item(i))
                     optionArray.push(res.rows.item(i))
 
                 }
@@ -108,21 +110,26 @@ class Questions extends Component {
                             {
                                 this.state.questions.map(data => {
                                     return (
-                                        <View>
-                                            <Text>{data.question_text}</Text>
-                                            {
-                                                this.state.options.map(opt => {
-                                                    if (opt.question_id == data.question_id) {
-                                                        return (
-                                                            <View>
-                                                                <Text>{opt.option_text}</Text>
-                                                            </View>
-                                                        )
-                                                    }
+                                        <View style={styles.questionView}>
+                                            <HTMLView
+                                                value={data.question_text}
+                                            />
+                                            <View style={styles.answerView}>
+                                                {
+                                                    this.state.options.map(opt => {
+                                                        if (opt.question_id == data.question_id) {
+                                                            return (
+                                                                <View>
+                                                                    <Text>{opt.option_text}</Text>
+                                                                </View>
+                                                            )
+                                                        }
 
 
-                                                })
-                                            }
+                                                    })
+                                                }
+                                            </View>
+
                                         </View>
                                     )
                                 })

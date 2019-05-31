@@ -35,14 +35,15 @@ const Auth = createStackNavigator({
 
 })
 const Main = createStackNavigator({
-    Questions: {
-        screen: Questions,
+    Download: {
+        screen: DownloadScreen,
         navigationOptions: {
             header: null
         }
     },
-    Download: {
-        screen: DownloadScreen,
+
+    Questions: {
+        screen: Questions,
         navigationOptions: {
             header: null
         }
