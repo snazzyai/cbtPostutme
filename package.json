@@ -16,6 +16,7 @@
     "react-native-gesture-handler": "^1.2.0",
     "react-native-htmlview": "^0.14.0",
     "react-native-local-mongodb": "^2.2.9",
+    "react-native-paper": "^2.15.2",
     "react-native-paystack": "^3.3.0",
     "react-native-sqlite-2": "^2.0.2",
     "react-native-svg": "^9.4.0",

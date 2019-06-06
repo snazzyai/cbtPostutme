@@ -24,7 +24,7 @@ class PastQuestions extends Component {
     drawer = null;
 
 
-    async componentDidMount(){
+    async componentDidMount() {
         // await AsyncStorage.removeItem(`hasShared`)
         // await AsyncStorage.removeItem(`paidExams`)
         //shows all AsyncStorage
@@ -36,7 +36,7 @@ class PastQuestions extends Component {
         //       });
         //     });
         //   });
-       
+
     }
     //check if user hasPaid and direct as appropriate
     checkUserPaid = async (type, id) => {
@@ -46,25 +46,17 @@ class PastQuestions extends Component {
 
         const getPayments = await AsyncStorage.getItem(`paidExams`)
         const parsedGetPayment = JSON.parse(getPayments)
-     
-        
-        if(parsedGetPayment === null) {
-            this.props.navigation.navigate('Payment', {
+
+
+        if (parsedGetPayment.includes(type)) {
+            this.props.navigation.navigate('SelectSubject', {
                 name: type
             })
+
         }
-            const payments =  parsedGetPayment.includes(type)
-            console.warn(payments)
-            if(payments){
-                this.props.navigation.navigate('SelectSubject', {
-                    name: type
-                })
-            }
-            else{
-                this.props.navigation.navigate('Payment', {
-                    name: type
-                })
-            }
+        else {
+            console.warn("else condition")
+        }
 
     }
 

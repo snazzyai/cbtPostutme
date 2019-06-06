@@ -13,6 +13,7 @@ import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 
 
 class MyExams extends Component {
+    schoolName = this.props.navigation.getParam('name')
 
     state = {
         searchValue: "",
@@ -31,7 +32,7 @@ class MyExams extends Component {
         const getExams = await AsyncStorage.getItem('paidExams')
         const parsedExams = JSON.parse(getExams)
         const finalArray = []
-        if(parsedExams !== null){
+        if (parsedExams !== null) {
             this.state.schools.forEach(question => {
                 parsedExams.forEach(exam => {
                     if (question.typeNameFull === exam) {
@@ -40,7 +41,7 @@ class MyExams extends Component {
                 })
             })
         }
-      
+
         this.setState({
             paid: finalArray
         })
@@ -53,11 +54,6 @@ class MyExams extends Component {
 
     }
 
-    componentWillUnmount(){
-        this.setState({
-            paid: []
-        })
-    }
 
     //slide drawer component
     viewOpened = () => {
@@ -87,13 +83,11 @@ class MyExams extends Component {
     }
     //end of slide drawer component
 
-    handlePaidExam = async (type) => {
-        // const getSubjects = await AsyncStorage.getItem(`${type}`)
-        // const parsedGetSubject = JSON.parse(getSubjects)
-        // const subjects = parsedGetSubject.subjects
-        // this.props.navigation.navigate('SelectSubject', {
-        //     subject: subjects
-        // })
+    handlePaidExam = (type) => {
+        const schoolName = this.schoolName
+        this.props.navigation.navigate("SelectSubject", {
+            name: type || schoolName
+        })
     }
 
     filteredList = () => {

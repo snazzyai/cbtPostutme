@@ -18,6 +18,7 @@ import PaymentPage from '../screens/PaymentPage'
 
 
 const Auth = createStackNavigator({
+
     Startup: {
         screen: Startup,
         navigationOptions: {
@@ -35,6 +36,19 @@ const Auth = createStackNavigator({
 
 })
 const Main = createStackNavigator({
+    PastQuestions: {
+        screen: PastQuestions,
+        navigationOptions: {
+            header: null
+        }
+    },
+    SelectSubject: {
+        screen: SelectSubject,
+        navigationOptions: {
+            header: null
+        }
+    },
+
     Download: {
         screen: DownloadScreen,
         navigationOptions: {
@@ -42,20 +56,7 @@ const Main = createStackNavigator({
         }
     },
 
-    Questions: {
-        screen: Questions,
-        navigationOptions: {
-            header: null
-        }
-    },
 
-
-    PastQuestions: {
-        screen: PastQuestions,
-        navigationOptions: {
-            header: null
-        }
-    },
     PaymentPage: {
         screen: PaymentPage,
         navigationOptions: {
@@ -86,7 +87,12 @@ const Main = createStackNavigator({
             header: null
         }
     },
-
+    Questions: {
+        screen: Questions,
+        navigationOptions: {
+            header: null
+        }
+    },
     MyExams: {
         screen: MyExams,
         navigationOptions: {
@@ -99,15 +105,6 @@ const Main = createStackNavigator({
             header: null
         }
     },
-    SelectSubject: {
-        screen: SelectSubject,
-        navigationOptions: {
-            header: null
-        }
-
-    },
-
-
 })
 
 
