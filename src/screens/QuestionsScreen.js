@@ -256,7 +256,10 @@ class Questions extends Component {
 
         console.warn("filtered data", filtered)
 
-        alert(`You have ${filtered.length} correct answers`)
+        this.props.navigation.navigate('QuestionCorrection', {
+            data: filtered
+        })
+
     }
     // onButtonPress = (data, optId, optText, qId, key, i) => {
 
