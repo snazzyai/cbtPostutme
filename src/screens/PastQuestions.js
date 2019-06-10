@@ -55,7 +55,9 @@ class PastQuestions extends Component {
 
         }
         else {
-            console.warn("else condition")
+            this.props.navigation.navigate('Payment', {
+                name: type
+            })
         }
 
     }

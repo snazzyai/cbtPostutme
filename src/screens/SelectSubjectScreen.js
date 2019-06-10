@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/Ionicons"
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent';
 import axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage';
-import SQLite from 'react-native-sqlite-2';
+
 import Datastore from 'react-native-local-mongodb'
 
 
@@ -20,7 +20,6 @@ class SelectSubject extends Component {
     subject = this.props.navigation.getParam('subject')
 
     state = {
-
         subjectId: "",
         subjects: [],
         pastQuestionName: this.name,
@@ -69,6 +68,7 @@ class SelectSubject extends Component {
             return false
 
         }
+
         this.state.subjects.map(data => {
             if (this.state.subjectId == data.subject_id) {
                 this.props.navigation.navigate('Questions', {
@@ -96,9 +96,9 @@ class SelectSubject extends Component {
                         }>
                         <Picker.item label="Choose a subject" value="" />
                         {
-                            this.state.subjects.map(sub => {
+                            this.state.subjects.map((sub, i) => {
                                 return (
-                                    <Picker.item label={sub.subject_name} value={sub.subject_id} />
+                                    <Picker.item key={i} label={sub.subject_name} value={sub.subject_id} />
                                 )
                             })
                         }
@@ -108,6 +108,9 @@ class SelectSubject extends Component {
                     <View style={styles.iconView}>
                         <Icon size={30} color="#fff" name="ios-arrow-dropdown" />
                     </View>
+                    {
+
+                    }
                     <ButtonComponent externalStyle={{ marginLeft: 30 }} onPress={this.handlePress} text="SELECT SUBJECT" />
                 </ScrollView>
             </View >

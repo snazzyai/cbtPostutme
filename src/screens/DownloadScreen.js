@@ -6,7 +6,6 @@ import ActivationScreenHeader from '../components/ActivationScreenHeader/Activat
 import Axios from 'axios'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
-import SQLite from 'react-native-sqlite-2';
 import Datastore from 'react-native-local-mongodb'
 import SchoolListComponent from '../components/SchoolListComponent/SchoolListComponent';
 
@@ -14,7 +13,7 @@ import SchoolListComponent from '../components/SchoolListComponent/SchoolListCom
 
 
 
-const db = SQLite.openDatabase('faceyourbook.db', '1.0', '', 1);
+// const db = SQLite.openDatabase('faceyourbook.db', '1.0', '', 1);
 
 
 
