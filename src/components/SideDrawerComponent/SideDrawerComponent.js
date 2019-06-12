@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         paddingLeft: 20
     },
     touchable: {
-        marginBottom: 20
+        marginBottom: 30
     },
     text: {
         fontSize: 20,

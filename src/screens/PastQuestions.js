@@ -6,7 +6,18 @@ import schools from '../components/SchoolListComponent/SchoolListComponent'
 import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
+import Datastore from 'react-native-local-mongodb'
 
+const dbstoreSubjects = new Datastore({ filename: 'faceyourbook', autoload: true });
+const dbstoreData = new Datastore({ filename: 'questionData', autoload: true });
+
+//For testing
+// dbstoreSubjects.remove({}, { multi: true }, function (err, numRemoved) {
+//     console.warn("removed mongo")
+// });
+// dbstoreData.remove({}, { multi: true }, function (err, numRemoved) {
+//     console.warn("removed mongo")
+// });
 
 
 
@@ -17,14 +28,14 @@ class PastQuestions extends Component {
         drawerClosed: true,
         subjects: {},
         schools: schools,
-
-
     }
 
     drawer = null;
 
 
+
     async componentDidMount() {
+
         // await AsyncStorage.removeItem(`hasShared`)
         // await AsyncStorage.removeItem(`paidExams`)
         //shows all AsyncStorage
@@ -43,11 +54,15 @@ class PastQuestions extends Component {
         /*for testing purpose
         await AsyncStorage.removeItem(`${type}`)
         */
+
         const getPayments = await AsyncStorage.getItem(`paidExams`)
         const parsedGetPayment = JSON.parse(getPayments)
-
-
-        if (parsedGetPayment.includes(type)) {
+        if (parsedGetPayment === null) {
+            this.props.navigation.navigate('Payment', {
+                name: type
+            })
+        }
+        else if (parsedGetPayment.includes(type)) {
             this.props.navigation.navigate('SelectSubject', {
                 name: type
             })

@@ -90,6 +90,13 @@ class DownloadScreen extends Component {
 
     }
 
+    componentWillUnmount() {
+        this.setState({
+            isLoading: false,
+            error: true
+        })
+    }
+
     populateQuestions = (response, schoolName) => {
 
         // const response = {
@@ -257,8 +264,18 @@ class DownloadScreen extends Component {
                 },
                 school_name: schoolName
             }
-            dbstoreData.insert(otherData, (err, newDoc) => {
+            dbstoreData.insert(otherData, async (err, newDoc) => {
                 if (lastObject.id === newDoc.question_id) {
+
+                    const getPaidExams = await AsyncStorage.getItem(`paidExams`)
+                    const examToAdd = [`${schoolName}`]
+                    if (getPaidExams !== null) {
+                        const newExam = JSON.parse(getPaidExams).concat(examToAdd);
+                        AsyncStorage.setItem('paidExams', JSON.stringify(newExam));
+                    }
+                    else {
+                        AsyncStorage.setItem('paidExams', JSON.stringify(examToAdd));
+                    }
                     this.props.navigation.navigate("MyExams", {
                         name: this.name
                     })
@@ -275,21 +292,13 @@ class DownloadScreen extends Component {
 
 
     getSubjects = (schoolName) => {
-        console.warn("in get subjects")
+
         Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/subjects`)
             .then(async response => {
                 // for testing 
                 // await AsyncStorage.removeItem(`paidExams`)
-                console.warn('subject response')
-                const getPaidExams = await AsyncStorage.getItem(`paidExams`)
-                const examToAdd = [`${schoolName}`]
-                if (getPaidExams !== null) {
-                    const newExam = JSON.parse(getPaidExams).concat(examToAdd);
-                    AsyncStorage.setItem('paidExams', JSON.stringify(newExam));
-                }
-                else {
-                    AsyncStorage.setItem('paidExams', JSON.stringify(examToAdd));
-                }
+
+
 
                 this.setSubjectToDb(response, schoolName)
                 await this.getQuestions(schoolName)
@@ -329,7 +338,6 @@ class DownloadScreen extends Component {
 
     componentDidMount() {
         const schoolName = this.name || "University of Lagos"
-        console.warn(this.name)
         // testing
         // await AsyncStorage.removeItem(`paidExams`)
         BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.navigate('PastQuestions'));

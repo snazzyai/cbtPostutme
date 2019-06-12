@@ -97,9 +97,9 @@ class Corrections extends Component {
                 renderNavigationView={this.viewOpened}
             >
                 <ImageBackground style={styles.container}>
-                    <View>
-                        <MenuDrawer styling={{ paddingLeft: 20, marginTop: 15, marginBottom: 15, zIndex: 1 }} onClickDrawerOpener={() => this.drawer.openDrawer()} />
-                        <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", color: "#fff", marginBottom: 10 }} >{this.name || "UNIVERSITY OF LAGOS"}</Text>
+                    <View style={{ borderBottomColor: "#fafafa", borderBottomWidth: 2 }}>
+                        <MenuDrawer styling={{ paddingLeft: 15, marginTop: 15, marginBottom: 15, zIndex: 1 }} onClickDrawerOpener={() => this.drawer.openDrawer()} />
+                        <Text style={styles.textSelect} >{this.name || "University of Lagos"}</Text>
                     </View>
 
                     <ScrollView>
@@ -151,7 +151,7 @@ class Corrections extends Component {
                                                     stylesheet={styles}
                                                 />
                                                 <Html
-                                                    value={`<h4>Explanation: ${data.question_explanation}</h4>`}
+                                                    value={data.question_explanation === null ? `<h4>Explanation: None</h4>` : `<h4>Explanation: ${data.question_explanation}</h4>`}
                                                     stylesheet={styles}
                                                 />
                                             </View>
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
         color: "#fff",
         position: "relative",
         bottom: 48,
-        marginLeft: 15
+        left: 10
     },
     picker: { height: 40, width: 300, backgroundColor: "#5FA046", marginTop: 30, color: "#fff" },
     iconView: {

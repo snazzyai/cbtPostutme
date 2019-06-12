@@ -10,6 +10,7 @@ import { ActivityIndicator, Button, RadioButton } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons'
 import _ from 'underscore'
 import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
+import CountDown from 'react-native-countdown-component'
 
 
 
@@ -201,9 +202,25 @@ class Questions extends Component {
                 renderNavigationView={this.viewOpened}
             >
                 <ImageBackground style={styles.container}>
-                    <View>
-                        <MenuDrawer styling={{ paddingLeft: 20, marginTop: 15, marginBottom: 15, zIndex: 1 }} onClickDrawerOpener={() => this.drawer.openDrawer()} />
+                    <View style={{ borderBottomColor: "#fafafa", borderBottomWidth: 1 }}>
+                        <MenuDrawer styling={{ paddingLeft: 15, marginTop: 15, marginBottom: 15, zIndex: 1 }} onClickDrawerOpener={() => this.drawer.openDrawer()} />
                         <Text style={styles.textSelect}>{schoolName || "UNIVERSITY OF LAGOS"} </Text>
+                        <View style={{ padding: 8 }}>
+                            <CountDown
+                                size={20}
+                                until={60 * 0.2}
+                                onFinish={() => this.onSubmit()}
+                                digitStyle={{ backgroundColor: '#FFF', borderRadius: 5 }}
+                                digitTxtStyle={{ color: '#1CC625' }}
+                                timeLabelStyle={{ color: 'red', fontWeight: 'bold' }}
+                                separatorStyle={{ color: '#fff' }}
+                                timeToShow={['M', 'S']}
+                                timeLabels={{ m: null, s: null }}
+                                showSeparator
+                            />
+
+                        </View>
+
                     </View>
                     <ScrollView>
                         <View style={styles.headView}>
@@ -300,7 +317,7 @@ const styles = StyleSheet.create({
         color: "#fff",
         position: "relative",
         bottom: 48,
-        marginLeft: 15
+        left: 10
     },
     picker: { height: 40, width: 300, backgroundColor: "#5FA046", marginTop: 30, color: "#fff" },
     iconView: {
