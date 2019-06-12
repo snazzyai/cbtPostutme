@@ -275,16 +275,14 @@ class DownloadScreen extends Component {
 
 
     getSubjects = (schoolName) => {
+        console.warn("in get subjects")
         Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/subjects`)
             .then(async response => {
                 // for testing 
                 // await AsyncStorage.removeItem(`paidExams`)
-
-
-
+                console.warn('subject response')
                 const getPaidExams = await AsyncStorage.getItem(`paidExams`)
                 const examToAdd = [`${schoolName}`]
-
                 if (getPaidExams !== null) {
                     const newExam = JSON.parse(getPaidExams).concat(examToAdd);
                     AsyncStorage.setItem('paidExams', JSON.stringify(newExam));
@@ -298,42 +296,56 @@ class DownloadScreen extends Component {
 
 
             })
-            .catch(e => console.warn(e))
+            .catch(e => {
+                this.setState({
+                    error: true,
+                    isLoading: false
+                })
+            })
     }
 
     getQuestions = (schoolName) => {
         Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/questions`)
             .then(async response => {
-
+                console.warn("response gotten")
+                if (response.length <= 0) {
+                    return (
+                        this.setState({
+                            error: true,
+                            isLoading: false
+                        })
+                    )
+                }
                 await this.populateQuestions(response, schoolName)
                 // console.warn("populated")
-            }).catch(e => alert(e))
+            }).catch(e => {
+                this.setState({
+                    error: true,
+                    isLoading: false
+                })
+            })
     }
 
 
     componentDidMount() {
         const schoolName = this.name || "University of Lagos"
-
+        console.warn(this.name)
         // testing
         // await AsyncStorage.removeItem(`paidExams`)
         BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.navigate('PastQuestions'));
 
-        if (this.name === "WAEC" || this.name === "UTME") {
-            //donwload files for waec or utme using api
-            //set as part of paidExams
-            alert('waec/putme')
-            this.setState({
-                isLoading: false,
-                error: true
-            })
-            return false
-        }
+        //For waec and jamb
+        //     if (this.name === "WAEC") {
+        //         //donwload files for waec or utme using api
+        //         //set as part of paidExams
+        //         thhis.getWaecQuestions()
+        //     }
+        //     else if (this.name === "UTME"){
 
+        // }
 
-        // await this.populateQuestions(schoolName)
 
         this.getSubjects(schoolName)
-
 
     }
 
@@ -435,6 +447,29 @@ class DownloadScreen extends Component {
                                 <Text style={styles.textView}> Click here to go to your Exams Screen </Text>
                             </TouchableOpacity>
 
+                        </View>
+                    </View>
+                </DrawerLayout>
+            )
+        }
+        else if (this.state.notFound) {
+            return (
+                <DrawerLayout
+                    ref={drawer => this.drawer = drawer}
+                    drawerWidth={240}
+                    drawerPosition={DrawerLayout.positions.Left}
+                    drawerType='front'
+                    drawerBackgroundColor="#ddd"
+                    renderNavigationView={this.viewOpened}
+                >
+                    <View>
+
+                        <ActivationScreenHeader onClickDrawerOpen={() => this.drawer.openDrawer()} processText={"DOWNLOAD SCREEN"} />
+                        <View style={styles.donwloadView}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate("MyExams")} >
+                                <Text style={styles.textView}> Click here to go to your Exams Screen </Text>
+                            </TouchableOpacity>
+                            <Text>!! please check another exam</Text>
                         </View>
                     </View>
                 </DrawerLayout>

@@ -49,6 +49,8 @@ const Main = createStackNavigator({
             header: null
         }
     },
+
+
     QuestionCorrections: {
         screen: Corrections,
         navigationOptions: {

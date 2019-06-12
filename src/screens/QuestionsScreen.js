@@ -201,13 +201,13 @@ class Questions extends Component {
                 renderNavigationView={this.viewOpened}
             >
                 <ImageBackground style={styles.container}>
-                    <MenuDrawer styling={{ paddingLeft: 25, marginTop: 15, marginBottom: 15 }} onClickDrawerOpener={() => this.drawer.openDrawer()} />
                     <View>
-
+                        <MenuDrawer styling={{ paddingLeft: 20, marginTop: 15, marginBottom: 15, zIndex: 1 }} onClickDrawerOpener={() => this.drawer.openDrawer()} />
+                        <Text style={styles.textSelect}>{schoolName || "UNIVERSITY OF LAGOS"} </Text>
                     </View>
                     <ScrollView>
                         <View style={styles.headView}>
-                            <Text style={styles.textSelect}>{schoolName || "UNIVERSITY OF LAGOS"} </Text>
+
                             <View style={styles.subjectName}>
                                 <Text style={{ fontSize: 18, fontWeight: "bold", textAlign: "center", color: "#fff" }}>{subjectName}</Text>
                             </View>
@@ -231,18 +231,19 @@ class Questions extends Component {
                                                 {data.options.map((opt, optkey) => {
                                                     return (
 
-                                                        <View style={{ flex: 1, flexDirection: "row", paddingRight: 10 }} key={opt.option_id} >
+                                                        <View style={{ flex: 1, flexDirection: "row" }} key={opt.option_id} >
                                                             {letters[optkey] !== undefined ? <Text style={{ marginTop: 7, fontSize: 17, fontWeight: "bold" }}>{`${letters[optkey]}`}</Text> : <Text style={{ marginTop: 5, fontSize: 17, fontWeight: "bold" }}>E.</Text>}
                                                             <RadioButton
+                                                                style={{ zIndex: 1 }}
                                                                 value={radioValue}
                                                                 status={radioValueArray.filter(data => {
                                                                     return data.id === datakey && data.option_id === opt.option_id
                                                                 }).length !== 0 ? 'checked' : 'unchecked'}
                                                                 onPress={() => this.handleRadio(datakey, opt.option_id, opt.option_text)}
                                                             />
-                                                            <View style={{ paddingTop: 5 }}>
+                                                            <View style={{ paddingTop: 5, paddingRight: 5 }}>
                                                                 <Html
-                                                                    value={`<h4>${opt.option_text}</h4>`}
+                                                                    value={`<div><h4>${opt.option_text}</h4></div>`}
                                                                     stylesheet={styles}
                                                                 />
                                                             </View>
@@ -256,8 +257,8 @@ class Questions extends Component {
                             }
 
                         </View>
-                        <View style={{ width: "80%", marginLeft: "8%", marginBottom: 10, marginTop: 20 }}>
-                            <Button style={{ backgroundColor: "#fff" }} onPress={this.onSubmit}>
+                        <View style={{ width: "80%", marginLeft: "8%", marginTop: 15, marginBottom: 5, alignItems: "center" }}>
+                            <Button mode="outlined" style={{ backgroundColor: "#fff" }} onPress={this.onSubmit}>
                                 <Text style={{ fontSize: 18, color: "green" }}>SUBMIT</Text>
                             </Button>
                         </View>
@@ -277,8 +278,12 @@ const styles = StyleSheet.create({
         height: 60,
         fontSize: 25
     },
+    div: {
+        paddingRight: 20
+    },
     outerView: {
         borderRadius: 20,
+        alignItems: "center"
     },
     subjectName: {
         textAlign: "center"
@@ -288,7 +293,15 @@ const styles = StyleSheet.create({
         backgroundColor: "#5FA046",
         flex: 1,
     },
-    textSelect: { fontSize: 20, fontWeight: "bold", textAlign: "center", color: "#fff" },
+    textSelect: {
+        fontSize: 22,
+        fontWeight: "bold",
+        textAlign: "center",
+        color: "#fff",
+        position: "relative",
+        bottom: 48,
+        marginLeft: 15
+    },
     picker: { height: 40, width: 300, backgroundColor: "#5FA046", marginTop: 30, color: "#fff" },
     iconView: {
         position: "relative",
@@ -300,16 +313,16 @@ const styles = StyleSheet.create({
     questionText: {
         paddingBottom: 10,
         fontSize: 17,
-        fontWeight: "bold",
+        color: "green",
+        fontWeight: "bold"
     },
     questionView: {
         padding: 20,
-        marginLeft: 13,
         marginBottom: 10,
         backgroundColor: "#fff",
         elevation: 2,
         borderRadius: 20,
-        width: "90%"
+        width: "87%"
 
     },
     answerView: {

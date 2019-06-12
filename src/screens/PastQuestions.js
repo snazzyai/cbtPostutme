@@ -43,7 +43,6 @@ class PastQuestions extends Component {
         /*for testing purpose
         await AsyncStorage.removeItem(`${type}`)
         */
-
         const getPayments = await AsyncStorage.getItem(`paidExams`)
         const parsedGetPayment = JSON.parse(getPayments)
 
@@ -80,7 +79,7 @@ class PastQuestions extends Component {
             // for testing
             // await AsyncStorage.removeItem(`WAEC`)
             // await AsyncStorage.removeItem(`UTME`)
-            console.warn("removed waec and utme")
+
             // const questionType = await AsyncStorage.getItem(`${type}`)
             // const parsedType = JSON.parse(questionType)
             // if (parsedType !== null) {
@@ -207,10 +206,12 @@ class PastQuestions extends Component {
         const QuestionList = QuestionListFiltered.map((type) => (
             <TouchableOpacity key={type.id} style={styles.typesView} onPress={() => {
                 if (type.typeName == "WAEC") {
-                    this.checkUserShared(type.typeNameFull)
+                    // this.checkUserShared(type.typeNameFull)
+                    return false
                 }
                 else if (type.typeName == "UTME") {
-                    this.checkUserShared(type.typeNameFull)
+                    // this.checkUserShared(type.typeNameFull)
+                    return false
                 }
                 else {
                     this.checkUserPaid(type.typeNameFull, type.id)

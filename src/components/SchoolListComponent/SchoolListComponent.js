@@ -1,20 +1,20 @@
 
 export default schools = [
-    {
-        id: 1,
-        typeName: "WAEC",
-        typeNameFull: "WAEC",
-        imageSource: require("../../../assets/images/waec.png"),
-        fullTypeName: "WAEC QUESTIONS"
-
-    },
-    {
-        id: 2,
-        typeName: "UTME",
-        typeNameFull: "UTME",
-        imageSource: require("../../../assets/images/jamb.png"),
-        fullTypeName: "UTME QUESTIONS"
-    },
+    /* {
+         id: 1,
+         typeName: "WAEC",
+         typeNameFull: "WAEC",
+         imageSource: require("../../../assets/images/waec.png"),
+         fullTypeName: "WAEC QUESTIONS"
+ 
+     },
+     {
+         id: 2,
+         typeName: "UTME",
+         typeNameFull: "UTME",
+         imageSource: require("../../../assets/images/jamb.png"),
+         fullTypeName: "UTME QUESTIONS"
+     },*/
     {
         id: 3,
         typeName: "UNILAG",

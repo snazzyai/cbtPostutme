@@ -16,7 +16,7 @@ import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
 
 
 
-let color = "green"
+let color = "black"
 
 
 class Corrections extends Component {
@@ -97,15 +97,19 @@ class Corrections extends Component {
                 renderNavigationView={this.viewOpened}
             >
                 <ImageBackground style={styles.container}>
-                    <MenuDrawer styling={{ paddingLeft: 25, marginTop: 15, marginBottom: 15 }} onClickDrawerOpener={() => this.drawer.openDrawer()} />
+                    <View>
+                        <MenuDrawer styling={{ paddingLeft: 20, marginTop: 15, marginBottom: 15, zIndex: 1 }} onClickDrawerOpener={() => this.drawer.openDrawer()} />
+                        <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", color: "#fff", marginBottom: 10 }} >{this.name || "UNIVERSITY OF LAGOS"}</Text>
+                    </View>
+
                     <ScrollView>
                         <View style={styles.headView}>
-                            <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", color: "#fff" }} >{this.name || "UNIVERSITY OF LAGOS"}</Text>
+
                             <Text style={{ fontSize: 18, fontWeight: "bold", textAlign: "center", color: "#fff" }}>{this.subject} correction</Text>
                         </View>
                         <View>
-                            <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", color: filtered.length < 10 ? "#F16334" : "#fafafa" }} >Your total score is {filtered.length}/20 </Text>
-                            <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", color: percent < 50 ? "#F16334" : "#fafafa" }}>You got {percent}% </Text>
+                            <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", color: filtered.length < 10 ? "yellow" : "#fafafa" }} >Your total score is {filtered.length}/20 </Text>
+                            <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center", color: percent < 50 ? "yellow" : "#fafafa" }}>You got {percent}% </Text>
 
                         </View>
 
@@ -158,8 +162,8 @@ class Corrections extends Component {
                             }
 
                         </View>
-                        <View style={{ width: "80%", marginLeft: "8%", marginBottom: 10, marginTop: 20 }}>
-                            <Button style={{ backgroundColor: "#fff" }} onPress={this.onSubmit}>
+                        <View style={{ width: "80%", marginLeft: "8%", marginTop: 15, alignItems: "center" }}>
+                            <Button mode="outlined" style={{ backgroundColor: "#fff" }} onPress={this.onSubmit}>
                                 <Text style={{ fontSize: 18, color: "green" }}>TAKE ANOTHER EXAM</Text>
                             </Button>
                         </View>
@@ -199,7 +203,15 @@ const styles = StyleSheet.create({
         backgroundColor: "#5FA046",
         flex: 1,
     },
-    textSelect: { fontSize: 20, fontWeight: "bold", textAlign: "center", },
+    textSelect: {
+        fontSize: 22,
+        fontWeight: "bold",
+        textAlign: "center",
+        color: "#fff",
+        position: "relative",
+        bottom: 48,
+        marginLeft: 15
+    },
     picker: { height: 40, width: 300, backgroundColor: "#5FA046", marginTop: 30, color: "#fff" },
     iconView: {
         position: "relative",
@@ -211,7 +223,9 @@ const styles = StyleSheet.create({
     questionText: {
         paddingBottom: 10,
         fontSize: 17,
-        fontWeight: "bold",
+        color: "green",
+        fontWeight: "bold"
+
     },
     questionView: {
         padding: 20,
