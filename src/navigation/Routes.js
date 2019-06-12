@@ -15,6 +15,7 @@ import SelectSubject from '../screens/SelectSubjectScreen'
 import Questions from '../screens/QuestionsScreen'
 import SignUp from '../screens/SignUpScreen'
 import PaymentPage from '../screens/PaymentPage'
+import Corrections from '../screens/QuestionCorrections'
 
 
 const Auth = createStackNavigator({
@@ -36,14 +37,20 @@ const Auth = createStackNavigator({
 
 })
 const Main = createStackNavigator({
+    PastQuestions: {
+        screen: PastQuestions,
+        navigationOptions: {
+            header: null
+        }
+    },
     SelectSubject: {
         screen: SelectSubject,
         navigationOptions: {
             header: null
         }
     },
-    PastQuestions: {
-        screen: PastQuestions,
+    QuestionCorrections: {
+        screen: Corrections,
         navigationOptions: {
             header: null
         }

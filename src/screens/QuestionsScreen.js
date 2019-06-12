@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ScrollView, StyleSheet, Linking, BackHandler } from 'react-native'
+import { Text, View, TouchableOpacity, ScrollView, StyleSheet, Linking, BackHandler, ImageBackground } from 'react-native'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
 import Html from 'react-native-htmlview';
@@ -9,6 +9,7 @@ import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
 import { ActivityIndicator, Button, RadioButton } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons'
 import _ from 'underscore'
+import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
 
 
 
@@ -29,23 +30,13 @@ class Questions extends Component {
     subjectId = this.props.navigation.getParam('subjectId')
     name = this.props.navigation.getParam('name')
     subjectName = this.props.navigation.getParam('subjectName')
-
-
-
     state = {
-        shouldSet: false,
         radioValue: "",
         radioValueArray: [],
-        answers: [],
         questions: null,
-        score: 0,
-        currentQuestionIndex: 0,
-        questionNumber: 1,
-        selectedAnswer: null,
-        selectedArray: []
+
 
     }
-
     componentDidMount() {
         const schoolName = this.name
         const filtered = []
@@ -77,7 +68,7 @@ class Questions extends Component {
         //     });
         // })
 
-        dbstoreData.find({ subject_id: subject }, async (err, newDoc) => {
+        dbstoreData.find({ subject_id: subject, school_name: this.name || "University of Lagos" }, async (err, newDoc) => {
             let questionArray = []
             newDoc = lodash.shuffle(newDoc)
             for (let i = 0; i < 20; i++) {
@@ -135,52 +126,10 @@ class Questions extends Component {
     }
     //end of slide drawer component
 
-    prev = () => {
-        if (this.state.questionNumber <= 1) {
-            this.setState({
-                questionNumber: 20,
-                currentQuestionIndex: 19
-            })
-        }
-
-        else {
-            this.setState({
-                questionNumber: this.state.questionNumber - 1,
-                currentQuestionIndex: this.state.currentQuestionIndex - 1
-            })
-        }
-    }
-    next = () => {
-
-        const selected = []
-        const { selectedAnswer, questions, currentQuestionIndex } = this.state
-        selected.push(selectedAnswer)
-
-
-        if (this.state.questionNumber >= 20) {
-            this.setState({
-                questionNumber: 1,
-                currentQuestionIndex: 0,
-                selectedArray: this.state.selectedArray.concat(selected),
-
-            })
-        }
-
-        else {
-            this.setState({
-                questionNumber: this.state.questionNumber + 1,
-                currentQuestionIndex: this.state.currentQuestionIndex + 1,
-                selectedArray: this.state.selectedArray.concat(selected),
-            })
-        }
-
-
-
-    }
 
     //handle button radio press
 
-    handleRadio = (datakey, optkey) => {
+    handleRadio = (datakey, optkey, optText) => {
         const { radioValueArray } = this.state
         const filteredArray = radioValueArray.filter(data => {
             return data.id === datakey
@@ -197,7 +146,8 @@ class Questions extends Component {
         const selected = []
         selected.push({
             id: datakey,
-            option_id: optkey
+            option_id: optkey,
+            option_text: optText
         })
 
 
@@ -209,41 +159,8 @@ class Questions extends Component {
 
     }
 
-
-    onSelectAnswer = (opt, i) => {
-        data = this.state.questions[this.state.currentQuestionIndex]
-        console.warn(opt.option_id, data.answers.option_id)
-        if (this.state.selectedArray.includes(opt.option_id)) {
-            return false
-        }
-        else {
-            this.setState({
-                selectedAnswer: opt.option_id,
-            })
-        }
-
-
-        // selected.push({option_id: opt.option_id})
-        // this.setState({
-        //     selectedAnswer: this.state.selectedAnswer.concat(selected)
-        // })
-        // if (opt.option_id === data.answers.option_id) {
-        //     console.warn("correct")
-        //     // answers.push({ question_id: data.question_id, question_text: data.question_text, explanation: data.question_explanation })
-        //     this.setState({
-        //         answers: this.state.answers.concat(answers)
-        //     })
-        // }
-        // else {
-        //     console.warn("incorrect")
-        //     answers = answers.filter(data => {
-        //         return opt.option_id == data.answers.option_id
-        //     })
-        // }
-    }
-
     onSubmit = () => {
-        const { radioValueArray } = this.state
+        const { questions, radioValueArray } = this.state
 
         const filtered = []
         this.state.questions.filter(data => {
@@ -254,44 +171,22 @@ class Questions extends Component {
             })
         })
 
-        console.warn("filtered data", filtered)
 
-        this.props.navigation.navigate('QuestionCorrection', {
-            data: filtered
+
+        this.props.navigation.navigate('QuestionCorrections', {
+            filtered: filtered,
+            data: questions,
+            radioValue: radioValueArray,
+            school: this.name,
+            subject: this.subjectName
         })
 
     }
-    // onButtonPress = (data, optId, optText, qId, key, i) => {
 
-    //     let answers = []
-    //     let active = []
-    //     if (optId == data.answers.option_id) {
-    //         console.warn("correct")
-    //         answers.push({ question_id: data.question_id, question_text: data.question_text, explanation: data.question_explanation })
-    //         checked.push({ option_id: optId })
-    //         this.setState({
-    //             checked: optId,
-    //             selectedButton: qId
-    //         })
-    //     }
-    //     else {
-    //         console.warn("incorrect")
-    //         answers = answers.filter(data => {
-    //             return optId == data.answers.option_id
-    //         })
-    //         this.setState({
-    //             checked: optId,
-    //             selectedButton: qId
-    //         })
-
-    //     }
-
-    //     console.warn(answers)
-
-
-    // }
     render() {
-        const { currentQuestionIndex, questions, selectedArray, radioValue, radioValueArray, shouldSet } = this.state
+        const { questions, radioValue, radioValueArray } = this.state
+        const schoolName = this.name
+        const subjectName = this.subjectName
         if (this.state.questions === null) {
             return (<View><ActivityIndicator /></View>)
         }
@@ -305,63 +200,69 @@ class Questions extends Component {
                 drawerBackgroundColor="#ddd"
                 renderNavigationView={this.viewOpened}
             >
-                <View style={styles.container}>
+                <ImageBackground style={styles.container}>
+                    <MenuDrawer styling={{ paddingLeft: 25, marginTop: 15, marginBottom: 15 }} onClickDrawerOpener={() => this.drawer.openDrawer()} />
+                    <View>
+
+                    </View>
                     <ScrollView>
                         <View style={styles.headView}>
-                            <Text style={styles.textSelect}>Questions for {this.name || "University of Lagos"}</Text>
+                            <Text style={styles.textSelect}>{schoolName || "UNIVERSITY OF LAGOS"} </Text>
                             <View style={styles.subjectName}>
-                                <Text style={{ fontSize: 20, fontWeight: "bold" }}>{this.subjectName}</Text>
+                                <Text style={{ fontSize: 18, fontWeight: "bold", textAlign: "center", color: "#fff" }}>{subjectName}</Text>
                             </View>
 
                         </View>
 
                         <View style={styles.outerView}>
                             {
+                                //checks the question array and returns question and options
                                 questions.map((data, datakey) => {
+                                    const letters = ["A.", "B.", "C.", "D."]
                                     const number = datakey + 1
                                     return (
                                         <View style={styles.questionView}>
                                             <Text style={styles.questionText}>Question {number} of 20</Text>
                                             <Html
-                                                value={data.question_text}
+                                                value={`<h4>${data.question_text}</h4>`}
                                                 stylesheet={styles}
                                             />
                                             <View style={styles.answerView}>
                                                 {data.options.map((opt, optkey) => {
                                                     return (
 
-                                                        <View key={opt.option_id} >
+                                                        <View style={{ flex: 1, flexDirection: "row", paddingRight: 10 }} key={opt.option_id} >
+                                                            {letters[optkey] !== undefined ? <Text style={{ marginTop: 7, fontSize: 17, fontWeight: "bold" }}>{`${letters[optkey]}`}</Text> : <Text style={{ marginTop: 5, fontSize: 17, fontWeight: "bold" }}>E.</Text>}
                                                             <RadioButton
                                                                 value={radioValue}
                                                                 status={radioValueArray.filter(data => {
                                                                     return data.id === datakey && data.option_id === opt.option_id
                                                                 }).length !== 0 ? 'checked' : 'unchecked'}
-                                                                onPress={() => this.handleRadio(datakey, opt.option_id)}
+                                                                onPress={() => this.handleRadio(datakey, opt.option_id, opt.option_text)}
                                                             />
-                                                            <Html
-                                                                value={`<h4>${opt.option_text}</h4>`}
-                                                                stylesheet={styles}
-                                                            />
-
+                                                            <View style={{ paddingTop: 5 }}>
+                                                                <Html
+                                                                    value={`<h4>${opt.option_text}</h4>`}
+                                                                    stylesheet={styles}
+                                                                />
+                                                            </View>
                                                         </View>
-
                                                     )
                                                 })}
                                             </View>
-
                                         </View>
                                     )
                                 })
                             }
 
                         </View>
-                        <View style={{ width: "70%" }}>
-                            <Button style={{ backgroundColor: "#5FA046" }} onPress={this.onSubmit}>
-                                <Text style={{ fontSize: 18, color: "#fff" }}>SUBMIT</Text>
+                        <View style={{ width: "80%", marginLeft: "8%", marginBottom: 10, marginTop: 20 }}>
+                            <Button style={{ backgroundColor: "#fff" }} onPress={this.onSubmit}>
+                                <Text style={{ fontSize: 18, color: "green" }}>SUBMIT</Text>
                             </Button>
                         </View>
                     </ScrollView>
-                </View >
+                </ImageBackground >
             </DrawerLayout >
         )
     }
@@ -372,11 +273,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 15
     },
-    p: {
-        fontSize: 18,
-        color: "black"
-    },
-
     btn: {
         height: 60,
         fontSize: 25
@@ -389,10 +285,10 @@ const styles = StyleSheet.create({
     },
     container: {
         alignItems: "center",
-        backgroundColor: "#fafafa",
+        backgroundColor: "#5FA046",
         flex: 1,
     },
-    textSelect: { fontSize: 20, fontWeight: "bold", textAlign: "center", },
+    textSelect: { fontSize: 20, fontWeight: "bold", textAlign: "center", color: "#fff" },
     picker: { height: 40, width: 300, backgroundColor: "#5FA046", marginTop: 30, color: "#fff" },
     iconView: {
         position: "relative",
@@ -408,10 +304,12 @@ const styles = StyleSheet.create({
     },
     questionView: {
         padding: 20,
-        margin: 10,
+        marginLeft: 13,
+        marginBottom: 10,
         backgroundColor: "#fff",
         elevation: 2,
         borderRadius: 20,
+        width: "90%"
 
     },
     answerView: {

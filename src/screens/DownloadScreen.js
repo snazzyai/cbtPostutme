@@ -84,15 +84,14 @@ class DownloadScreen extends Component {
             }
 
             dbstoreSubjects.insert(subjectData, (err, newDoc) => {
-                console.warn(newDoc)
+
             })
         })
 
     }
 
     populateQuestions = (response, schoolName) => {
-        console.warn(schoolName)
-        console.warn("now in populate")
+
         // const response = {
         //     "data": [
         //         {
@@ -259,9 +258,6 @@ class DownloadScreen extends Component {
                 school_name: schoolName
             }
             dbstoreData.insert(otherData, (err, newDoc) => {
-                if (err) {
-                    console.warn(err)
-                }
                 if (lastObject.id === newDoc.question_id) {
                     this.props.navigation.navigate("MyExams", {
                         name: this.name
@@ -285,7 +281,7 @@ class DownloadScreen extends Component {
                 // await AsyncStorage.removeItem(`paidExams`)
 
 
-                console.warn(response)
+
                 const getPaidExams = await AsyncStorage.getItem(`paidExams`)
                 const examToAdd = [`${schoolName}`]
 
@@ -296,14 +292,10 @@ class DownloadScreen extends Component {
                 else {
                     AsyncStorage.setItem('paidExams', JSON.stringify(examToAdd));
                 }
-                console.warn("has set school as paid")
 
-
-
-                console.log("going to setsubject")
                 this.setSubjectToDb(response, schoolName)
                 await this.getQuestions(schoolName)
-                console.warn("in getsubjects")
+
 
             })
             .catch(e => console.warn(e))
@@ -312,7 +304,7 @@ class DownloadScreen extends Component {
     getQuestions = (schoolName) => {
         Axios.get(`http://learn.simbibot.com/api/putme_schools/${schoolName}/questions`)
             .then(async response => {
-                console.warn("fetched questions")
+
                 await this.populateQuestions(response, schoolName)
                 // console.warn("populated")
             }).catch(e => alert(e))
@@ -341,10 +333,6 @@ class DownloadScreen extends Component {
         // await this.populateQuestions(schoolName)
 
         this.getSubjects(schoolName)
-
-
-
-
 
 
     }

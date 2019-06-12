@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Linking } from 'react-native';
 import ActivationScreenHeader from "../components/ActivationScreenHeader/ActivationScreenHeader"
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';

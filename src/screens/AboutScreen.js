@@ -11,8 +11,8 @@ class About extends Component {
         faq: [
             {
                 id: 1,
-                question: "How do i get a pin?",
-                answer: "About FaceyourbookApp v 1.0"
+                question: "What is faceyourbook all about?",
+                answer: "Faceyourbook app was developed solely to impact learning and making sure student hoping to have good result achieve their purpose."
             },
 
         ]
@@ -63,7 +63,7 @@ class About extends Component {
                     drawerBackgroundColor="#ddd"
                     renderNavigationView={this.viewOpened}
                 >
-                    <ActivationScreenHeader onClickDrawerOpen={() => this.drawer.openDrawer()} processText={"ABOUT PAGE"} />
+                    <ActivationScreenHeader onClickDrawerOpen={() => this.drawer.openDrawer()} processText={"ABOUT"} />
                     <ScrollView style={[styles.faqView, styles]} >
                         {
                             faq.map(item => {

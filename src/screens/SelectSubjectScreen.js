@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator, Picker, StyleSheet, BackHandler, Alert } from 'react-native'
+import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator, Picker, StyleSheet, BackHandler, Alert, ImageBackground, Linking } from 'react-native'
 import Icon from "react-native-vector-icons/Ionicons"
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent';
 import axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage';
-
+import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
 import Datastore from 'react-native-local-mongodb'
+import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 
 
 
@@ -41,7 +42,6 @@ class SelectSubject extends Component {
         //     }); 
         // })
         dbstoreSubjects.find({ school_name: `${schoolName}` }, (err, newDoc) => {
-            console.warn(newDoc)
             let subjectArray = []
             newDoc.map(items => {
                 subjectArray.push(items)
@@ -61,6 +61,38 @@ class SelectSubject extends Component {
         // console.warn(use[0], use[1])
         // console.warn(this.subject)
     }
+    //slide drawer component
+    drawer = null;
+
+
+    viewOpened = () => {
+        return (
+            <SideDrawerComponent
+                handleHomeNavigation={() => {
+                    this.props.navigation.navigate('Startup')
+
+                }}
+                handleExamsNavigation={() => this.props.navigation.navigate('MyExams')}
+                handleAboutNavigation={() => this.props.navigation.navigate('About')}
+                inviteFriends={this.inviteFriends}
+                goToWhatsApp={this.goToWhatsApp}
+                closeDrawer={() => this.drawer.closeDrawer()}
+            />
+        )
+    }
+
+
+
+    inviteFriends = async () => {
+        await Share.share({
+            message: "Share Faceyourbook App to your lovely friends | click this link to download http://www.faceyourbookapp.com"
+        })
+    }
+
+    goToWhatsApp = () => {
+        Linking.openURL(`https://chat.whatsapp.com/CBVGniVkviM5SjPknnDdgz`);
+    }
+    //end of slide drawer component
 
     handlePress = () => {
         if (this.state.subjectId === "") {
@@ -84,36 +116,49 @@ class SelectSubject extends Component {
     render() {
         // { console.warn(this.subjects[0].subject_name) }
         return (
+            <DrawerLayout
+                ref={drawer => this.drawer = drawer}
+                drawerWidth={240}
+                drawerPosition={DrawerLayout.positions.Left}
+                drawerType='front'
+                drawerBackgroundColor="#ddd"
+                renderNavigationView={this.viewOpened}
+            >
+                <ImageBackground style={styles.container}>
+                    <MenuDrawer styling={{ paddingLeft: 25, marginTop: 15, marginBottom: 15, }} onClickDrawerOpener={() => this.drawer.openDrawer()} />
+                    <ScrollView >
+                        <View style={{ paddingTop: "40%" }}>
+                            <Text style={styles.textSelect}>SELECT A SUBJECT</Text>
+                            <Picker
+                                selectedValue={this.state.subjectId}
+                                style={styles.picker}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    this.setState({ subjectId: itemValue })
+                                }>
+                                <Picker.item label="Choose a subject" value="" />
+                                {
+                                    this.state.subjects.map((sub, i) => {
+                                        return (
+                                            <Picker.item key={i} label={sub.subject_name} value={sub.subject_id} />
+                                        )
+                                    })
+                                }
 
-            <View style={styles.container}>
-                <ScrollView >
-                    <Text style={styles.textSelect}>SELECT A SUBJECT</Text>
-                    <Picker
-                        selectedValue={this.state.subjectId}
-                        style={styles.picker}
-                        onValueChange={(itemValue, itemIndex) =>
-                            this.setState({ subjectId: itemValue })
-                        }>
-                        <Picker.item label="Choose a subject" value="" />
-                        {
-                            this.state.subjects.map((sub, i) => {
-                                return (
-                                    <Picker.item key={i} label={sub.subject_name} value={sub.subject_id} />
-                                )
-                            })
-                        }
+                            </Picker>
 
-                    </Picker>
+                            <View style={styles.iconView}>
+                                <Icon size={30} color="#5FA046" name="ios-arrow-dropdown" />
+                            </View>
+                            {
 
-                    <View style={styles.iconView}>
-                        <Icon size={30} color="#fff" name="ios-arrow-dropdown" />
-                    </View>
-                    {
+                            }
+                            <ButtonComponent textStyle={{ color: "green" }} externalStyle={{ marginLeft: 30, backgroundColor: "#fafafa" }} onPress={this.handlePress} text="SELECT SUBJECT" />
 
-                    }
-                    <ButtonComponent externalStyle={{ marginLeft: 30 }} onPress={this.handlePress} text="SELECT SUBJECT" />
-                </ScrollView>
-            </View >
+                        </View>
+
+                    </ScrollView>
+                </ImageBackground >
+            </DrawerLayout>
         )
     }
 }
@@ -122,10 +167,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        paddingTop: "50%"
+        backgroundColor: "#5FA046"
     },
-    textSelect: { fontSize: 25, fontWeight: "bold", textAlign: "center", },
-    picker: { height: 45, width: 300, backgroundColor: "#5FA046", marginTop: 30, color: "#fff" },
+    textSelect: { fontSize: 25, fontWeight: "bold", textAlign: "center", color: "#fff" },
+    picker: { height: 45, width: 300, backgroundColor: "#fafafa", marginTop: 30, color: "green" },
     iconView: {
         position: "relative",
         bottom: 38,
