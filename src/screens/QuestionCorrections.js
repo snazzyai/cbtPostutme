@@ -16,7 +16,6 @@ import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
 
 
 
-let color = "black"
 
 
 class Corrections extends Component {
@@ -116,6 +115,7 @@ class Corrections extends Component {
                         <View style={styles.outerView}>
                             {
                                 questions.map((data, datakey) => {
+                                    let color = "black"
                                     const number = datakey + 1
                                     return (
                                         <View style={styles.questionView}>
@@ -135,25 +135,33 @@ class Corrections extends Component {
                                                             color = "red"
                                                         }
                                                         return (
-                                                            <Html
-                                                                value={`<h4>Your Answer: ${value.option_text}</h4>`}
-                                                                stylesheet={styles}
-                                                            />
+                                                            <View>
+                                                                <Text style={styles.answerText}>Your Answer:</Text>
+                                                                <Html
+                                                                    value={`<h4> ${value.option_text}</h4>`}
+                                                                    stylesheet={styles}
+                                                                />
+                                                            </View>
                                                         )
                                                     }
                                                     else {
                                                         return false
                                                     }
                                                 })}
-
-                                                <Html
-                                                    value={`<h4>Correct Answer: ${data.answers.option_text}</h4>`}
-                                                    stylesheet={styles}
-                                                />
-                                                <Html
-                                                    value={data.question_explanation === null ? `<h4>Explanation: None</h4>` : `<h4>Explanation: ${data.question_explanation}</h4>`}
-                                                    stylesheet={styles}
-                                                />
+                                                <View>
+                                                    <Text style={[styles.answerText, { color: "red" }]}>Correct Answer:</Text>
+                                                    <Html
+                                                        value={`<h4>${data.answers.option_text}</h4>`}
+                                                        stylesheet={styles}
+                                                    />
+                                                </View>
+                                                <View>
+                                                    <Text style={[styles.answerText, { color: "red" }]}>Explanation: </Text>
+                                                    <Html
+                                                        value={data.question_explanation === null ? `<div>None</div>` : `<div>${data.question_explanation}</div>`}
+                                                        stylesheet={styles}
+                                                    />
+                                                </View>
                                             </View>
 
                                         </View>
@@ -175,17 +183,27 @@ class Corrections extends Component {
 }
 
 const styles = StyleSheet.create({
+    answerText: {
+        fontSize: 18,
+        fontWeight: "bold"
+    },
     headView: {
         textAlign: 'center',
         padding: 15
     },
     p: {
+        letterSpacing: 0.7,
+        lineHeight: 24,
         fontSize: 18,
         color: "black"
     },
     h4: {
-        color: `${color}`,
         fontSize: 18,
+    },
+    div: {
+
+        fontSize: 15
+
     },
 
     btn: {

@@ -84,7 +84,15 @@ class DownloadScreen extends Component {
             }
 
             dbstoreSubjects.insert(subjectData, (err, newDoc) => {
-
+                if (err) {
+                    dbstoreSubjects.remove({ school_name: schoolName }, { multi: true }, function (err, numRemoved) {
+                        console.warn("subject removed on error")
+                    })
+                    this.setState({
+                        error: true,
+                        isLoading: false
+                    })
+                }
             })
         })
 
@@ -265,6 +273,20 @@ class DownloadScreen extends Component {
                 school_name: schoolName
             }
             dbstoreData.insert(otherData, async (err, newDoc) => {
+                if (err) {
+                    dbstoreData.remove({ school_name: schoolName }, { multi: true }, function (err, numRemoved) {
+                        console.warn("error found and removed data")
+
+                    });
+                    dbstoreSubjects.remove({ school_name: schoolName }, { multi: true }, function (err, numRemoved) {
+                        console.warn("subject removed on error")
+                    })
+
+                    this.setState({
+                        error: true,
+                        isLoading: false
+                    })
+                }
                 if (lastObject.id === newDoc.question_id) {
 
                     const getPaidExams = await AsyncStorage.getItem(`paidExams`)
@@ -340,7 +362,16 @@ class DownloadScreen extends Component {
         const schoolName = this.name || "University of Lagos"
         // testing
         // await AsyncStorage.removeItem(`paidExams`)
-        BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.navigate('PastQuestions'));
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            dbstoreData.remove({ school_name: schoolName }, { multi: true }, function (err, numRemoved) {
+
+            });
+            dbstoreSubjects.remove({ school_name: schoolName }, { multi: true }, function (err, numRemoved) {
+
+            })
+
+            this.props.navigation.navigate('PastQuestions')
+        });
 
         //For waec and jamb
         //     if (this.name === "WAEC") {
@@ -405,7 +436,8 @@ class DownloadScreen extends Component {
 
                         <ActivationScreenHeader onClickDrawerOpen={() => this.drawer.openDrawer()} processText={"DOWNLOAD SCREEN"} />
                         <View style={styles.downloadView}>
-                            <Text style={styles.textView}>Downloading files for {this.name} Questions..Please Wait, this might take a few minutes...</Text>
+                            <Text style={styles.textView}>Downloading questions for {this.name}</Text>
+                            <Text style={styles.textView}>Please Wait, this might take a few minutes...</Text>
                             <ActivityIndicator size="large" color="#00ff00" />
                         </View>
                     </View>

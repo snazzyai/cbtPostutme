@@ -12,6 +12,7 @@ import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 
 
 
+
 class MyExams extends Component {
     schoolName = this.props.navigation.getParam('name')
 
@@ -30,6 +31,7 @@ class MyExams extends Component {
             openBar: false
         })
         const getExams = await AsyncStorage.getItem('paidExams')
+        console.warn(getExams)
         const parsedExams = JSON.parse(getExams)
         const finalArray = []
         if (parsedExams !== null) {

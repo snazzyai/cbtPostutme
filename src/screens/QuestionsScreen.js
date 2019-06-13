@@ -208,7 +208,7 @@ class Questions extends Component {
                         <View style={{ padding: 8 }}>
                             <CountDown
                                 size={20}
-                                until={60 * 0.2}
+                                until={60}
                                 onFinish={() => this.onSubmit()}
                                 digitStyle={{ backgroundColor: '#FFF', borderRadius: 5 }}
                                 digitTxtStyle={{ color: '#1CC625' }}
@@ -222,64 +222,75 @@ class Questions extends Component {
                         </View>
 
                     </View>
-                    <ScrollView>
-                        <View style={styles.headView}>
+                    <View style={{ flex: 1 }}>
+                        <ScrollView>
+                            <View style={styles.headView}>
+                                <View style={styles.subjectName}>
+                                    <Text style={{ fontSize: 18, fontWeight: "bold", textAlign: "center", color: "#fff" }}>{subjectName}</Text>
+                                </View>
 
-                            <View style={styles.subjectName}>
-                                <Text style={{ fontSize: 18, fontWeight: "bold", textAlign: "center", color: "#fff" }}>{subjectName}</Text>
                             </View>
 
-                        </View>
+                            <View style={styles.outerView}>
+                                {
+                                    //checks the question array and returns question and options
+                                    questions.map((data, datakey) => {
+                                        const subjectId = this.subjectId
+                                        const letters = ["A.", "B.", "C.", "D."]
+                                        const number = datakey + 1
+                                        return (
 
-                        <View style={styles.outerView}>
-                            {
-                                //checks the question array and returns question and options
-                                questions.map((data, datakey) => {
-                                    const letters = ["A.", "B.", "C.", "D."]
-                                    const number = datakey + 1
-                                    return (
-                                        <View style={styles.questionView}>
-                                            <Text style={styles.questionText}>Question {number} of 20</Text>
-                                            <Html
-                                                value={`<h4>${data.question_text}</h4>`}
-                                                stylesheet={styles}
-                                            />
-                                            <View style={styles.answerView}>
-                                                {data.options.map((opt, optkey) => {
-                                                    return (
+                                            <View style={{
+                                                padding: 20,
+                                                marginBottom: 15,
+                                                backgroundColor: "#fff",
+                                                elevation: 2,
+                                                borderRadius: 20,
+                                                width: subjectId === 1 ? "93%" : "88%"
 
-                                                        <View style={{ flex: 1, flexDirection: "row" }} key={opt.option_id} >
-                                                            {letters[optkey] !== undefined ? <Text style={{ marginTop: 7, fontSize: 17, fontWeight: "bold" }}>{`${letters[optkey]}`}</Text> : <Text style={{ marginTop: 5, fontSize: 17, fontWeight: "bold" }}>E.</Text>}
-                                                            <RadioButton
-                                                                style={{ zIndex: 1 }}
-                                                                value={radioValue}
-                                                                status={radioValueArray.filter(data => {
-                                                                    return data.id === datakey && data.option_id === opt.option_id
-                                                                }).length !== 0 ? 'checked' : 'unchecked'}
-                                                                onPress={() => this.handleRadio(datakey, opt.option_id, opt.option_text)}
-                                                            />
-                                                            <View style={{ paddingTop: 5, paddingRight: 5 }}>
-                                                                <Html
-                                                                    value={`<div><h4>${opt.option_text}</h4></div>`}
-                                                                    stylesheet={styles}
+                                            }}>
+                                                <Text style={styles.questionText}>Question {number} of 20</Text>
+                                                <Html
+                                                    value={`<h4>${data.question_text}</h4>`}
+                                                    stylesheet={styles}
+                                                />
+                                                <View style={styles.answerView}>
+                                                    {data.options.map((opt, optkey) => {
+                                                        return (
+                                                            <TouchableOpacity key={opt.option_id} style={{ flexDirection: "row" }} onPress={() => this.handleRadio(datakey, opt.option_id, opt.option_text)}>
+                                                                {letters[optkey] !== undefined ? <Text style={{ marginTop: 7, fontSize: 17, fontWeight: "bold" }}>{`${letters[optkey]}`}</Text> : <Text style={{ marginTop: 5, fontSize: 17, fontWeight: "bold" }}>E.</Text>}
+                                                                <RadioButton
+                                                                    value={radioValue}
+                                                                    status={radioValueArray.filter(data => {
+                                                                        return data.id === datakey && data.option_id === opt.option_id
+                                                                    }).length > 0 ? 'checked' : 'unchecked'}
+                                                                    onPress={() => this.handleRadio(datakey, opt.option_id, opt.option_text)}
                                                                 />
-                                                            </View>
-                                                        </View>
-                                                    )
-                                                })}
+                                                                <View style={{ paddingTop: 5, paddingRight: 5 }}>
+                                                                    <Html
+                                                                        value={`<div><h4>${opt.option_text}</h4></div>`}
+                                                                        stylesheet={styles}
+                                                                    />
+                                                                </View>
+                                                            </TouchableOpacity>
+                                                        )
+                                                    })}
+                                                </View>
                                             </View>
-                                        </View>
-                                    )
-                                })
-                            }
+                                        )
+                                    })
+                                }
 
-                        </View>
-                        <View style={{ width: "80%", marginLeft: "8%", marginTop: 15, marginBottom: 5, alignItems: "center" }}>
-                            <Button mode="outlined" style={{ backgroundColor: "#fff" }} onPress={this.onSubmit}>
-                                <Text style={{ fontSize: 18, color: "green" }}>SUBMIT</Text>
-                            </Button>
-                        </View>
-                    </ScrollView>
+                            </View>
+                            <View style={{ width: "80%", marginLeft: "8%", marginTop: 15, marginBottom: 15, alignItems: "center" }}>
+                                <Button mode="outlined" style={{ backgroundColor: "#fff" }} onPress={this.onSubmit}>
+                                    <Text style={{ fontSize: 18, color: "green" }}>SUBMIT</Text>
+                                </Button>
+                            </View>
+                        </ScrollView>
+
+                    </View>
+
                 </ImageBackground >
             </DrawerLayout >
         )
@@ -300,15 +311,16 @@ const styles = StyleSheet.create({
     },
     outerView: {
         borderRadius: 20,
-        alignItems: "center"
+        alignItems: "center",
+        flex: 1
     },
     subjectName: {
         textAlign: "center"
     },
     container: {
-        alignItems: "center",
-        backgroundColor: "#5FA046",
         flex: 1,
+        alignItems: "center",
+        backgroundColor: "#5FA046"
     },
     textSelect: {
         fontSize: 22,
@@ -333,18 +345,9 @@ const styles = StyleSheet.create({
         color: "green",
         fontWeight: "bold"
     },
-    questionView: {
-        padding: 20,
-        marginBottom: 10,
-        backgroundColor: "#fff",
-        elevation: 2,
-        borderRadius: 20,
-        width: "87%"
-
-    },
     answerView: {
         padding: 10,
-        textAlign: 'center'
+        textAlign: 'center',
     },
     questionNavigation: {
         flexDirection: "row",

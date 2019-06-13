@@ -36,17 +36,17 @@ class PastQuestions extends Component {
 
     async componentDidMount() {
 
-        // await AsyncStorage.removeItem(`hasShared`)
+        // await AsyncStorage.removeItem(`questionData`)
         // await AsyncStorage.removeItem(`paidExams`)
         //shows all AsyncStorage
         // AsyncStorage.getAllKeys((err, keys) => {
         //     AsyncStorage.multiGet(keys, (error, stores) => {
-        //       stores.map((result, i, store) => {
-        //         console.warn({ [store[i][0]]: store[i][1] });
-        //         return true;
-        //       });
+        //         stores.map((result, i, store) => {
+        //             console.warn({ [store[i][0]]: store[i][1] });
+        //             return true;
+        //         });
         //     });
-        //   });
+        // });
 
     }
     //check if user hasPaid and direct as appropriate
