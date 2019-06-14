@@ -364,10 +364,10 @@ class DownloadScreen extends Component {
         // await AsyncStorage.removeItem(`paidExams`)
         BackHandler.addEventListener('hardwareBackPress', () => {
             dbstoreData.remove({ school_name: schoolName }, { multi: true }, function (err, numRemoved) {
-
+                console.warn(numRemoved)
             });
             dbstoreSubjects.remove({ school_name: schoolName }, { multi: true }, function (err, numRemoved) {
-
+                console.warn(numRemoved)
             })
 
             this.props.navigation.navigate('PastQuestions')

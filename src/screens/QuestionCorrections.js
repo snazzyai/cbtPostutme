@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, ScrollView, StyleSheet, Linking, BackHandler, ImageBackground } from 'react-native'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
-import Html from 'react-native-htmlview';
+// import Html from 'react-native-htmlview';
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
 import { ActivityIndicator, Button, RadioButton } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
+import Html from 'react-native-render-html';
 
 
 
@@ -115,18 +116,21 @@ class Corrections extends Component {
                         <View style={styles.outerView}>
                             {
                                 questions.map((data, datakey) => {
-                                    let color = "black"
+                                    let color = "red"
                                     const number = datakey + 1
+                                    const answerDataMain = unescape(data.answers.option_text)
+                                    const questionData = unescape(data.question_text)
+                                    const explanation = unescape(data.question_explanation)
                                     return (
                                         <View style={styles.questionView}>
                                             <Text style={styles.questionText}>Question {number} of 20</Text>
                                             <Html
-                                                value={`<h4>${data.question_text}</h4>`}
-                                                stylesheet={styles}
+                                                html={questionData}
+
                                             />
                                             <View style={styles.answerView}>
                                                 {radioValue.map(value => {
-
+                                                    const answerDataSub = unescape(value.option_text)
                                                     if (value.id === datakey) {
                                                         if (value.option_text === data.answers.option_text) {
                                                             color = "green"
@@ -136,10 +140,10 @@ class Corrections extends Component {
                                                         }
                                                         return (
                                                             <View>
-                                                                <Text style={styles.answerText}>Your Answer:</Text>
+                                                                <Text style={[styles.answerText, { color: `${color}` }]}>Your Answer:</Text>
                                                                 <Html
-                                                                    value={`<h4> ${value.option_text}</h4>`}
-                                                                    stylesheet={styles}
+                                                                    html={answerDataSub}
+
                                                                 />
                                                             </View>
                                                         )
@@ -149,17 +153,17 @@ class Corrections extends Component {
                                                     }
                                                 })}
                                                 <View>
-                                                    <Text style={[styles.answerText, { color: "red" }]}>Correct Answer:</Text>
+                                                    <Text style={[styles.answerText, { color: `${color}` }]}>Correct Answer:</Text>
                                                     <Html
-                                                        value={`<h4>${data.answers.option_text}</h4>`}
-                                                        stylesheet={styles}
+                                                        html={answerDataMain}
+
                                                     />
                                                 </View>
                                                 <View>
-                                                    <Text style={[styles.answerText, { color: "red" }]}>Explanation: </Text>
+                                                    <Text style={[styles.answerText, { color: `${color}` }]}>Explanation: </Text>
                                                     <Html
-                                                        value={data.question_explanation === null ? `<div>None</div>` : `<div>${data.question_explanation}</div>`}
-                                                        stylesheet={styles}
+                                                        html={data.question_explanation === null ? `<div>None</div>` : explanation}
+                                                        tagsStyles={{ span: { textDecoration: "underline" } }}
                                                     />
                                                 </View>
                                             </View>
