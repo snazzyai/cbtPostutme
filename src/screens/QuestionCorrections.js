@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, ScrollView, StyleSheet, Linking, BackHandler, ImageBackground } from 'react-native'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
-// import Html from 'react-native-htmlview';
+import HTML from 'react-native-htmlview';
 import ButtonComponent from '../components/ButtonComponent/ButtonComponent'
 import { ActivityIndicator, Button, RadioButton } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
 import Html from 'react-native-render-html';
+import { WebView } from 'react-native-webview'
 
 
 
@@ -125,8 +126,7 @@ class Corrections extends Component {
                                         <View style={styles.questionView}>
                                             <Text style={styles.questionText}>Question {number} of 20</Text>
                                             <Html
-                                                html={questionData}
-
+                                                html={`<div>${questionData}</div>`}
                                             />
                                             <View style={styles.answerView}>
                                                 {radioValue.map(value => {
@@ -142,7 +142,7 @@ class Corrections extends Component {
                                                             <View>
                                                                 <Text style={[styles.answerText, { color: `${color}` }]}>Your Answer:</Text>
                                                                 <Html
-                                                                    html={answerDataSub}
+                                                                    html={`<div>${answerDataSub}</div>`}
 
                                                                 />
                                                             </View>
@@ -153,18 +153,26 @@ class Corrections extends Component {
                                                     }
                                                 })}
                                                 <View>
-                                                    <Text style={[styles.answerText, { color: `${color}` }]}>Correct Answer:</Text>
+                                                    <Text style={[styles.answerText, { color: `green` }]}>Correct Answer:</Text>
                                                     <Html
-                                                        html={answerDataMain}
+                                                        html={`<div><p  style="font-size: 40px"><u>this is what i want it to underline</u><sup>2</sup><p>${answerDataMain}</div>`}
+
 
                                                     />
                                                 </View>
-                                                <View>
-                                                    <Text style={[styles.answerText, { color: `${color}` }]}>Explanation: </Text>
-                                                    <Html
-                                                        html={data.question_explanation === null ? `<div>None</div>` : explanation}
-                                                        tagsStyles={{ span: { textDecoration: "underline" } }}
-                                                    />
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={[styles.answerText, { color: `green` }]}>Explanation: </Text>
+                                                    {  /*<Html
+                                                        value={data.question_explanation === null ? `<div>None</div>` : `<div>${explanation}</div>`}
+
+                                                  />*/}
+                                                    <View style={{ maxWidth: "100%", minHeight: 400 }}>
+                                                        <WebView
+                                                            source={{ html: `<div style="font-size: 62px; font-weight: bold">${explanation}</div>` }}
+
+                                                        />
+                                                    </View>
+
                                                 </View>
                                             </View>
 
