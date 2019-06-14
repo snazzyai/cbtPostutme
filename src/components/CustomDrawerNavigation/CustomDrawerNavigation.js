@@ -6,6 +6,11 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 
 class CustomDrawerNavigation extends Component {
+
+
+    componentDidMount() {
+
+    }
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
@@ -13,14 +18,18 @@ class CustomDrawerNavigation extends Component {
                     <Image style={{ height: 170, width: 280 }} source={require("../../../assets/images/background.jpg")} />
                 </View>
                 <View style={{ flex: 1, backgroundColor: "#fafafa" }}>
+                    <View>
+                        <TouchableOpacity>
+                            <Text>Unilag</Text>
+                        </TouchableOpacity>
+                    </View>
                     <DrawerItems {...this.props} />
-                    <TouchableOpacity onPress={async () => {
+                    {  /*<TouchableOpacity onPress={async () => {
                         await AsyncStorage.removeItem("userData")
-
                         this.props.navigation.navigate("Startup")
                     }}>
                         <Text style={{ fontSize: 18, fontWeight: "bold", color: "#000", paddingLeft: 15 }}>Logout</Text>
-                    </TouchableOpacity>
+                </TouchableOpacity> */}
                 </View>
             </SafeAreaView>
         );

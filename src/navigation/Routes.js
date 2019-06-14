@@ -7,6 +7,7 @@ import Payment from '../screens/Payment'
 import BankTransferScreen from '../screens/BankTransferScreen'
 import PutmeScreen from '../screens/PutmeScreen'
 import MyExams from '../screens/MyExamScreen'
+import About from '../screens/AboutScreen'
 import DownloadScreen from "../screens/DownloadScreen"
 import ActivationScreenOne from "../screens/ActivationScreenOne"
 import ActivationScreenTwo from "../screens/ActivationScreenTwo"
@@ -14,15 +15,11 @@ import SelectSubject from '../screens/SelectSubjectScreen'
 import Questions from '../screens/QuestionsScreen'
 import SignUp from '../screens/SignUpScreen'
 import PaymentPage from '../screens/PaymentPage'
-
-
-
-
-
-
+import Corrections from '../screens/QuestionCorrections'
 
 
 const Auth = createStackNavigator({
+
     Startup: {
         screen: Startup,
         navigationOptions: {
@@ -40,14 +37,37 @@ const Auth = createStackNavigator({
 
 })
 const Main = createStackNavigator({
-    PaymentPage: {
-        screen: PaymentPage,
+    PastQuestions: {
+        screen: PastQuestions,
         navigationOptions: {
             header: null
         }
     },
-    PastQuestions: {
-        screen: PastQuestions,
+    SelectSubject: {
+        screen: SelectSubject,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+    QuestionCorrections: {
+        screen: Corrections,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+
+    Download: {
+        screen: DownloadScreen,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+
+    PaymentPage: {
+        screen: PaymentPage,
         navigationOptions: {
             header: null
         }
@@ -58,8 +78,8 @@ const Main = createStackNavigator({
             header: null
         }
     },
-    Payment: {
-        screen: Payment,
+    ActivationTwo: {
+        screen: ActivationScreenTwo,
         navigationOptions: {
             header: null
         }
@@ -70,38 +90,33 @@ const Main = createStackNavigator({
             header: null
         }
     },
-    ActivationTwo: {
-        screen: ActivationScreenTwo,
+    Payment: {
+        screen: Payment,
         navigationOptions: {
             header: null
         }
     },
-
-    Download: {
-        screen: DownloadScreen,
+    Questions: {
+        screen: Questions,
         navigationOptions: {
             header: null
         }
     },
-
-})
-
-const ChooseQuestions = createStackNavigator({
-    Exam: {
+    MyExams: {
         screen: MyExams,
         navigationOptions: {
             header: null
         }
     },
-    SelectSubject: {
-        screen: SelectSubject,
-
+    About: {
+        screen: About,
+        navigationOptions: {
+            header: null
+        }
     },
-    Questions: {
-        screen: Questions
-    }
-
 })
+
+
 const StartScreen = createSwitchNavigator({
     Auth: Auth,
     Main: Main
@@ -113,10 +128,6 @@ const StartScreen = createSwitchNavigator({
 )
 
 const DrawerNavigation = createDrawerNavigator({
-    ["My Exams"]: {
-        screen: ChooseQuestions,
-
-    },
     ["Add an Exam"]: {
         screen: PastQuestions,
 
@@ -131,24 +142,29 @@ const DrawerNavigation = createDrawerNavigator({
     }
 )
 
-const AppSwitchNavigator = createStackNavigator(
-    {
-        StartScreen: {
-            screen: StartScreen, navigationOptions: {
-                header: null
-            }
-        },
-        DrawerNavigation: DrawerNavigation
-    },
-    {
-        initialRouteName: 'StartScreen',
-    }
-)
+// const AppSwitchNavigator = createStackNavigator(
+//     {
+//         StartScreen: {
+//             screen: StartScreen, navigationOptions: {
+//                 header: null
+//             }
+//         },
+//         ChooseQuestion: {
+//             screen: ChooseQuestions, navigationOptions: {
+//                 header: null
+//             }
+//         },
+
+//     },
+//     {
+//         initialRouteName: 'StartScreen',
+//     }
+// )
 
 
 
 
-export default createAppContainer(AppSwitchNavigator);
+export default createAppContainer(StartScreen);
 
 
 

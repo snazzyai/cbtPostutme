@@ -55,8 +55,7 @@ class Startup extends ValidationComponent {
             }
         }
         )
-        // const userData = await AsyncStorage.removeItem("userData")
-        // FOR TESTING AUTHENTICATION
+        // await AsyncStorage.removeItem("userData")//for testing login logout
         const userData = await AsyncStorage.getItem("userData")
         if (userData !== null) {
             this.props.navigation.navigate('Main')
@@ -102,20 +101,20 @@ class Startup extends ValidationComponent {
                 device_id: this.state.device_id
             }).then(async result => {
                 if (result.status === "success") {
-
+                    const user_id = result.user.id
                     try {
                         const data = {
                             email: this.state.email,
-                            device_id: this.state.device_id
+                            device_id: this.state.device_id,
+                            user_id: user_id
                         }
                         await AsyncStorage.setItem('userData', JSON.stringify(data))
-
                     }
                     catch (e) {
                         console.warn(e)
                     }
 
-                    this.props.navigation.navigate('Main')
+                    this.props.navigation.navigate('PastQuestion')
 
                 }
                 else if (result.message) {

@@ -2,8 +2,8 @@ package com.cbtpostume;
 
 import android.app.Application;
 
-
 import com.facebook.react.ReactApplication;
+import com.arttitude360.reactnative.rnpaystack.RNPaystackPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
@@ -31,6 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNPaystackPackage(),
+     
             new RNDeviceInfo(),
             new VectorIconsPackage(),
             new AsyncStoragePackage(),

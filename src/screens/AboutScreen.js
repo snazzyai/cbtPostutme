@@ -6,18 +6,13 @@ import ActivationScreenHeader from "../components/ActivationScreenHeader/Activat
 
 
 
-class BankTransferScreen extends Component {
+class About extends Component {
     state = {
         faq: [
             {
                 id: 1,
-                question: "How do I get a pin?",
-                answer: "Visit any GTBank Outlet(You can also make use of internet bank transfer) and pay N1500 only into Account Name: Brimatel Global Network.Account Number: 0117562221. Then contact Olamide via whatsapp on this number(09093905099) to get your pin"
-            },
-            {
-                id: 2,
-                question: "What is the app all about:",
-                answer: "CBT application is a world class mobile Application developed and enriched with Post UTME past questions. Answers and detailed explanations in othre to guarantee users a successful application"
+                question: "What is faceyourbook all about?",
+                answer: "Faceyourbook app was developed solely to impact learning and making sure student hoping to have good result achieve their purpose."
             },
 
         ]
@@ -68,19 +63,8 @@ class BankTransferScreen extends Component {
                     drawerBackgroundColor="#ddd"
                     renderNavigationView={this.viewOpened}
                 >
-                    <ActivationScreenHeader onClickDrawerOpen={() => this.drawer.openDrawer()} processText={"BANK TRANSFER"} />
+                    <ActivationScreenHeader onClickDrawerOpen={() => this.drawer.openDrawer()} processText={"ABOUT"} />
                     <ScrollView style={[styles.faqView, styles]} >
-                        <Text style={styles.faqText}>Payment Details</Text>
-                        <View style={styles.faq}>
-                            <Text style={[styles.textPayment, styles.texPaymentJustify]}>Visit any GTBank Outlet(You can also make use of internet bank transfer) and pay N1500 only into:</Text>
-                            <Text></Text>
-                            <Text style={styles.textPayment}>Account Name: <Text style={styles.textPaymentBold}>Brimatel Global Networks</Text></Text>
-                            <Text></Text>
-                            <Text style={styles.textPayment}>Account Number: <Text style={styles.textPaymentBold}>0117562221</Text></Text>
-                            <Text ></Text>
-                            <Text style={[styles.textPayment, styles.texPaymentJustify]}>Then contact Olamide via whatsapp on this phone number (09093905099) to get your pin.</Text>
-                        </View>
-                        <Text style={styles.faqText} >F.A.Qs</Text>
                         {
                             faq.map(item => {
                                 return (
@@ -169,4 +153,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default BankTransferScreen;
+export default About;
