@@ -1,92 +1,150 @@
 import React, { Component } from 'react';
 import Splashscreen from '../components/Splashscreen/Splashscreen'
-import Signin from '../components/Signin/Signin'
+import Signin from '../components/SigninComponent/SigninComponent'
 import AsyncStorage from '@react-native-community/async-storage'
+import { Postdata } from '../services/Postdata';
+import DeviceInfo from 'react-native-device-info'
+import ValidationComponent from 'react-native-form-validator';
+
 
 
 // import SplashScreen from 'react-native-splash-screen'
 
-
-class Startup extends Component {
+class Startup extends ValidationComponent {
     state = {
-        isLoading: true,
         displayLogin: false,
-        hasLoggedIn: false,
-        name: "",
         email: "",
-        phone: "",
-    }
-
-    setUserData = async () => {
-        try {
-            await AsyncStorage.setItem('userEmail', this.state.email)
-        }
-        catch (e) {
-            console.log(e)
-        }
-
-    }
-
-
-    getUserData = async () => {
-        try {
-            await AsyncStorage.getItem('userEmail')
-        }
-        catch (e) {
-            console.log(e)
-        }
+        errorEmail: "",
+        errorPassword: "",
+        errorDeviceMessage: "",
+        password: "",
+        device_id: "",
+        isLoading: false,
+        disabled: false,
+        error: [],
+        showAlert: false,
+        isLoading: false
     }
 
     awaitStartup = async () => {
-
-        return new Promise(resolve => {
-            setTimeout(() => resolve("resolve"), 300)
-        })
+        const Resolved = new Promise(resolve => setTimeout(() => resolve("resolve"), 300))
+        return Resolved
     }
 
-    async componentDidMount() {
-        // await AsyncStorage.removeItem("userEmail")
-        const userId = await AsyncStorage.getItem('userEmail')
-        const data = await this.awaitStartup()
-        if (data !== null && userId === null)
+    errorAdd = () => {
+        this.state.error.map(err => {
             this.setState({
-                displayLogin: true
+                errorPassword: err.password,
+                errorEmail: err.email,
+                errorDeviceMessage: err.message,
+                showAlert: true,
+                disabled: false,
+                isLoading: false,
             })
-        else if (data !== null && userId !== null) {
-            this.props.navigation.navigate("Main")
-            console.log(userId)
-        }
+        })
 
+    }
+    //gets device info and stores in state
+    async componentDidMount() {
+        const deviceId = DeviceInfo.getDeviceId()
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                device_id: deviceId,
+                error: []
+            }
+        }
+        )
+        // await AsyncStorage.removeItem("userData")//for testing login logout
+        const userData = await AsyncStorage.getItem("userData")
+        if (userData !== null) {
+            this.props.navigation.navigate('Main')
+        }
+        else {
+            const data = await this.awaitStartup()
+            if (data !== null)
+                this.setState({
+                    displayLogin: true
+                })
+        }
     }
     handleEmail = (value) => {
         this.setState({
             email: value
         })
     }
-    handlePhone = (value) => {
+    handlePassword = (value) => {
         this.setState({
-            phone: value
+            password: value
         })
     }
-    handleName = (value) => {
-        this.setState({
-            name: value
-        })
-    }
-
+    //handles signin
     handleSignin = () => {
-        this.props.navigation.navigate("Main" )
+        this.validate({
+            email: { minlength: 5, email: true, },
+            password: { minlength: 5, required: true }
+        });
+
+        if (this.getErrorMessages()) {
+            alert(this.getErrorMessages())
+        }
+        else {
+            this.setState({
+                disabled: true,
+                showAlert: false,
+                isLoading: true,
+                error: []
+            })
+            Postdata('login', {
+                email: this.state.email,
+                password: this.state.password,
+                device_id: this.state.device_id
+            }).then(async result => {
+                if (result.status === "success") {
+                    const user_id = result.user.id
+                    try {
+                        const data = {
+                            email: this.state.email,
+                            device_id: this.state.device_id,
+                            user_id: user_id
+                        }
+                        await AsyncStorage.setItem('userData', JSON.stringify(data))
+                    }
+                    catch (e) {
+                        console.warn(e)
+                    }
+
+                    this.props.navigation.navigate('PastQuestion')
+
+                }
+                else if (result.message) {
+                    alert(result.message)
+                    this.setState({
+                        disabled: false,
+                        showAlert: false,
+                        isLoading: false,
+                    })
+                    return false
+                }
+
+                else {
+                    this.setState(prevState => {
+                        return {
+                            ...prevState,
+                            error: prevState.error.concat(result),
+                        }
+                    })
+                    this.errorAdd()
+                }
+            }).catch(err => console.warn(err))
+        }
+
+
     }
 
-    handleSignin = async () => {
-        await this.setUserData()
-        this.setState({
-            hasLoggedIn: true
-        })
-        this.props.navigation.navigate("Main")
+    handleSignupNavigation = () => {
+        this.props.navigation.navigate("Signup")
     }
-
-
 
 
     render() {
@@ -95,7 +153,18 @@ class Startup extends Component {
         }
         else {
             return (
-                <Signin email={this.state.email} handleEmail={this.handleEmail} handleName={this.handleName} handlePhone={this.handlePhone} login={this.handleSignin} />
+                <Signin
+                    handleEmail={this.handleEmail}
+                    handlePassword={this.handlePassword}
+                    login={this.handleSignin}
+                    navigateSignup={this.handleSignupNavigation}
+                    handleDisabled={this.state.disabled}
+                    error={this.state.error}
+                    errorEmail={this.state.errorEmail}
+                    errorPassword={this.state.errorPassword}
+                    showAlert={this.state.showAlert}
+                    isLoading={this.state.isLoading}
+                />
             )
         }
 

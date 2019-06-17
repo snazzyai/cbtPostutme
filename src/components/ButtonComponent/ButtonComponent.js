@@ -1,10 +1,11 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
-const ButtonComponent = ({ onPress, text, externalStyle, width, height }) => {
+
+const ButtonComponent = ({ onPress, text, externalStyle, textStyle, isLoading, isDisabled, htmlView }) => {
     return (
-        <TouchableOpacity style={[styles.paymentTouch, externalStyle]} onPress={onPress}>
-            <Text style={styles.paymentText}>{text}</Text>
+        <TouchableOpacity disabled={isDisabled} style={[styles.paymentTouch, externalStyle]} onPress={onPress}>
+            {isLoading ? <ActivityIndicator size="small" color="#00ff00" /> : <Text style={[styles.paymentText, textStyle]}>{text}{htmlView}</Text>}
         </TouchableOpacity >
 
     )
@@ -13,7 +14,7 @@ const ButtonComponent = ({ onPress, text, externalStyle, width, height }) => {
 const styles = StyleSheet.create({
     paymentTouch: {
         backgroundColor: "#5FA046",
-        elevation: 1,
+        // elevation: 1,
         width: "80%",
         borderRadius: 30,
         height: 45,

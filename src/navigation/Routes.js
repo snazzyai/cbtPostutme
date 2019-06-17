@@ -8,14 +8,35 @@ import Payment from '../screens/Payment'
 import BankTransferScreen from '../screens/BankTransferScreen'
 import PutmeScreen from '../screens/PutmeScreen'
 import MyExams from '../screens/MyExamScreen'
+import About from '../screens/AboutScreen'
 import DownloadScreen from "../screens/DownloadScreen"
 import ActivationScreenOne from "../screens/ActivationScreenOne"
 import ActivationScreenTwo from "../screens/ActivationScreenTwo"
 import SelectSubject from '../screens/SelectSubjectScreen'
 import Questions from '../screens/QuestionsScreen'
+import SignUp from '../screens/SignUpScreen'
+import PaymentPage from '../screens/PaymentPage'
+import Corrections from '../screens/QuestionCorrections'
 
 
+const Auth = createStackNavigator({
 
+    Startup: {
+        screen: Startup,
+        navigationOptions: {
+            header: null
+        }
+
+    },
+    Signup: {
+        screen: SignUp,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+
+})
 const Main = createStackNavigator({
     // Quiz: {
     //     screen: Quiz,
@@ -29,20 +50,37 @@ const Main = createStackNavigator({
             header: null
         }
     },
+    SelectSubject: {
+        screen: SelectSubject,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+    QuestionCorrections: {
+        screen: Corrections,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+
+    Download: {
+        screen: DownloadScreen,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+
+    PaymentPage: {
+        screen: PaymentPage,
+        navigationOptions: {
+            header: null
+        }
+    },
     BankTransfer: {
         screen: BankTransferScreen,
-        navigationOptions: {
-            header: null
-        }
-    },
-    Payment: {
-        screen: Payment,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ActivationOne: {
-        screen: ActivationScreenOne,
         navigationOptions: {
             header: null
         }
@@ -53,63 +91,86 @@ const Main = createStackNavigator({
             header: null
         }
     },
-    Download: {
-        screen: DownloadScreen,
+    ActivationOne: {
+        screen: ActivationScreenOne,
         navigationOptions: {
             header: null
         }
     },
-
-})
-const StartScreen = createSwitchNavigator({
-    Startup: Startup,
-    Main: Main
-
-
-})
-const ChooseQuestions = createStackNavigator({
-    Exam: {
+    Payment: {
+        screen: Payment,
+        navigationOptions: {
+            header: null
+        }
+    },
+    Questions: {
+        screen: Questions,
+        navigationOptions: {
+            header: null
+        }
+    },
+    MyExams: {
         screen: MyExams,
         navigationOptions: {
             header: null
         }
     },
-    SelectSubject: {
-        screen: SelectSubject,
-
+    About: {
+        screen: About,
+        navigationOptions: {
+            header: null
+        }
     },
-    Questions: {
-        screen: Questions
-    }
-
 })
 
-const DrawerNavigation = createDrawerNavigator({
-    ["My Exams"]: {
-        screen: ChooseQuestions
-    },
-    ["Add an Exam"]: {
-        screen: PastQuestions
-    }
+
+const StartScreen = createSwitchNavigator({
+    Auth: Auth,
+    Main: Main
 },
     {
-        contentComponent: CustomDrawerNavigation
+        initialRouteName: 'Auth',
     }
+
 )
 
-const AppSwitchNavigator = createSwitchNavigator(
-    {
-        StartScreen: StartScreen,
-        DrawerNavigation: DrawerNavigation
+const DrawerNavigation = createDrawerNavigator({
+    ["Add an Exam"]: {
+        screen: PastQuestions,
+
     },
+
+},
     {
-        initialRouteName: 'StartScreen',
+        contentComponent: CustomDrawerNavigation,
+        navigationOptions: {
+            header: null
+        }
     }
 )
 
+// const AppSwitchNavigator = createStackNavigator(
+//     {
+//         StartScreen: {
+//             screen: StartScreen, navigationOptions: {
+//                 header: null
+//             }
+//         },
+//         ChooseQuestion: {
+//             screen: ChooseQuestions, navigationOptions: {
+//                 header: null
+//             }
+//         },
+
+//     },
+//     {
+//         initialRouteName: 'StartScreen',
+//     }
+// )
 
 
 
-export default createAppContainer(AppSwitchNavigator);
+
+export default createAppContainer(StartScreen);
 
 

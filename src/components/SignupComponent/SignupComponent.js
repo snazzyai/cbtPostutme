@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, Image, ScrollView } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ImageBackground, Image, ScrollView, ActivityIndicator } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import ShowAlert from '../ShowAlertComponent/ShowAlertComponent'
 
 
 
 
-class Signin extends Component {
+
+
+class Signup extends Component {
+
+
 
     render() {
         return (
@@ -13,27 +18,44 @@ class Signin extends Component {
                 <ScrollView style={styles.scrollView}>
                     <View style={styles.logo}>
                         <Image style={styles.imageLogo} source={require("../../../assets/images/logo.png")} />
-
                     </View>
                     <View style={styles.inputFieldView}>
-
                         <View style={styles.inputContainer}>
                             <TextInput onChangeText={this.props.handleName} style={styles.inputStyle} placeholder="Name" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="ios-person" size={20} color="#fff" />
                         </View>
+
+                        {this.props.showAlert ? <ShowAlert ErrorMessage={this.props.errorName} /> : false}
+
+
                         <View style={styles.inputContainer}>
                             <TextInput keyboardType="email-address" onChangeText={this.props.handleEmail} style={styles.inputStyle} placeholder="Email" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="md-mail" size={20} color="#fff" />
                         </View>
+
+                        {this.props.showAlert ? <ShowAlert ErrorMessage={this.props.errorEmail} /> : false}
+
                         <View style={styles.inputContainer}>
                             <TextInput keyboardType="phone-pad" onChangeText={this.props.handlePhone} style={styles.inputStyle} placeholder="Phone Number" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
                             <Icon style={styles.icon} name="md-call" size={20} color="#fff" />
                         </View>
 
+                        {this.props.showAlert ? <ShowAlert ErrorMessage={this.props.errorPhone} /> : false}
+
+                        <View style={styles.inputContainer}>
+                            <TextInput secureTextEntry={true} onChangeText={this.props.handlePassword} style={styles.inputStyle} placeholder="Password" underlineColorAndroid="#fff" placeholderTextColor="#fff" />
+                            <Icon style={styles.icon} name="md-lock" size={20} color="#fff" />
+                        </View>
+                        {this.props.showAlert ? <ShowAlert ErrorMessage={this.props.errorPassword} /> : false}
                     </View>
                     <View style={styles.clickableView}>
-                        <TouchableOpacity onPress={this.props.login} style={styles.clickable}>
-                            <Text style={styles.clickableText}>SIGN IN</Text>
+                        <TouchableOpacity disabled={this.props.handleDisabled} onPress={this.props.handleSignup} style={styles.clickable}>
+                            {this.props.isLoading ? <ActivityIndicator size="small" color="#00ff00" /> : <Text style={styles.clickableText}>SIGNUP</Text>}
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.clickableView}>
+                        <TouchableOpacity onPress={this.props.handleLoginNavigation} style={styles.clickable}>
+                            <Text style={styles.clickableText}>LOGIN</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -70,7 +92,7 @@ const styles = StyleSheet.create({
 
     },
     logo: {
-        marginTop: "15%",
+        marginTop: "10%",
         alignItems: "center"
     },
     logoText: {
@@ -79,7 +101,7 @@ const styles = StyleSheet.create({
 
     },
     inputFieldView: {
-        marginTop: "20%",
+        marginTop: "1%",
         alignItems: "center",
 
 
@@ -103,10 +125,9 @@ const styles = StyleSheet.create({
         color: "#ffffff",
     },
     clickableView: {
-        marginTop: "7%",
+        marginTop: "5%",
         alignItems: "center",
-
-
+        marginBottom: "2%"
     },
     clickable: {
         alignItems: "center",
@@ -132,4 +153,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Signin;
+export default Signup;

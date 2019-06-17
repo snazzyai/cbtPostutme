@@ -2,10 +2,9 @@ package com.cbtpostume;
 
 import android.app.Application;
 
-
 import com.facebook.react.ReactApplication;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import cl.json.RNSharePackage;
+import com.arttitude360.reactnative.rnpaystack.RNPaystackPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.horcrux.svg.SvgPackage;
@@ -32,8 +31,14 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+<<<<<<< HEAD
             new SplashScreenReactPackage(),
             new RNSharePackage(),
+=======
+            new RNPaystackPackage(),
+     
+            new RNDeviceInfo(),
+>>>>>>> 5eee840198806ef1d09d34218411d5ec2ad14f3c
             new VectorIconsPackage(),
             new AsyncStoragePackage(),
             new SvgPackage(),
