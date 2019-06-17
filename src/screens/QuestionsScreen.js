@@ -282,11 +282,11 @@ class Questions extends Component {
                                 }
 
                             </View>
-                            <View style={{ width: "80%", marginLeft: "8%", marginTop: 15, marginBottom: 15, alignItems: "center" }}>
-                                <Button mode="outlined" style={{ backgroundColor: "#fff" }} onPress={this.onSubmit}>
-                                    <Text style={{ fontSize: 18, color: "green" }}>SUBMIT</Text>
-                                </Button>
-                            </View>
+
+                            <TouchableOpacity style={{ width: "80%", marginLeft: "8%", marginTop: 15, alignItems: "center", marginBottom: 10, backgroundColor: "#fff", borderRadius: 20, height: 50, paddingTop: 10 }} onPress={this.onSubmit}>
+                                <Text style={{ fontSize: 18, color: "green" }}>SUBMIT</Text>
+                            </TouchableOpacity>
+
                         </ScrollView>
 
                     </View>

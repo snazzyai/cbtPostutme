@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, ScrollView, StyleSheet, Linking, BackHandler, ImageBackground } from 'react-native'
+import { Text, View, TouchableOpacity, ScrollView, StyleSheet, Linking, BackHandler, ImageBackground, Dimensions } from 'react-native'
 import DrawerLayout from 'react-native-gesture-handler/DrawerLayout'
 import SideDrawerComponent from '../components/SideDrawerComponent/SideDrawerComponent'
 import HTML from 'react-native-htmlview';
@@ -9,6 +9,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import MenuDrawer from '../components/MenuDrawerComponent/MenuDrawerComponent'
 import Html from 'react-native-render-html';
 import { WebView } from 'react-native-webview'
+import MyWebView from 'react-native-webview-autoheight'
+import AutoHeightWebView from 'react-native-autoheight-webview'
 
 
 
@@ -21,6 +23,7 @@ import { WebView } from 'react-native-webview'
 
 
 class Corrections extends Component {
+    height = Dimensions.get('window')
     filtered = this.props.navigation.getParam('filtered')
     data = this.props.navigation.getParam('data')
     radioValue = this.props.navigation.getParam('radioValue')
@@ -125,8 +128,13 @@ class Corrections extends Component {
                                     return (
                                         <View style={styles.questionView}>
                                             <Text style={styles.questionText}>Question {number} of 20</Text>
-                                            <Html
-                                                html={`<div>${questionData}</div>`}
+                                            <AutoHeightWebView
+
+                                                source={{
+                                                    html: `<div style="font-size: 17px; font-weight: bold; height: auto" >${questionData}</div>`
+                                                }}
+                                                style={{ width: 300 }}
+
                                             />
                                             <View style={styles.answerView}>
                                                 {radioValue.map(value => {
@@ -141,8 +149,12 @@ class Corrections extends Component {
                                                         return (
                                                             <View>
                                                                 <Text style={[styles.answerText, { color: `${color}` }]}>Your Answer:</Text>
-                                                                <Html
-                                                                    html={`<div>${answerDataSub}</div>`}
+                                                                <AutoHeightWebView
+
+                                                                    source={{
+                                                                        html: `<div style="font-size: 17px; font-weight: bold; height: auto" >${answerDataSub}</div>`
+                                                                    }}
+                                                                    style={{ width: 300 }}
 
                                                                 />
                                                             </View>
@@ -154,27 +166,30 @@ class Corrections extends Component {
                                                 })}
                                                 <View>
                                                     <Text style={[styles.answerText, { color: `green` }]}>Correct Answer:</Text>
-                                                    <Html
-                                                        html={`<div><p  style="font-size: 40px"><u>this is what i want it to underline</u><sup>2</sup><p>${answerDataMain}</div>`}
+                                                    <AutoHeightWebView
 
+                                                        source={{
+                                                            html: `<div style="font-size: 17px; font-weight: bold; height: auto" >${answerDataMain}</div>`
+                                                        }}
+                                                        style={{ width: 300 }}
 
                                                     />
                                                 </View>
-                                                <View style={{ flex: 1 }}>
+                                                <View>
                                                     <Text style={[styles.answerText, { color: `green` }]}>Explanation: </Text>
-                                                    {  /*<Html
-                                                        value={data.question_explanation === null ? `<div>None</div>` : `<div>${explanation}</div>`}
 
-                                                  />*/}
-                                                    <View style={{ maxWidth: "100%", minHeight: 400 }}>
-                                                        <WebView
-                                                            source={{ html: `<div style="font-size: 62px; font-weight: bold">${explanation}</div>` }}
+                                                    <AutoHeightWebView
 
-                                                        />
-                                                    </View>
+                                                        source={{
+                                                            html: `<div style="font-size: 16px; font-weight: bold; height: auto" >${explanation}</div>`
 
+                                                        }}
+                                                        style={{ width: 300 }}
+
+                                                    />
                                                 </View>
                                             </View>
+
 
                                         </View>
                                     )
@@ -182,10 +197,10 @@ class Corrections extends Component {
                             }
 
                         </View>
-                        <View style={{ width: "80%", marginLeft: "8%", marginTop: 15, alignItems: "center" }}>
-                            <Button mode="outlined" style={{ backgroundColor: "#fff" }} onPress={this.onSubmit}>
+                        <View >
+                            <TouchableOpacity style={{ width: "80%", marginLeft: "8%", marginTop: 15, alignItems: "center", marginBottom: 15, backgroundColor: "#fff", borderRadius: 20, height: 50, paddingTop: 10 }} onPress={this.onSubmit}>
                                 <Text style={{ fontSize: 18, color: "green" }}>TAKE ANOTHER EXAM</Text>
-                            </Button>
+                            </TouchableOpacity>
                         </View>
                     </ScrollView>
                 </ImageBackground>
