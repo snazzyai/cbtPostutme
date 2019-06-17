@@ -17,12 +17,12 @@ import Questions from '../screens/QuestionsScreen'
 
 
 const Main = createStackNavigator({
-    Quiz: {
-        screen: Quiz,
-        navigationOptions: {
-            header: null
-        }
-    },
+    // Quiz: {
+    //     screen: Quiz,
+    //     navigationOptions: {
+    //         header: null
+    //     }
+    // },
     PastQuestions: {
         screen: PastQuestions,
         navigationOptions: {

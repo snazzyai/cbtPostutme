@@ -4,6 +4,8 @@ import android.app.Application;
 
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import cl.json.RNSharePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.horcrux.svg.SvgPackage;
@@ -30,10 +32,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-<<<<<<< HEAD
-=======
+            new SplashScreenReactPackage(),
+            new RNSharePackage(),
             new VectorIconsPackage(),
->>>>>>> d2ffee2ce15fa2e3ba27f7b2b1cc71a47656c18c
             new AsyncStoragePackage(),
             new SvgPackage(),
             new RNGestureHandlerPackage()

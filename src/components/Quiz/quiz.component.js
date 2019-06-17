@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import HTMLView from "react-native-htmlview";
 
 class QuizComponent extends Component {
   constructor(props) {
@@ -26,9 +25,10 @@ class QuizComponent extends Component {
   render() {
     return (
       <View style={styles.card}>
-        <HTMLView value={this.props.question} stylesheet={styles.question} />
         <View style={styles.buttonGroup}>
-              <View></View>
+              <View style>
+                
+              </View>
         </View>
       </View>
     );
